@@ -9,9 +9,9 @@
 import React from 'react';
 import { Home } from './src/screens/home'
 const App = (props) => {
-  return (
-    <Home props={props} />
-  )
+	return (
+		<Home props={props} />
+	)
 }
 
 export default App;

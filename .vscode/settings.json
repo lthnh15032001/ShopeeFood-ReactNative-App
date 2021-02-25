@@ -1,3 +1,30 @@
 {
-    "git.ignoreLimitWarning": true
-}
+    "git.ignoreLimitWarning": true,
+	// "workbench.iconTheme": "material-icon-theme",
+	// "workbench.colorTheme": "Monokai Dimmed",
+	"workbench.editor.enablePreview": false,
+	"git.autofetch": true,
+	"editor.formatOnSave": false,
+    "editor.detectIndentation": false,
+    "editor.insertSpaces": false,
+	"editor.tabSize": 4, 
+	"[html]": {
+		"editor.formatOnSave": true
+	},
+	"[typescript]": {
+		"editor.tabSize": 4,
+		"editor.formatOnSave": true,
+		// "editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[scss]": {
+		"editor.formatOnSave": true
+	},
+    "[javascript]": {
+        "editor.formatOnSave": true
+    },
+	"breadcrumbs.enabled": true,
+	// "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe",
+	"workbench.settings.editor": "json",
+	"typescript.updateImportsOnFileMove.enabled": "always",
+	"explorer.confirmDelete": false,
+} 
