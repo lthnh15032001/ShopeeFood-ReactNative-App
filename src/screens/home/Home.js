@@ -4,10 +4,10 @@ import { Navigation } from "react-native-navigation";
 import { Header } from '../../components/Header'
 import { Icon, Container } from '../../components/'
 import { colorStyles } from '../../styles/ColorStyles'
-
+import { HomeScrollHeader } from './HomeScrollHeader'
+const BackButton = () => <Icon Ionicons name='ios-chevron-back-sharp' color={colorStyles.curiousBlue} size={28} />
 export const Home = ({ props }) => {
 	Navigation.registerComponent('HeaderComponent', () => Header)
-	const BackButton = () => <Icon Ionicons name='ios-chevron-back-sharp' color={colorStyles.curiousBlue} size={28} />
 	Navigation.registerComponent('BackButton', () => BackButton)
 	Navigation.mergeOptions(props.componentId, {
 		topBar: {
@@ -47,15 +47,18 @@ export const Home = ({ props }) => {
 	})
 	return (
 		<Container style={styles.container}>
-			<Text>Main Categories</Text>
+			<Text style={styles.titleHome}>Main {`\n`}Categories</Text>
+			<HomeScrollHeader />
 		</Container>
 	)
 }
 const styles = StyleSheet.create({
 	container: {
-		// flex: 1,
-		// justifyContent: 'center',
-		// alignItems: 'center'
+
+	},
+	titleHome: {
+		fontSize: 32,
+		fontWeight: '500'
 	}
 })
 

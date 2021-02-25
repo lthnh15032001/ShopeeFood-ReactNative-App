@@ -12,6 +12,6 @@ export const Container = (props) => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		padding: 12
+		padding: 20
 	}
 })
