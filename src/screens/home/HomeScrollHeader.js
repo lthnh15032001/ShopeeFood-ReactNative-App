@@ -46,7 +46,7 @@ export const HomeScrollHeader = () => {
 				horizontal={true}
 			/>
 			<InfoItemProduct />
-			<InfoItemProduct />
+			{/* <InfoItemProduct /> */}
 		</>
 	)
 }
