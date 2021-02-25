@@ -1,11 +1,47 @@
 import React from 'react'
-import { Text, StyleSheet, View } from 'react-native'
-export const Home = () => {
+import { Text, StyleSheet, View, TouchableOpacity } from 'react-native'
+import { Navigation } from "react-native-navigation";
+import { Header } from '../../components/Header'
+Navigation.registerComponent('HeaderComponent', () => Header)
+export const Home = ({ props }) => {
+    // console.log({ props: props.componentId })
+    Navigation.mergeOptions(props.componentId, {
+        topBar: {
+            animate: true,
+            title: {
+                component: {
+                    id: 'HeaderComponent',
+                    name: 'HeaderComponent',
+                    alignment: 'center',
+                    passProps: {
+                        title: "Home"
+                    }
+                }
+            },
+            rightButtons: [
+                {
+                    text: 'next',
+                    id: 'saveMembers'
+                },
+                {
+                    // icon: require('../../img/ic_find.png'),
+                    id: 'search'
+                }
+            ],
+            leftButtons: [
+                {
+                    id: 'cancel',
+                    text: 'back'
+                    // icon: require('../../img/ic_close.png')
+                }
+            ]
+        }
+    })
     return (
         <View style={styles.container}>
-            <Text >
-                12
-            </Text>
+            <TouchableOpacity onPress={() => Navigation.popTo('LOGIN_SCREEN')}>
+                <Text>CLICK</Text>
+            </TouchableOpacity>
         </View>
     )
 }

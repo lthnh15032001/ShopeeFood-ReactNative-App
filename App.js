@@ -8,9 +8,9 @@
 
 import React from 'react';
 import { Home } from './src/screens/home'
-const App = () => {
+const App = (props) => {
   return (
-    <Home />
+    <Home props={props} />
   )
 }
 

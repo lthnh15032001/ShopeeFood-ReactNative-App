@@ -10,20 +10,25 @@ export const rootStack = (root) => {
             stack: {
                 id: 'AUTHEN_STACK',
                 children: [
+
                     {
                         component: {
                             id: 'LOGIN_SCREEN',
                             name: 'LOGIN_SCREEN'
-                        },
+                        }
+                    },
+                    {
                         component: {
                             id: 'REGISTER_SCREEN',
                             name: 'REGISTER_SCREEN'
-                        },
+                        }
+                    },
+                    {
                         component: {
                             id: 'ROOT',
                             name: root
                         },
-                    }
+                    },
                 ]
             }
         }
