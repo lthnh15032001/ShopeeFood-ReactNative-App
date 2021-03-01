@@ -55,7 +55,8 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
 };
 exports.__esModule = true;
 exports.baseApi = void 0;
-var async_storage_1 = require("@react-native-community/async-storage");
+var react_native_navigation_1 = require("react-native-navigation");
+var async_storage_1 = require("@react-native-async-storage/async-storage");
 var url_join_1 = require("url-join");
 var ENABLE_LOG = false;
 var writeLog = function (_a) {
@@ -77,6 +78,7 @@ var getAccessToken = function (anonymus) { return __awaiter(void 0, void 0, void
                 strToken = _a.sent();
                 if (!strToken && !anonymus) {
                     // window.location.href = "#/login";
+                    react_native_navigation_1.Navigation.popTo('LOGIN_SCREEN');
                     return [2 /*return*/, ''];
                 }
                 token = strToken && JSON.parse(strToken);
@@ -87,6 +89,7 @@ var getAccessToken = function (anonymus) { return __awaiter(void 0, void 0, void
                 e_1 = _a.sent();
                 console.log(e_1);
                 // window.location.href = "#/login";
+                react_native_navigation_1.Navigation.popTo('LOGIN_SCREEN');
                 return [2 /*return*/, ''];
             case 3: return [2 /*return*/];
         }
@@ -136,6 +139,7 @@ var call = function (_a) {
                             //         window.location.href = "/#/login"
                             //     }
                             // })
+                            react_native_navigation_1.Navigation.popTo('LOGIN_SCREEN');
                         }
                         else
                             console.error({ content: response.status });

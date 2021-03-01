@@ -10,7 +10,7 @@
 		"lint": "eslint . --ext .js,.jsx,.ts,.tsx"
 	},
 	"dependencies": {
-		"@react-native-community/async-storage": "^1.12.1",
+		"@react-native-async-storage/async-storage": "^1.14.1",
 		"@types/react-native": "^0.63.50",
 		"@types/react-test-renderer": "^17.0.1",
 		"@types/url-join": "^4.0.0",

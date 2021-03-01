@@ -1,5 +1,5 @@
-import { string } from "prop-types";
-import AsyncStorage from "@react-native-community/async-storage";
+import { Navigation } from "react-native-navigation";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import urljoin from "url-join";
 const ENABLE_LOG = false;
 const writeLog = ({ url, model, response, responseJson }: any) => {
@@ -10,11 +10,12 @@ const writeLog = ({ url, model, response, responseJson }: any) => {
 	// console.groupEnd();
 }
 
-const getAccessToken = async (anonymus: boolean): string => {
+const getAccessToken = async (anonymus: boolean) => {
 	try {
 		let strToken = await AsyncStorage.getItem("token");
 		if (!strToken && !anonymus) {
 			// window.location.href = "#/login";
+			Navigation.popTo('LOGIN_SCREEN')
 			return ''
 		}
 
@@ -24,6 +25,7 @@ const getAccessToken = async (anonymus: boolean): string => {
 	} catch (e) {
 		console.log(e);
 		// window.location.href = "#/login";
+		Navigation.popTo('LOGIN_SCREEN')
 		return '';
 	}
 
@@ -86,6 +88,8 @@ const call = async ({ url, method, model = {}, contentType = "application/json",
 				//         window.location.href = "/#/login"
 				//     }
 				// })
+				Navigation.popTo('LOGIN_SCREEN')
+
 			} else console.error({ content: response.status })
 			return { success: false };
 		}
