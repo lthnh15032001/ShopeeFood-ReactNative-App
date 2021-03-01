@@ -1,8 +1,8 @@
 import React from 'react'
 import { Text, StyleSheet, View, TouchableOpacity } from 'react-native'
-import { Container } from '../../components/'
+import { Container } from '../../components'
 import { HomeScrollHeader } from './HomeScrollHeader'
-export const Home = ({ props }) => {
+export const Home = ({ props } : any) => {
 	return (
 		<Container style={styles.container}>
 			<Text style={styles.titleHome}>Main {`\n`}Categories</Text>

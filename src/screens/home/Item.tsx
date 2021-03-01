@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet, Image } from 'react-native'
 import { colorStyles } from '../../styles/ColorStyles'
-export const Item = (props) => {
+export const Item = (props : any) => {
 	const { item, index } = props
 	return (
 		<View style={styles.container}>

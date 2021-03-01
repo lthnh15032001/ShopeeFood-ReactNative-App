@@ -11,5 +11,5 @@ Navigation.registerComponent('com.internapp', () => App);
 import { rootStack } from './src/navigation/Root'
 
 Navigation.events().registerAppLaunchedListener(() => {
-    rootStack('com.internapp')
+	rootStack('com.internapp')
 });

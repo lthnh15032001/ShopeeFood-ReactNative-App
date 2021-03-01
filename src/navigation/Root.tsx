@@ -1,16 +1,23 @@
 import React from 'react'
 import { Navigation } from "react-native-navigation";
 import { Login, Register } from '../screens/authen'
-import { Icon } from '../components/'
+import { Icon } from '../components'
 import { colorStyles } from '../styles/ColorStyles'
-import { Header } from '../components/Header'
-const BackButton = () => <Icon Ionicons name='ios-chevron-back-sharp' color={colorStyles.curiousBlue} size={28} />
+import { TouchableOpacity } from 'react-native';
+// import { Header } from '../components/Header'
+const BackButton = () : any => {
+	return (
+		<TouchableOpacity onPress={() => console.log("dat")}>
+			<Icon Ionicons name='ios-chevron-back-sharp' color={colorStyles.curiousBlue} size={28} />
+		</TouchableOpacity>
+	)
+}
 
 Navigation.registerComponent('LOGIN_SCREEN', () => Login);
 Navigation.registerComponent('REGISTER_SCREEN', () => Register);
-Navigation.registerComponent('HeaderComponent', () => Header)
+// Navigation.registerComponent('HeaderComponent', () => Header)
 Navigation.registerComponent('BackButton', () => BackButton)
-export const rootStack = (root) => {
+export const rootStack = (root : any) => {
 	return Navigation.setRoot({
 		root: {
 			bottomTabs: {
@@ -29,14 +36,6 @@ export const rootStack = (root) => {
 												animate: true,
 												title: {
 													text: "Home"
-													// component: {
-													// 	id: 'HeaderComponent',
-													// 	name: 'HeaderComponent',
-													// 	alignment: 'center',
-													// 	passProps: {
-													// 		title: "Home"
-													// 	}
-													// }
 												},
 												rightButtons: [
 													{

@@ -27,4 +27,5 @@
 	"workbench.settings.editor": "json",
 	"typescript.updateImportsOnFileMove.enabled": "always",
 	"explorer.confirmDelete": false,
+	"compile-hero.disable-compile-files-on-did-save-code": false,
 } 
