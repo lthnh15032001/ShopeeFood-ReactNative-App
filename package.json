@@ -10,13 +10,16 @@
 		"lint": "eslint . --ext .js,.jsx,.ts,.tsx"
 	},
 	"dependencies": {
+		"@react-native-community/async-storage": "^1.12.1",
 		"@types/react-native": "^0.63.50",
 		"@types/react-test-renderer": "^17.0.1",
+		"@types/url-join": "^4.0.0",
 		"react": "16.13.1",
 		"react-devtools": "^4.10.1",
 		"react-native": "0.63.4",
 		"react-native-navigation": "^7.11.0",
-		"react-native-vector-icons": "^8.1.0"
+		"react-native-vector-icons": "^8.1.0",
+		"url-join": "^4.0.1"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.12.17",
@@ -36,7 +39,7 @@
 	},
 	"resolutions": {
 		"@types/react": "^16"
-	  },
+	},
 	"jest": {
 		"preset": "react-native",
 		"moduleFileExtensions": [
