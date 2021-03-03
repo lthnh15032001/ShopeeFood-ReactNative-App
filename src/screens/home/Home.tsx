@@ -5,7 +5,7 @@ import { HomeScrollHeader } from './HomeScrollHeader'
 import { baseApi } from '../../api/BaseApi'
 import { data } from '../../craw/get_browsing_infos2'
 import { StoreItems } from '../../components'
-export const Home = ({ props }: any) => {
+const Home = ({ props }: any) => {
 	// useEffect(() => {
 	// 	callApi()
 	// }, [])
@@ -16,11 +16,9 @@ export const Home = ({ props }: any) => {
 	// 	console.log({ data: data })
 	// }
 	return (
-		<Container style={styles.container}>
-			<Text style={styles.titleHome}>Main {`\n`}Categories</Text>
-			<HomeScrollHeader />
+		<View style={styles.container}>
+			<HomeScrollHeader props={props} />
 			{/* <View style={{width: 200, height: 200, backgroundColor : 'yellow'}}> */}
-
 			{/* </View> */}
 			{
 				// <FlatList
@@ -30,7 +28,7 @@ export const Home = ({ props }: any) => {
 				// 			<StoreItems
 				// 				image={item.photos[4]}
 				// 			/>
-							
+
 				// 		)
 				// 	}}
 				// 	keyExtractor={(item, index) => index.toString()}
@@ -49,15 +47,16 @@ export const Home = ({ props }: any) => {
 				// 		/>)
 				// })
 			}
-		</Container>
+		</View>
 	)
 }
 const styles = StyleSheet.create({
 	container: {
-		flex: 1
+		flex: 1,
+		paddingVertical: 0,
+		paddingHorizontal: 13
 	},
-	titleHome: {
-		fontSize: 32,
-		fontWeight: '500'
-	}
 })
+
+
+export default Home

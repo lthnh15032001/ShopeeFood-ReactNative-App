@@ -1,11 +1,16 @@
 import React from 'react'
 
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { Navigation } from 'react-native-navigation'
 import { Icon } from '../../components'
 import { colorStyles } from '../../styles/ColorStyles'
-export const InfoItemProduct = () => {
+export const InfoItemProduct = ({props} : any) => {
 	return (
-		<View>
+		<TouchableOpacity
+			onPress={() => {
+				Navigation.popTo('DETAIL_PRODUCT')
+			}}
+			style={styles.container}>
 			<View style={styles.wrapImage}>
 				<Image
 					source={require('../../assets/thumbail.jpg')}
@@ -27,17 +32,20 @@ export const InfoItemProduct = () => {
 					<Text style={styles.category2}> $$$</Text>
 				</View>
 			</View>
-		</View>
+		</TouchableOpacity>
 	)
 }
 
 const styles = StyleSheet.create({
-
+	container: {
+		flex: 1,
+		paddingBottom: 10
+	},
 	wrapImage: {
 		width: '100%',
 		// height: 160,
 		aspectRatio: 2,
-		marginTop: 10
+		// marginTop: 10
 	},
 	imageThumbnail: {
 		flex: 1,

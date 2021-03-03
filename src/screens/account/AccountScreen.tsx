@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 
 import { View, Text, StyleSheet } from 'react-native'
-const Login = (props: any) => {
+const AccountScreen = (props: any) => {
 	return (
 		<View>
 			<Text>LOginnnnn</Text>
@@ -14,4 +14,4 @@ const styles = StyleSheet.create({
 
 	}
 })
-export default Login
+export default AccountScreen

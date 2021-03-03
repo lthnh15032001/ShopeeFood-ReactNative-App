@@ -1,6 +1,7 @@
 import React from 'react'
 import { Navigation } from "react-native-navigation";
 import { Login, Register } from '../screens/authen'
+import { Detail_Product } from '../components'
 
 import { Header } from '../components/Header'
 // const BackButton = (): any => {
@@ -14,6 +15,7 @@ import { Header } from '../components/Header'
 Navigation.registerComponent('LOGIN_SCREEN', () => Login);
 Navigation.registerComponent('REGISTER_SCREEN', () => Register);
 Navigation.registerComponent('HeaderComponent', () => Header)
+Navigation.registerComponent('DETAIL_PRODUCT', () => Detail_Product)
 export const rootStack = (root: any) => {
 	return Navigation.setRoot({
 		root: {
@@ -21,11 +23,6 @@ export const rootStack = (root: any) => {
 				id: 'BOTTOM_TAB_LAYOUT',
 				children: [
 					{
-						// component: {
-						// 	id: "REGISTER_SCREEN",
-						// 	name: "REGISTER_SCREEN",
-						// 	options  : {}
-						// }
 						stack: {
 							id: 'HOME_TAB',
 							children: [
@@ -63,7 +60,7 @@ export const rootStack = (root: any) => {
 														component: {
 															name: "HeaderComponent",
 															passProps: {
-																isLeft : true
+																isLeft: true
 															}
 														}
 													}
@@ -71,12 +68,15 @@ export const rootStack = (root: any) => {
 											}
 										}
 									}
-								}
+								},
+								
 							],
 							options: {
 								bottomTab: {
-									text: 'tab1',
-									icon: require('../assets/ic_close.png'),
+									text: 'Home',
+									icon: require('../assets/HomeSelect.png'),
+									selectedIconColor: 'black',
+									selectedTextColor: 'black'
 								},
 								layout: {
 									backgroundColor: 'black'
@@ -120,12 +120,104 @@ export const rootStack = (root: any) => {
 							],
 							options: {
 								bottomTab: {
-									text: 'tab2',
-									icon: require('../assets/ic_close.png'),
+									text: 'Đã lưu',
+									icon: require('../assets/heart.png'),
+									selectedIconColor: 'black',
+									selectedTextColor: 'black'
 								}
 							}
 						}
-					}
+					},
+					{
+						stack: {
+							id: 'REGISTER_SCREEN',
+							children: [
+								{
+									component: {
+										id: 'REGISTER_SCREEN',
+										name: 'REGISTER_SCREEN',
+										options: {
+											topBar: {
+												animate: true,
+												title: {
+													text: "Login"
+												},
+												rightButtons: [
+													{
+														text: 'next',
+														id: 'saveMembers'
+													},
+													{
+														id: 'search'
+													}
+												],
+												leftButtons: [
+													{
+														id: 'cancel',
+														text: 'back'
+													}
+												]
+											}
+										}
+									}
+								}
+							],
+							options: {
+								bottomTab: {
+									text: 'Đơn hàng',
+									icon: require('../assets/Vector.png'),
+									selectedIconColor: 'black',
+									selectedTextColor: 'black',
+									iconWidth: 20,
+									iconHeight: 20
+								}
+							}
+						}
+					},
+					{
+						stack: {
+							id: 'REGISTER_SCREEN',
+							children: [
+								{
+									component: {
+										id: 'REGISTER_SCREEN',
+										name: 'REGISTER_SCREEN',
+										options: {
+											topBar: {
+												animate: true,
+												title: {
+													text: "Login"
+												},
+												rightButtons: [
+													{
+														text: 'next',
+														id: 'saveMembers'
+													},
+													{
+														id: 'search'
+													}
+												],
+												leftButtons: [
+													{
+														id: 'cancel',
+														text: 'back'
+													}
+												]
+											}
+										}
+									}
+								}
+							],
+							options: {
+								bottomTab: {
+									text: 'Tôi',
+									icon: require('../assets/user.png'),
+									selectedIconColor: 'black',
+									selectedTextColor: 'black'
+								}
+							}
+						}
+					},
 				]
 			}
 		}

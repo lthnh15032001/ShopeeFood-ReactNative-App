@@ -3,6 +3,7 @@ exports.__esModule = true;
 exports.rootStack = void 0;
 var react_native_navigation_1 = require("react-native-navigation");
 var authen_1 = require("../screens/authen");
+var components_1 = require("../components");
 var Header_1 = require("../components/Header");
 // const BackButton = (): any => {
 // 	return (
@@ -14,6 +15,7 @@ var Header_1 = require("../components/Header");
 react_native_navigation_1.Navigation.registerComponent('LOGIN_SCREEN', function () { return authen_1.Login; });
 react_native_navigation_1.Navigation.registerComponent('REGISTER_SCREEN', function () { return authen_1.Register; });
 react_native_navigation_1.Navigation.registerComponent('HeaderComponent', function () { return Header_1.Header; });
+react_native_navigation_1.Navigation.registerComponent('DETAIL_PRODUCT', function () { return components_1.Detail_Product; });
 exports.rootStack = function (root) {
     return react_native_navigation_1.Navigation.setRoot({
         root: {
@@ -21,11 +23,6 @@ exports.rootStack = function (root) {
                 id: 'BOTTOM_TAB_LAYOUT',
                 children: [
                     {
-                        // component: {
-                        // 	id: "REGISTER_SCREEN",
-                        // 	name: "REGISTER_SCREEN",
-                        // 	options  : {}
-                        // }
                         stack: {
                             id: 'HOME_TAB',
                             children: [
@@ -71,12 +68,14 @@ exports.rootStack = function (root) {
                                             }
                                         }
                                     }
-                                }
+                                },
                             ],
                             options: {
                                 bottomTab: {
-                                    text: 'tab1',
-                                    icon: require('../assets/ic_close.png')
+                                    text: 'Home',
+                                    icon: require('../assets/HomeSelect.png'),
+                                    selectedIconColor: 'black',
+                                    selectedTextColor: 'black'
                                 },
                                 layout: {
                                     backgroundColor: 'black'
@@ -120,12 +119,104 @@ exports.rootStack = function (root) {
                             ],
                             options: {
                                 bottomTab: {
-                                    text: 'tab2',
-                                    icon: require('../assets/ic_close.png')
+                                    text: 'Đã lưu',
+                                    icon: require('../assets/heart.png'),
+                                    selectedIconColor: 'black',
+                                    selectedTextColor: 'black'
                                 }
                             }
                         }
-                    }
+                    },
+                    {
+                        stack: {
+                            id: 'REGISTER_SCREEN',
+                            children: [
+                                {
+                                    component: {
+                                        id: 'REGISTER_SCREEN',
+                                        name: 'REGISTER_SCREEN',
+                                        options: {
+                                            topBar: {
+                                                animate: true,
+                                                title: {
+                                                    text: "Login"
+                                                },
+                                                rightButtons: [
+                                                    {
+                                                        text: 'next',
+                                                        id: 'saveMembers'
+                                                    },
+                                                    {
+                                                        id: 'search'
+                                                    }
+                                                ],
+                                                leftButtons: [
+                                                    {
+                                                        id: 'cancel',
+                                                        text: 'back'
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            ],
+                            options: {
+                                bottomTab: {
+                                    text: 'Đơn hàng',
+                                    icon: require('../assets/Vector.png'),
+                                    selectedIconColor: 'black',
+                                    selectedTextColor: 'black',
+                                    iconWidth: 20,
+                                    iconHeight: 20
+                                }
+                            }
+                        }
+                    },
+                    {
+                        stack: {
+                            id: 'REGISTER_SCREEN',
+                            children: [
+                                {
+                                    component: {
+                                        id: 'REGISTER_SCREEN',
+                                        name: 'REGISTER_SCREEN',
+                                        options: {
+                                            topBar: {
+                                                animate: true,
+                                                title: {
+                                                    text: "Login"
+                                                },
+                                                rightButtons: [
+                                                    {
+                                                        text: 'next',
+                                                        id: 'saveMembers'
+                                                    },
+                                                    {
+                                                        id: 'search'
+                                                    }
+                                                ],
+                                                leftButtons: [
+                                                    {
+                                                        id: 'cancel',
+                                                        text: 'back'
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            ],
+                            options: {
+                                bottomTab: {
+                                    text: 'Tôi',
+                                    icon: require('../assets/user.png'),
+                                    selectedIconColor: 'black',
+                                    selectedTextColor: 'black'
+                                }
+                            }
+                        }
+                    },
                 ]
             }
         }
