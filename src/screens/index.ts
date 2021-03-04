@@ -22,156 +22,161 @@ Screens.set(DETAIL_PRODUCT_SCREEN, DetailProduct)
 // component
 // Screens.set(HEADER, Header)
 export const startApp = () => {
-	const tabs = [
-		{
-			stack: {
-				id: "HOME_SCREEN",
-				children: [
-					{
-						component: {
-							name: HOME_SCREEN,
-						}
-					}
-				]
-			}
-		},
-		{
-			stack: {
-				id: "LOGIN_SCREEN",
-				children: [
-					{
-						component: {
-							name: LOGIN_SCREEN,
-							// options: {
-							// 	topBar: {
-							// 		animate: true,
-							// 		title: {
-							// 			text: "Login"
-							// 		},
-							// 		rightButtons: [
-							// 			{
-							// 				text: 'next',
-							// 				id: 'saveMembers'
-							// 			},
-							// 			{
-							// 				id: 'search'
-							// 			}
-							// 		],
-							// 		leftButtons: [
-							// 			{
-							// 				id: 'cancel',
-							// 				text: 'back'
-							// 			}
-							// 		]
-							// 	}
-							// }
-						}
-					}
-				],
-				options: {
-					bottomTab: {
-						text: 'Đã lưu',
-						icon: require('../assets/heart.png'),
-						selectedIconColor: 'black',
-						selectedTextColor: 'black'
-					}
-				}
-			}
-		},
-		{
-			stack: {
-				id: "REGISTER_SCREEN",
-				children: [
-					{
-						component: {
-							name: REGISTER_SCREEN,
-							// options: {
-							// 	topBar: {
-							// 		animate: true,
-							// 		title: {
-							// 			text: "Login"
-							// 		},
-							// 		rightButtons: [
-							// 			{
-							// 				text: 'next',
-							// 				id: 'saveMembers'
-							// 			},
-							// 			{
-							// 				id: 'search'
-							// 			}
-							// 		],
-							// 		leftButtons: [
-							// 			{
-							// 				id: 'cancel',
-							// 				text: 'back'
-							// 			}
-							// 		]
-							// 	}
-							// }
-						}
-					}
-				],
-				options: {
-					bottomTab: {
-						text: 'Đơn hàng',
-						icon: require('../assets/Vector.png'),
-						selectedIconColor: 'black',
-						selectedTextColor: 'black',
-						iconWidth: 20,
-						iconHeight: 20
-					}
-				}
-			}
-		},
-		{
-			stack: {
-				id: "ACCOUNT_SCREEN",
-				children: [
-					{
-						component: {
-							name: ACCOUNT_SCREEN,
-							options: {
-								topBar: {
-									animate: true,
-									// title: {
-									// 	text: "Login"
-									// },
-									rightButtons: [
-										{
-											text: 'next',
-											id: 'saveMembers'
-										},
-										{
-											id: 'search'
-										}
-									],
-									leftButtons: [
-										{
-											id: 'cancel',
-											text: 'back'
-										}
-									]
-								}
-							}
-						}
-					}
-				],
-				options: {
-					bottomTab: {
-						text: 'Tôi',
-						icon: require('../assets/user.png'),
-						selectedIconColor: 'black',
-						selectedTextColor: 'black'
-					}
-				}
-			}
-		},
-	]
+	// const tabs = 
 	return Navigation.setRoot({
 		root: {
 			bottomTabs: {
 				id: 'ROOT',
-				children: tabs
+				children: [
+					{
+						stack: {
+							id: "HOME_SCREEN",
+							children: [
+								{
+									component: {
+										name: HOME_SCREEN,
+										options: {
+											topBar: {
+												visible: false
+											}
+										}
+									}
+								}
+							]
+						}
+					},
+					{
+						stack: {
+							id: "LOGIN_SCREEN",
+							children: [
+								{
+									component: {
+										name: LOGIN_SCREEN,
+										// options: {
+										// 	topBar: {
+										// 		animate: true,
+										// 		title: {
+										// 			text: "Login"
+										// 		},
+										// 		rightButtons: [
+										// 			{
+										// 				text: 'next',
+										// 				id: 'saveMembers'
+										// 			},
+										// 			{
+										// 				id: 'search'
+										// 			}
+										// 		],
+										// 		leftButtons: [
+										// 			{
+										// 				id: 'cancel',
+										// 				text: 'back'
+										// 			}
+										// 		]
+										// 	}
+										// }
+									}
+								}
+							],
+							options: {
+								bottomTab: {
+									text: 'Đã lưu',
+									icon: require('../assets/heart.png'),
+									selectedIconColor: 'black',
+									selectedTextColor: 'black'
+								}
+							}
+						}
+					},
+					{
+						stack: {
+							id: "REGISTER_SCREEN",
+							children: [
+								{
+									component: {
+										name: REGISTER_SCREEN,
+										// options: {
+										// 	topBar: {
+										// 		animate: true,
+										// 		title: {
+										// 			text: "Login"
+										// 		},
+										// 		rightButtons: [
+										// 			{
+										// 				text: 'next',
+										// 				id: 'saveMembers'
+										// 			},
+										// 			{
+										// 				id: 'search'
+										// 			}
+										// 		],
+										// 		leftButtons: [
+										// 			{
+										// 				id: 'cancel',
+										// 				text: 'back'
+										// 			}
+										// 		]
+										// 	}
+										// }
+									}
+								}
+							],
+							options: {
+								bottomTab: {
+									text: 'Đơn hàng',
+									icon: require('../assets/Vector.png'),
+									selectedIconColor: 'black',
+									selectedTextColor: 'black',
+									iconWidth: 20,
+									iconHeight: 20
+								}
+							}
+						}
+					},
+					{
+						stack: {
+							id: "ACCOUNT_SCREEN",
+							children: [
+								{
+									component: {
+										name: ACCOUNT_SCREEN,
+										options: {
+											topBar: {
+												animate: true,
+												// title: {
+												// 	text: "Login"
+												// },
+												rightButtons: [
+													{
+														text: 'next',
+														id: 'saveMembers'
+													},
+													{
+														id: 'search'
+													}
+												],
+												leftButtons: [
+													{
+														id: 'cancel',
+														text: 'back'
+													}
+												]
+											}
+										}
+									}
+								}
+							],
+							options: {
+								bottomTab: {
+									text: 'Tôi',
+									icon: require('../assets/user.png'),
+									selectedIconColor: 'black',
+									selectedTextColor: 'black'
+								}
+							}
+						}
+					},
+				]
 			}
 		}
 	})

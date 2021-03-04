@@ -10,7 +10,6 @@ import { applyThemeOptions } from '../../styles';
 import { autobind } from 'core-decorators';
 import UI from '../../stores/UI'
 import Header from '../../components/Header'
-import { HEADER } from '../../screens'
 interface Props {
 	componentId: string;
 	testID?: string;
@@ -58,37 +57,39 @@ export default class Home extends React.Component<Props> {
 	render() {
 		// console.log(this.props.componentId)
 		return (
-			<View style={styles.container} >
-				<HomeScrollHeader props={this.props} />
+			<>
+				<Header />
+				<View style={styles.container} >
+					<HomeScrollHeader props={this.props} />
+					{
+						// <FlatList
+						// 	data={data.reply.delivery_infos}
+						// 	renderItem={({ item, index }) => {
+						// 		return (
+						// 			<StoreItems
+						// 				image={item.photos[4]}
+						// 			/>
 
-				{
-					// <FlatList
-					// 	data={data.reply.delivery_infos}
-					// 	renderItem={({ item, index }) => {
-					// 		return (
-					// 			<StoreItems
-					// 				image={item.photos[4]}
-					// 			/>
-
-					// 		)
-					// 	}}
-					// 	keyExtractor={(item, index) => index.toString()}
-					// 	style={{ flex: 1 }}
-					// />
-					// return x.photos.map((item, index) => {
-					// 	console.log({item: item})
-					// 		return (<Image
-					// 			source={{ uri: item.value }}
-					// 			// width={item.width}
-					// 			// height={item.height}
-					// 			style={{
-					// 				width: item.width,
-					// 				height: item.height
-					// 			}}
-					// 		/>)
-					// })
-				}
-			</View>
+						// 		)
+						// 	}}
+						// 	keyExtractor={(item, index) => index.toString()}
+						// 	style={{ flex: 1 }}
+						// />
+						// return x.photos.map((item, index) => {
+						// 	console.log({item: item})
+						// 		return (<Image
+						// 			source={{ uri: item.value }}
+						// 			// width={item.width}
+						// 			// height={item.height}
+						// 			style={{
+						// 				width: item.width,
+						// 				height: item.height
+						// 			}}
+						// 		/>)
+						// })
+					}
+				</View>
+			</>
 		)
 	}
 }
