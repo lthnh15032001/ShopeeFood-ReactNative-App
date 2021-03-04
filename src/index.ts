@@ -1,13 +1,16 @@
 import { Screens, startApp } from './screens';
+import { onSnapshot } from 'mobx-state-tree';
 import { Navigation } from 'react-native-navigation';
+import debounce from 'lodash/debounce';
+import UI from './stores/UI';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Register screens
 Screens.forEach((ScreenComponent, key) =>
 	Navigation.registerComponent(key, () => ScreenComponent));
 
-
 Navigation.events().registerAppLaunchedListener(() => {
-	startApp()
+	// startApp()
 	// if (__DEV__) {
 	// 	makeInspectable(UI);
 	// 	makeInspectable(Account);
@@ -15,7 +18,7 @@ Navigation.events().registerAppLaunchedListener(() => {
 	// 	makeInspectable(Items);
 	// }
 
-	// UI.hydrate().then(startApp);
+	UI.hydrate().then(startApp);
 });
 // Start application
 // Navigation.events().registerAppLaunchedListener(() => {
@@ -59,10 +62,10 @@ Navigation.events().registerAppLaunchedListener(() => {
 //   });
 
 //   // Persist some stuff (debounced to 1s)
-//   onSnapshot(UI.settings, debounce(
+// onSnapshot(UI.settings, debounce(
 // 	snapshot => AsyncStorage.setItem('UI.settings', JSON.stringify(snapshot)),
 // 	1000,
-//   ));
+// ));
 
 //   onSnapshot(Account, debounce(
 // 	snapshot => AsyncStorage.setItem('Account', JSON.stringify(snapshot)),

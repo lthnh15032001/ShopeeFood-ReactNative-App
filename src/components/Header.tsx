@@ -8,7 +8,7 @@ interface HeaderProps {
 	isRightButton?: boolean,
 	isLeft?: boolean
 }
-export const Header = (props: HeaderProps) => {
+const Header = (props: HeaderProps) => {
 	const renderItem = () => {
 		if (props.isTitle) {
 			return <TouchableOpacity>
@@ -49,3 +49,4 @@ const styles = StyleSheet.create({
 		fontWeight: '900'
 	}
 })
+export default Header

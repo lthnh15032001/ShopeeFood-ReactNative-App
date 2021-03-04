@@ -3,14 +3,7 @@ import { Navigation } from "react-native-navigation";
 import { Login, Register } from '../screens/authen'
 import { Detail_Product } from '../components'
 
-import { Header } from '../components/Header'
-// const BackButton = (): any => {
-// 	return (
-// 		<TouchableOpacity onPress={() => console.log("dat")}>
-// 			<Icon Ionicons name='ios-chevron-back-sharp' color={colorStyles.curiousBlue} size={28} />
-// 		</TouchableOpacity>
-// 	)
-// }
+import Header from '../components/Header'
 
 Navigation.registerComponent('LOGIN_SCREEN', () => Login);
 Navigation.registerComponent('REGISTER_SCREEN', () => Register);

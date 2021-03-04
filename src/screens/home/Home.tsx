@@ -1,54 +1,130 @@
 import React, { useEffect } from 'react'
+import { Navigation } from 'react-native-navigation'
 import { Text, StyleSheet, View, TouchableOpacity, Image, FlatList } from 'react-native'
 import { Container } from '../../components'
 import { HomeScrollHeader } from './HomeScrollHeader'
 import { baseApi } from '../../api/BaseApi'
 import { data } from '../../craw/get_browsing_infos2'
 import { StoreItems } from '../../components'
-const Home = ({ props }: any) => {
-	// useEffect(() => {
-	// 	callApi()
-	// }, [])
-	// const callApi = (): any => {
-	// 	const url = baseApi.makeUrl('users')
-	// 	console.log({ url: url })
-	// 	const data = baseApi.getWithoutToken(url)
-	// 	console.log({ data: data })
-	// }
-	return (
-		<View style={styles.container}>
-			<HomeScrollHeader props={props} />
-			{/* <View style={{width: 200, height: 200, backgroundColor : 'yellow'}}> */}
-			{/* </View> */}
-			{
-				// <FlatList
-				// 	data={data.reply.delivery_infos}
-				// 	renderItem={({ item, index }) => {
-				// 		return (
-				// 			<StoreItems
-				// 				image={item.photos[4]}
-				// 			/>
+import { applyThemeOptions } from '../../styles';
+import { autobind } from 'core-decorators';
+import UI from '../../stores/UI'
+import { HEADER } from '../../screens'
+interface Props {
+	componentId: string;
+	testID?: string;
+}
 
-				// 		)
-				// 	}}
-				// 	keyExtractor={(item, index) => index.toString()}
-				// 	style={{ flex: 1 }}
-				// />
-				// return x.photos.map((item, index) => {
-				// 	console.log({item: item})
-				// 		return (<Image
-				// 			source={{ uri: item.value }}
-				// 			// width={item.width}
-				// 			// height={item.height}
-				// 			style={{
-				// 				width: item.width,
-				// 				height: item.height
-				// 			}}
-				// 		/>)
-				// })
+export default class Home extends React.Component<Props> {
+	static get options() {
+		return {
+			topBar: {
+				animate: true,
+				title: {
+					component: {
+						id: HEADER,
+						name: HEADER,
+						// alignment: 'center',
+						passProps: {
+							isTitle: true,
+						}
+					}
+				},
+				rightButtons: [
+					{
+						id: HEADER,
+						component: {
+							name: HEADER,
+							passProps: {
+								isRightButton: true
+							}
+						}
+					}
+				],
+				leftButtons: [
+					{
+						id: HEADER,
+						component: {
+							name: HEADER,
+							passProps: {
+								isLeft: true
+							}
+						}
+					}
+				]
+			},
+			bottomTab: {
+				text: 'Home',
+				icon: require('../../assets/HomeSelect.png'),
+				selectedIconColor: 'black',
+				selectedTextColor: 'black'
+			},
+			layout: {
+				backgroundColor: 'black'
 			}
-		</View>
-	)
+		}
+	}
+	constructor(props: any) {
+		super(props);
+		Navigation.events().bindComponent(this);
+	}
+
+	UNSAFE_componentWillMount() {
+		UI.addScreen(this);
+	}
+	componentDidMount() {
+		// when(
+		//   () => Account.user && Account.user.id !== null,
+		//   this.updateOptions,
+		// );
+	}
+	componentDidAppear() {
+		this.updateOptions();
+	}
+	componentWillUnmount() {
+		UI.removeScreen(this);
+	}
+	@autobind
+	updateOptions() {
+		const opts = Home.options;
+		console.log('updateOptions', opts);
+		Navigation.mergeOptions(this.props.componentId, opts);
+	}
+	render() {
+		return (
+			<View style={styles.container} >
+				<HomeScrollHeader props={this.props} />
+
+				{
+					// <FlatList
+					// 	data={data.reply.delivery_infos}
+					// 	renderItem={({ item, index }) => {
+					// 		return (
+					// 			<StoreItems
+					// 				image={item.photos[4]}
+					// 			/>
+
+					// 		)
+					// 	}}
+					// 	keyExtractor={(item, index) => index.toString()}
+					// 	style={{ flex: 1 }}
+					// />
+					// return x.photos.map((item, index) => {
+					// 	console.log({item: item})
+					// 		return (<Image
+					// 			source={{ uri: item.value }}
+					// 			// width={item.width}
+					// 			// height={item.height}
+					// 			style={{
+					// 				width: item.width,
+					// 				height: item.height
+					// 			}}
+					// 		/>)
+					// })
+				}
+			</View>
+		)
+	}
 }
 const styles = StyleSheet.create({
 	container: {
@@ -59,4 +135,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default Home
+// export default Home

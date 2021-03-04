@@ -1,19 +1,22 @@
+import { Navigation } from 'react-native-navigation'
 import Home from './home/Home'
 import LoginScreen from './authen/Login'
 import RegisterScreen from './authen/Register'
 import AccountScreen from './account/AccountScreen'
-import { Navigation } from 'react-native-navigation'
+import Header from '../components/Header'
 export const HOME_SCREEN = 'internapp.HomeScreen'
 export const LOGIN_SCREEN = 'internapp.LoginScreen'
 export const REGISTER_SCREEN = 'internapp.RegisterScreen'
 export const ACCOUNT_SCREEN = 'internapp.AccountScreen'
-
+export const HEADER = 'component.Header'
 export const Screens = new Map()
-
+// screen 
 Screens.set(HOME_SCREEN, Home);
 Screens.set(LOGIN_SCREEN, LoginScreen);
 Screens.set(REGISTER_SCREEN, RegisterScreen);
 Screens.set(ACCOUNT_SCREEN, AccountScreen)
+// component
+Screens.set(HEADER, Header)
 export const startApp = () => {
 	const tabs = [
 		{
@@ -23,58 +26,9 @@ export const startApp = () => {
 					{
 						component: {
 							name: HOME_SCREEN,
-							options: {
-								topBar: {
-									animate: true,
-									title: {
-										component: {
-											id: "HeaderComponent",
-											name: "HeaderComponent",
-											// alignment: 'center',
-											passProps: {
-												isTitle: true,
-											}
-										}
-									},
-									rightButtons: [
-										{
-											id: "HeaderComponent",
-											component: {
-												name: "HeaderComponent",
-												passProps: {
-													isRightButton: true
-												}
-											}
-										}
-									],
-									leftButtons: [
-										{
-											id: "HeaderComponent",
-											component: {
-												name: "HeaderComponent",
-												passProps: {
-													isLeft: true
-												}
-											}
-										}
-									]
-								}
-							}
 						}
-					},
-
-				],
-				options: {
-					bottomTab: {
-						text: 'Home',
-						icon: require('../assets/HomeSelect.png'),
-						selectedIconColor: 'black',
-						selectedTextColor: 'black'
-					},
-					layout: {
-						backgroundColor: 'black'
 					}
-				}
+				]
 			}
 		},
 		{
@@ -84,29 +38,29 @@ export const startApp = () => {
 					{
 						component: {
 							name: LOGIN_SCREEN,
-							options: {
-								topBar: {
-									animate: true,
-									title: {
-										text: "Login"
-									},
-									rightButtons: [
-										{
-											text: 'next',
-											id: 'saveMembers'
-										},
-										{
-											id: 'search'
-										}
-									],
-									leftButtons: [
-										{
-											id: 'cancel',
-											text: 'back'
-										}
-									]
-								}
-							}
+							// options: {
+							// 	topBar: {
+							// 		animate: true,
+							// 		title: {
+							// 			text: "Login"
+							// 		},
+							// 		rightButtons: [
+							// 			{
+							// 				text: 'next',
+							// 				id: 'saveMembers'
+							// 			},
+							// 			{
+							// 				id: 'search'
+							// 			}
+							// 		],
+							// 		leftButtons: [
+							// 			{
+							// 				id: 'cancel',
+							// 				text: 'back'
+							// 			}
+							// 		]
+							// 	}
+							// }
 						}
 					}
 				],
@@ -127,29 +81,29 @@ export const startApp = () => {
 					{
 						component: {
 							name: REGISTER_SCREEN,
-							options: {
-								topBar: {
-									animate: true,
-									title: {
-										text: "Login"
-									},
-									rightButtons: [
-										{
-											text: 'next',
-											id: 'saveMembers'
-										},
-										{
-											id: 'search'
-										}
-									],
-									leftButtons: [
-										{
-											id: 'cancel',
-											text: 'back'
-										}
-									]
-								}
-							}
+							// options: {
+							// 	topBar: {
+							// 		animate: true,
+							// 		title: {
+							// 			text: "Login"
+							// 		},
+							// 		rightButtons: [
+							// 			{
+							// 				text: 'next',
+							// 				id: 'saveMembers'
+							// 			},
+							// 			{
+							// 				id: 'search'
+							// 			}
+							// 		],
+							// 		leftButtons: [
+							// 			{
+							// 				id: 'cancel',
+							// 				text: 'back'
+							// 			}
+							// 		]
+							// 	}
+							// }
 						}
 					}
 				],
@@ -218,5 +172,4 @@ export const startApp = () => {
 		}
 	})
 }
-
 
