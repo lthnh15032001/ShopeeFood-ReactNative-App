@@ -4,11 +4,12 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { Icon } from '../../components'
 import { colorStyles } from '../../styles/ColorStyles'
-export const InfoItemProduct = ({props} : any) => {
+import { DetailProductScreen } from '../'
+export const InfoItemProduct = ({ props }: any) => {
 	return (
 		<TouchableOpacity
 			onPress={() => {
-				Navigation.popTo('DETAIL_PRODUCT')
+				DetailProductScreen(props.componentId)
 			}}
 			style={styles.container}>
 			<View style={styles.wrapImage}>

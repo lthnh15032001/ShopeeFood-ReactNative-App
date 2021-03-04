@@ -4,10 +4,13 @@ import LoginScreen from './authen/Login'
 import RegisterScreen from './authen/Register'
 import AccountScreen from './account/AccountScreen'
 import Header from '../components/Header'
+import DetailProduct from './product/DetailProduct'
+import UI from '../stores/UI'
 export const HOME_SCREEN = 'internapp.HomeScreen'
 export const LOGIN_SCREEN = 'internapp.LoginScreen'
 export const REGISTER_SCREEN = 'internapp.RegisterScreen'
 export const ACCOUNT_SCREEN = 'internapp.AccountScreen'
+export const DETAIL_PRODUCT_SCREEN = 'internapp.DetailProductScreen'
 export const HEADER = 'component.Header'
 export const Screens = new Map()
 // screen 
@@ -15,8 +18,9 @@ Screens.set(HOME_SCREEN, Home);
 Screens.set(LOGIN_SCREEN, LoginScreen);
 Screens.set(REGISTER_SCREEN, RegisterScreen);
 Screens.set(ACCOUNT_SCREEN, AccountScreen)
+Screens.set(DETAIL_PRODUCT_SCREEN, DetailProduct)
 // component
-Screens.set(HEADER, Header)
+// Screens.set(HEADER, Header)
 export const startApp = () => {
 	const tabs = [
 		{
@@ -173,3 +177,15 @@ export const startApp = () => {
 	})
 }
 
+export const DetailProductScreen = (id: string) => {
+	console.log({ Ui: <string>UI.componentId })
+	console.log({ id: id })
+	Navigation.push(<string>UI.componentId, {
+		component: {
+			name: DETAIL_PRODUCT_SCREEN,
+			passProps: {
+
+			}
+		}
+	})
+}

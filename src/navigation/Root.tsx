@@ -13,22 +13,18 @@ export const rootStack = (root: any) => {
 	return Navigation.setRoot({
 		root: {
 			bottomTabs: {
-				id: 'BOTTOM_TAB_LAYOUT',
 				children: [
 					{
 						stack: {
-							id: 'HOME_TAB',
 							children: [
 								{
 									component: {
-										id: "ROOT",
 										name: root,
 										options: {
 											topBar: {
 												animate: true,
 												title: {
 													component: {
-														id: "HeaderComponent",
 														name: "HeaderComponent",
 														alignment: 'center',
 														passProps: {
@@ -79,11 +75,9 @@ export const rootStack = (root: any) => {
 					},
 					{
 						stack: {
-							id: 'AUTHEN_STACK',
 							children: [
 								{
 									component: {
-										id: 'LOGIN_SCREEN',
 										name: 'LOGIN_SCREEN',
 										options: {
 											topBar: {
@@ -123,11 +117,9 @@ export const rootStack = (root: any) => {
 					},
 					{
 						stack: {
-							id: 'REGISTER_SCREEN',
 							children: [
 								{
 									component: {
-										id: 'REGISTER_SCREEN',
 										name: 'REGISTER_SCREEN',
 										options: {
 											topBar: {
@@ -169,11 +161,9 @@ export const rootStack = (root: any) => {
 					},
 					{
 						stack: {
-							id: 'REGISTER_SCREEN',
 							children: [
 								{
 									component: {
-										id: 'REGISTER_SCREEN',
 										name: 'REGISTER_SCREEN',
 										options: {
 											topBar: {

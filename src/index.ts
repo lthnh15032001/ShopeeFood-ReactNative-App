@@ -6,11 +6,13 @@ import UI from './stores/UI';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Register screens
-Screens.forEach((ScreenComponent, key) =>
-	Navigation.registerComponent(key, () => ScreenComponent));
+Screens.forEach((ScreenComponent, key) => {
+	// console.log({ ScreenComponent: ScreenComponent, key: key })
+	Navigation.registerComponent(key, () => ScreenComponent)
+})
 
 Navigation.events().registerAppLaunchedListener(() => {
-	// startApp()
+	startApp()
 	// if (__DEV__) {
 	// 	makeInspectable(UI);
 	// 	makeInspectable(Account);
@@ -18,7 +20,7 @@ Navigation.events().registerAppLaunchedListener(() => {
 	// 	makeInspectable(Items);
 	// }
 
-	UI.hydrate().then(startApp);
+	// UI.hydrate().then(startApp);
 });
 // Start application
 // Navigation.events().registerAppLaunchedListener(() => {
@@ -33,14 +35,15 @@ Navigation.events().registerAppLaunchedListener(() => {
 //   });
 
 //   // Listen for componentDidAppear screen events
-//   Navigation.events().registerComponentDidAppearListener(({ componentId, componentName }) => {
-// 	UI.onDidAppear(componentId, componentName);
-//   });
+Navigation.events().registerComponentDidAppearListener(({ componentId, componentName }) => {
+	console.log({ componentId, componentName })
+	UI.onDidAppear(componentId, componentName);
+});
 
 //   // Listen for componentDidAppear screen events
-//   Navigation.events().registerComponentDidDisappearListener(({ componentId, componentName }) => {
-// 	UI.onDidDisappear(componentId, componentName);
-//   });
+Navigation.events().registerComponentDidDisappearListener(({ componentId, componentName }) => {
+	UI.onDidDisappear(componentId, componentName);
+});
 
 //   // Calculate layout on device rotation (and initially)
 //   Dimensions.addEventListener('change', UI.updateLayout);

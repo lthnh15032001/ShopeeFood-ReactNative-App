@@ -1,5 +1,5 @@
 import { Navigation } from 'react-native-navigation';
-import { Dimensions } from 'react-native'
+import { Dimensions, Platform } from 'react-native'
 import { types, flow, applySnapshot } from 'mobx-state-tree';
 import CodePush from 'react-native-code-push';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -53,6 +53,43 @@ const UI = types
 					screen.updateOptions();
 				}
 			});
+		},
+		updateLayout({ window = Dimensions.get('window') } = {}) {
+			return flow(function* () {
+				const { width, height } = window;
+				const isX = Platform.OS === 'ios' && ((width === 375 && height === 812) || (width === 812 && height === 375));
+				const isLandscape = width > height;
+				self.layout.inset = (isX && isLandscape) ? 44 : 0;
+				self.layout.width = width;
+				self.layout.height = height;
+				const constants = yield Navigation.constants();
+				if (constants) {
+					self.layout.bottomTabsHeight = constants.bottomTabsHeight;
+					self.layout.topBarHeight = constants.topBarHeight;
+					self.layout.statusBarHeight = constants.statusBarHeight;
+				}
+			})();
+		},
+		onDidAppear(componentId: string, componentName?: string) {
+			if (componentName === self.preview.componentName) {
+				return;
+			}
+			// console.log({ self: self.preview })
+			self.componentId = componentId;
+			(self as any).updateLayout();
+		},
+		onDidDisappear(componentId: string, componentName?: string) {
+			if (componentName === self.preview.componentName) {
+				self.preview.componentName = undefined;
+				self.preview.active = false;
+			}
+		},
+		setPreviewComponentName(componentName: string) {
+			self.preview.componentName = componentName;
+		},
+
+		setPreviewActive(flag: boolean) {
+			self.preview.active = flag;
 		},
 		restartApp() {
 			return CodePush.restartApp(false);

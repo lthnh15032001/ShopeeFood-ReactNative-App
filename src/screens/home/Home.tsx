@@ -9,50 +9,15 @@ import { StoreItems } from '../../components'
 import { applyThemeOptions } from '../../styles';
 import { autobind } from 'core-decorators';
 import UI from '../../stores/UI'
+import Header from '../../components/Header'
 import { HEADER } from '../../screens'
 interface Props {
 	componentId: string;
 	testID?: string;
 }
-
 export default class Home extends React.Component<Props> {
 	static get options() {
 		return {
-			topBar: {
-				animate: true,
-				title: {
-					component: {
-						id: HEADER,
-						name: HEADER,
-						// alignment: 'center',
-						passProps: {
-							isTitle: true,
-						}
-					}
-				},
-				rightButtons: [
-					{
-						id: HEADER,
-						component: {
-							name: HEADER,
-							passProps: {
-								isRightButton: true
-							}
-						}
-					}
-				],
-				leftButtons: [
-					{
-						id: HEADER,
-						component: {
-							name: HEADER,
-							passProps: {
-								isLeft: true
-							}
-						}
-					}
-				]
-			},
 			bottomTab: {
 				text: 'Home',
 				icon: require('../../assets/HomeSelect.png'),
@@ -91,6 +56,7 @@ export default class Home extends React.Component<Props> {
 		Navigation.mergeOptions(this.props.componentId, opts);
 	}
 	render() {
+		// console.log(this.props.componentId)
 		return (
 			<View style={styles.container} >
 				<HomeScrollHeader props={this.props} />

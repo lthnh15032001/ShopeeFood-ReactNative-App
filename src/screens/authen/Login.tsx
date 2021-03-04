@@ -1,11 +1,15 @@
 import React, { useEffect } from 'react'
-
-import { View, Text, StyleSheet } from 'react-native'
+import { Navigation } from 'react-native-navigation'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 const Login = (props: any) => {
 	return (
-		<View>
-			<Text>LOginnnnn</Text>
-		</View>
+		<TouchableOpacity onPress={() => {
+			
+		}}>
+			<View>
+				<Text>LOginnnnn</Text>
+			</View>
+		</TouchableOpacity>
 	)
 }
 
