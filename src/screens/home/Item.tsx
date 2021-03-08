@@ -1,10 +1,14 @@
 import React from 'react'
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import { colorStyles } from '../../styles/ColorStyles'
 export const Item = (props: any) => {
 	const { item, index } = props
 	return (
-		<View style={[styles.container, { backgroundColor: index === 0 ? colorStyles.pomegranate : colorStyles.white }]}>
+		<TouchableOpacity
+			onPress={() => {
+				
+			}}
+		style={[styles.container, { backgroundColor: index === 0 ? colorStyles.pomegranate : colorStyles.white }]}>
 			<View style={[styles.radius, { backgroundColor: index === 0 ? colorStyles.white : colorStyles.mercury }]}>
 				<Image
 					style={styles.tinyLogo}
@@ -15,7 +19,7 @@ export const Item = (props: any) => {
 			<Text style={[styles.textUnderbox, {color: index === 0 ? colorStyles.white : colorStyles.black}]}>
 				{item.name}
 			</Text>
-		</View>
+		</TouchableOpacity>
 	)
 }
 const styles = StyleSheet.create({

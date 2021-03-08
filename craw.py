@@ -14,8 +14,8 @@ headers = {
     'accept': 'application/json, text/plain, */*'
 }
 # https://gappapi.deliverynow.vn/api/delivery/get_browsing_infos
-metadataRequest = requests.get('https://gappapi.deliverynow.vn/api/meta/get_metadata',headers=headers)
-metadataFile = open("metadata.json", "a")
+metadataRequest = requests.get('https://gappapi.deliverynow.vn/api/dish/get_delivery_dishes?id_type=2&request_id=40614',headers=headers)
+metadataFile = open("./src/craw/product.json", "a")
 json.dump(metadataRequest.json(),metadataFile, ensure_ascii=False, indent=4)
 metadataFile.close()
 

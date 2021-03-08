@@ -25,6 +25,9 @@ export default class Home extends React.Component<Props> {
 			},
 			layout: {
 				backgroundColor: 'black'
+			},
+			topBar: {
+				visible: false
 			}
 		}
 	}

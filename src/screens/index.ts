@@ -19,10 +19,7 @@ Screens.set(LOGIN_SCREEN, LoginScreen);
 Screens.set(REGISTER_SCREEN, RegisterScreen);
 Screens.set(ACCOUNT_SCREEN, AccountScreen)
 Screens.set(DETAIL_PRODUCT_SCREEN, DetailProduct)
-// component
-// Screens.set(HEADER, Header)
 export const startApp = () => {
-	// const tabs = 
 	return Navigation.setRoot({
 		root: {
 			bottomTabs: {
@@ -35,11 +32,11 @@ export const startApp = () => {
 								{
 									component: {
 										name: HOME_SCREEN,
-										options: {
-											topBar: {
-												visible: false
-											}
-										}
+										// options: {
+										// 	topBar: {
+										// 		visible: false
+										// 	}
+										// }
 									}
 								}
 							]
@@ -51,30 +48,7 @@ export const startApp = () => {
 							children: [
 								{
 									component: {
-										name: LOGIN_SCREEN,
-										// options: {
-										// 	topBar: {
-										// 		animate: true,
-										// 		title: {
-										// 			text: "Login"
-										// 		},
-										// 		rightButtons: [
-										// 			{
-										// 				text: 'next',
-										// 				id: 'saveMembers'
-										// 			},
-										// 			{
-										// 				id: 'search'
-										// 			}
-										// 		],
-										// 		leftButtons: [
-										// 			{
-										// 				id: 'cancel',
-										// 				text: 'back'
-										// 			}
-										// 		]
-										// 	}
-										// }
+										name: LOGIN_SCREEN
 									}
 								}
 							],
@@ -94,30 +68,7 @@ export const startApp = () => {
 							children: [
 								{
 									component: {
-										name: REGISTER_SCREEN,
-										// options: {
-										// 	topBar: {
-										// 		animate: true,
-										// 		title: {
-										// 			text: "Login"
-										// 		},
-										// 		rightButtons: [
-										// 			{
-										// 				text: 'next',
-										// 				id: 'saveMembers'
-										// 			},
-										// 			{
-										// 				id: 'search'
-										// 			}
-										// 		],
-										// 		leftButtons: [
-										// 			{
-										// 				id: 'cancel',
-										// 				text: 'back'
-										// 			}
-										// 		]
-										// 	}
-										// }
+										name: REGISTER_SCREEN
 									}
 								}
 							],
@@ -139,30 +90,7 @@ export const startApp = () => {
 							children: [
 								{
 									component: {
-										name: ACCOUNT_SCREEN,
-										options: {
-											topBar: {
-												animate: true,
-												// title: {
-												// 	text: "Login"
-												// },
-												rightButtons: [
-													{
-														text: 'next',
-														id: 'saveMembers'
-													},
-													{
-														id: 'search'
-													}
-												],
-												leftButtons: [
-													{
-														id: 'cancel',
-														text: 'back'
-													}
-												]
-											}
-										}
+										name: ACCOUNT_SCREEN
 									}
 								}
 							],
@@ -183,8 +111,8 @@ export const startApp = () => {
 }
 
 export const DetailProductScreen = (id: string) => {
-	console.log({ Ui: <string>UI.componentId })
-	console.log({ id: id })
+	// console.log({ Ui: <string>UI.componentId })
+	// console.log({ id: id })
 	Navigation.push(<string>UI.componentId, {
 		component: {
 			name: DETAIL_PRODUCT_SCREEN,
