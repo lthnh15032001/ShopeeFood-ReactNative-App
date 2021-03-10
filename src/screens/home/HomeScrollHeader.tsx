@@ -3,8 +3,10 @@ import { View, Text, StyleSheet, FlatList, Image, Animated, ViewProps } from 're
 import { Icon } from '../../components'
 import { Item } from './Item'
 import { InfoItemProduct } from './InfoItemProduct'
+import Restaurants from '../../stores/Restaurant'
+import { observer } from 'mobx-react'
 
-export const HomeScrollHeader = ({props} : any) => {
+export const HomeScrollHeader = observer(({ props }: any) => {
 	// console.log(props)
 	const scrollY = useRef(new Animated.Value(0)).current
 	const testData = [
@@ -43,7 +45,7 @@ export const HomeScrollHeader = ({props} : any) => {
 		extrapolate: 'clamp'
 	})
 	return (
-		<View>
+		<>
 			<Animated.View style={{
 				zIndex: 10,
 			}}>
@@ -80,7 +82,7 @@ export const HomeScrollHeader = ({props} : any) => {
 				</Animated.View>
 			</Animated.View>
 			<FlatList
-				data={testData}
+				data={JSON.parse(JSON.stringify(Restaurants.restaurants))}
 				scrollEventThrottle={16}
 				onScroll={
 					Animated.event([
@@ -89,16 +91,19 @@ export const HomeScrollHeader = ({props} : any) => {
 				}
 				renderItem={({ item, index }) => {
 					return (
-						<InfoItemProduct props={props} />
+						<InfoItemProduct
+							item={item}
+							index={index}
+							props={props} />
 					)
 				}}
 				keyExtractor={(item, index) => index.toString()}
 				showsVerticalScrollIndicator={false}
 			/>
-		</View>
+		</>
 	)
 }
-
+)
 const styles = StyleSheet.create({
 	FlatListStyle: {
 		// maxHeight: 200,

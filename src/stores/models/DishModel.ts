@@ -39,3 +39,4 @@ const DishModel = types
 		}
 	})
 export default DishModel;
+

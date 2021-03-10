@@ -36,7 +36,7 @@ Navigation.events().registerAppLaunchedListener(() => {
 
 //   // Listen for componentDidAppear screen events
 Navigation.events().registerComponentDidAppearListener(({ componentId, componentName }) => {
-	console.log({ componentId, componentName })
+	// console.log({ componentId, componentName })
 	UI.onDidAppear(componentId, componentName);
 });
 

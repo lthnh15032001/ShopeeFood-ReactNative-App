@@ -1,19 +1,17 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Navigation } from 'react-native-navigation'
-import { Text, StyleSheet, View, TouchableOpacity, Image, FlatList } from 'react-native'
-import { Container } from '../../components'
+import { Text, StyleSheet, View } from 'react-native'
 import { HomeScrollHeader } from './HomeScrollHeader'
-import { baseApi } from '../../api/BaseApi'
-import { data } from '../../craw/get_browsing_infos2'
-import { StoreItems } from '../../components'
-import { applyThemeOptions } from '../../styles';
+import Restaurants from '../../stores/Restaurant'
 import { autobind } from 'core-decorators';
 import UI from '../../stores/UI'
 import Header from '../../components/Header'
+import { observer } from 'mobx-react'
 interface Props {
 	componentId: string;
 	testID?: string;
 }
+@observer
 export default class Home extends React.Component<Props> {
 	static get options() {
 		return {
@@ -34,16 +32,16 @@ export default class Home extends React.Component<Props> {
 	constructor(props: any) {
 		super(props);
 		Navigation.events().bindComponent(this);
+		// this.state = {
+		// 	restaurants
+		// }
 	}
 
 	UNSAFE_componentWillMount() {
 		UI.addScreen(this);
 	}
 	componentDidMount() {
-		// when(
-		//   () => Account.user && Account.user.id !== null,
-		//   this.updateOptions,
-		// );
+		Restaurants.fetchData()
 	}
 	componentDidAppear() {
 		this.updateOptions();
@@ -54,46 +52,31 @@ export default class Home extends React.Component<Props> {
 	@autobind
 	updateOptions() {
 		const opts = Home.options;
-		console.log('updateOptions', opts);
 		Navigation.mergeOptions(this.props.componentId, opts);
 	}
 	render() {
-		// console.log(this.props.componentId)
-		return (
-			<>
-				<Header />
-				<View style={styles.container} >
-					<HomeScrollHeader props={this.props} />
-					{
-						// <FlatList
-						// 	data={data.reply.delivery_infos}
-						// 	renderItem={({ item, index }) => {
-						// 		return (
-						// 			<StoreItems
-						// 				image={item.photos[4]}
-						// 			/>
-
-						// 		)
-						// 	}}
-						// 	keyExtractor={(item, index) => index.toString()}
-						// 	style={{ flex: 1 }}
-						// />
-						// return x.photos.map((item, index) => {
-						// 	console.log({item: item})
-						// 		return (<Image
-						// 			source={{ uri: item.value }}
-						// 			// width={item.width}
-						// 			// height={item.height}
-						// 			style={{
-						// 				width: item.width,
-						// 				height: item.height
-						// 			}}
-						// 		/>)
-						// })
-					}
+		if (Restaurants.isLoading) {
+			return (
+				<View style={{
+					justifyContent: 'center',
+					alignItems: 'center',
+					flex: 1
+				}}>
+					<Text>12323</Text>
 				</View>
-			</>
-		)
+			)
+		} else {
+			return (
+				<>
+					<Header />
+					<View style={styles.container} >
+						<HomeScrollHeader
+							props={this.props} />
+					</View>
+				</>
+			)
+		}
+
 	}
 }
 const styles = StyleSheet.create({
@@ -106,3 +89,32 @@ const styles = StyleSheet.create({
 
 
 // export default Home
+{/* {
+						<FlatList
+							data={JSON.parse(JSON.stringify(restaurants))}
+							renderItem={({ item, index }) => {
+								console.log(item)
+								// return <Text>{index}</Text>;
+								return (
+									<StoreItems
+										image={item.photos[4]}
+									/>
+
+								)
+							}}
+							keyExtractor={(item, index) => index.toString()}
+							style={{ flex: 1 }}
+						/>
+						// return x.photos.map((item, index) => {
+						// 	console.log({item: item})
+						// 		return (<Image
+						// 			source={{ uri: item.value }}
+						// 			// width={item.width}
+						// 			// height={item.height}
+						// 			style={{
+						// 				width: item.width,
+						// 				height: item.height
+						// 			}}
+						// 		/>)
+						// })
+					} */}
