@@ -3,6 +3,7 @@ import { Navigation } from 'react-native-navigation'
 import { Text, StyleSheet, View } from 'react-native'
 import { HomeScrollHeader } from './HomeScrollHeader'
 import Restaurants from '../../stores/Restaurant'
+import Categories from '../../stores/Category'
 import { autobind } from 'core-decorators';
 import UI from '../../stores/UI'
 import Header from '../../components/Header'
@@ -42,6 +43,7 @@ export default class Home extends React.Component<Props> {
 	}
 	componentDidMount() {
 		Restaurants.fetchData()
+		Categories.fetchData()
 	}
 	componentDidAppear() {
 		this.updateOptions();

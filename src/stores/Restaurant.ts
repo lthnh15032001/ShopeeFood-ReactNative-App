@@ -29,6 +29,17 @@ const RestaurantsType = types
 			}
 			self.isLoading = false
 		}),
+		fetchDataByCategoryId: flow(function* (id: number) {
+			self.isLoading = true;
+			try {
+				Services.getRestaurantByCategoryId(20, id).then(res => {
+					self.restaurants = res
+				})
+			} catch (e) {
+				console.log(e)
+			}
+			self.isLoading = false
+		}),
 		addSingleRestaurant(data: any) {
 			self.restaurants.push(data)
 		},

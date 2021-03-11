@@ -14,32 +14,38 @@ export const InfoItemProduct = (props: Props) => {
 	const { props: propsItem, item, index } = props
 	console.log({ item: item, index: index })
 	return (
-		<TouchableOpacity style={styles.container}>
-			<View style={{ flexDirection: 'row' }}>
-				<Image source={{ uri: item.photos[1].value }} style={{
-					width: item.photos[1].width,
-					height: item.photos[1].height
-				}} />
-				<View style={styles.wrapInfo}>
-					<Text style={styles.name}>{item.name}</Text>
-					<Text style={styles.address}>{item.address.length >= 35 ? item.address.slice(0, 35) + "..." : item.address}</Text>
-					<View style={{ flexDirection: 'row', alignItems: 'baseline', marginTop: 3 }}>
-						<Icon AntDesign name='star' color={colorStyles.saffron} size={21} />
-						<Text style={styles.rating}>{item.rating.avg} -</Text>
-						<Text style={styles.cuisines}>{item.cuisines.map((x: string, i: number) => `${x} ${item.cuisines.length >= 2 ? item.cuisines.length != i + 1 ? "," : "" : ""}`)}</Text>
-					</View>
-					<View style={{ flexDirection: 'row', marginTop: 2, alignItems: 'baseline' }}>
-						<View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
-							<Icon EvilIcons name="tag" size={25} color="black" />
-							<Text style={styles.priceRange}>Tối thiểu: {item.min_order_value.resource_args[0]}</Text>
+		<TouchableOpacity style={styles.container}
+			onPress={() => {
+				DetailProductScreen()
+			}}
+		>
+			<View style={styles.wrap}>
+				<View style={{ flexDirection: 'row' }}>
+					<Image source={{ uri: item.photos[1].value }} style={{
+						width: item.photos[1].width,
+						height: item.photos[1].height
+					}} />
+					<View style={styles.wrapInfo}>
+						<Text style={styles.name}>{item.name}</Text>
+						<Text style={styles.address}>{item.address.length >= 35 ? item.address.slice(0, 35) + "..." : item.address}</Text>
+						<View style={{ flexDirection: 'row', alignItems: 'baseline', marginTop: 3 }}>
+							<Icon AntDesign name='star' color={colorStyles.saffron} size={21} />
+							<Text style={styles.rating}>{item.rating.avg} -</Text>
+							<Text style={styles.cuisines}>{item.cuisines.map((x: string, i: number) => `${x} ${item.cuisines.length >= 2 ? item.cuisines.length != i + 1 ? "," : "" : ""}`)}</Text>
 						</View>
-						<View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
-							<Icon MaterialIcons name="attach-money" size={18} color="black" />
-							<Text style={styles.priceRange}>Giá: {item.price_range.resource_args[0]}</Text>
+						<View style={{ flexDirection: 'row', marginTop: 2, alignItems: 'baseline' }}>
+							<View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
+								<Icon EvilIcons name="tag" size={25} color="black" />
+								<Text style={styles.priceRange}>Tối thiểu: {item.min_order_value.resource_args[0]}</Text>
+							</View>
+							<View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
+								<Icon MaterialIcons name="attach-money" size={18} color="black" />
+								<Text style={styles.priceRange}>Giá: {item.price_range.resource_args[0]}</Text>
+							</View>
 						</View>
-					</View>
-					<View>
-						
+						<View>
+
+						</View>
 					</View>
 				</View>
 			</View>
@@ -75,9 +81,20 @@ export const InfoItemProduct = (props: Props) => {
 }
 
 const styles = StyleSheet.create({
+	wrap: {
+		shadowColor: "#000",
+		shadowOffset: {
+			width: 0,
+			height: 1,
+		},
+		shadowOpacity: 0.22,
+		shadowRadius: 2.22,
+
+		elevation: 3,
+	},
 	container: {
 		flex: 1,
-		paddingBottom: 10
+		paddingBottom: 10,
 	},
 	wrapInfo: {
 		marginLeft: 8

@@ -5,12 +5,14 @@ import RegisterScreen from './authen/Register'
 import AccountScreen from './account/AccountScreen'
 import Header from '../components/Header'
 import DetailProduct from './product/DetailProduct'
+import CategoryFood from './product/CategoryFood'
 import UI from '../stores/UI'
 export const HOME_SCREEN = 'internapp.HomeScreen'
 export const LOGIN_SCREEN = 'internapp.LoginScreen'
 export const REGISTER_SCREEN = 'internapp.RegisterScreen'
 export const ACCOUNT_SCREEN = 'internapp.AccountScreen'
 export const DETAIL_PRODUCT_SCREEN = 'internapp.DetailProductScreen'
+export const CATEGORY_FOOD_SCREEN = 'internapp.CategoryFood'
 export const HEADER = 'component.Header'
 export const Screens = new Map()
 // screen 
@@ -19,6 +21,7 @@ Screens.set(LOGIN_SCREEN, LoginScreen);
 Screens.set(REGISTER_SCREEN, RegisterScreen);
 Screens.set(ACCOUNT_SCREEN, AccountScreen)
 Screens.set(DETAIL_PRODUCT_SCREEN, DetailProduct)
+Screens.set(CATEGORY_FOOD_SCREEN, CategoryFood)
 export const startApp = () => {
 	return Navigation.setRoot({
 		root: {
@@ -110,7 +113,7 @@ export const startApp = () => {
 	})
 }
 
-export const DetailProductScreen = (id: string) => {
+export const DetailProductScreen = () => {
 	// console.log({ Ui: <string>UI.componentId })
 	// console.log({ id: id })
 	Navigation.push(<string>UI.componentId, {
@@ -118,6 +121,16 @@ export const DetailProductScreen = (id: string) => {
 			name: DETAIL_PRODUCT_SCREEN,
 			passProps: {
 
+			}
+		}
+	})
+}
+export const CategoryFoodScreen = (categoryId: number) => {
+	Navigation.push(<string>UI.componentId, {
+		component: {
+			name: CATEGORY_FOOD_SCREEN,
+			passProps: {
+				categoryId: categoryId
 			}
 		}
 	})

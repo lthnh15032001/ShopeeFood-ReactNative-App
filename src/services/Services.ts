@@ -13,10 +13,21 @@ export class Services {
 		})
 			.then(res => res.text())
 	}
+	async getCategories() {
+		const data = await this.fetch(`category_groups`)
+		const jsonData = await JSON.parse(data);
+		// console.log({ data: jsonData, type: typeof jsonData })
+		return jsonData
+	}
 	async getRestaurant(page = 20) {
 		const data = await this.fetch(`restaurants`)
 		const jsonData = await JSON.parse(data);
 		// console.log({ data: jsonData, type: typeof jsonData })
+		return jsonData
+	}
+	async getRestaurantByCategoryId(page = 20, id: number) {
+		const data = await this.fetch(`restaurants/${id}?page=${page}`)
+		const jsonData = await JSON.parse(data)
 		return jsonData
 	}
 	async getAccessToken(anonymus: boolean) {
