@@ -1,19 +1,22 @@
 import React from 'react'
 import { Navigation } from 'react-native-navigation'
-import { Text, StyleSheet, View } from 'react-native'
-import { HomeScrollHeader } from './HomeScrollHeader'
+import { Text, StyleSheet, View, ActivityIndicator } from 'react-native'
+import { CategoryGroupHeader } from './CategoryGroupHeader'
 import Restaurants from '../../stores/Restaurant'
 import Categories from '../../stores/Category'
 import { autobind } from 'core-decorators';
 import UI from '../../stores/UI'
 import Header from '../../components/Header'
 import { observer } from 'mobx-react'
+import { observable } from 'mobx'
 interface Props {
 	componentId: string;
 	testID?: string;
 }
 @observer
 export default class Home extends React.Component<Props> {
+	@observable
+	isLoading = false
 	static get options() {
 		return {
 			bottomTab: {
@@ -42,11 +45,38 @@ export default class Home extends React.Component<Props> {
 		UI.addScreen(this);
 	}
 	componentDidMount() {
-		Restaurants.fetchData()
-		Categories.fetchData()
+		this.fetchData()
+		// const dataCategory = JSON.parse(JSON.stringify(Categories.categories))
+		// Restaurants.fetchDataByCategoryId(dataCategory[1].id) 
+	}
+	async fetchData(isClear?: boolean, index = 0) {
+		this.isLoading = true
+		// console.log(this.isLoading)
+		// console.log({ Categoriesloading: Categories.isLoading })
+		// console.log({ Categoriesloading: Categories.isLoading })
+		const dataCategory = JSON.parse(JSON.stringify(Categories.categories))
+		// console.log({ index: index })
+		// console.log({ Restaurantsloading: Restaurants.isLoading })
+		if (dataCategory[index]) {
+			Restaurants.fetchDataByCategoryId(dataCategory[Categories.isSelect].id)
+			console.log({ haveindex: Categories.isSelect })
+			// isClear ? Categories.clearSelect() : ""
+		}
+		else {
+			await Categories.fetchData()
+			Restaurants.fetchDataByCategoryId(1000000);
+			Categories.clearSelect()
+			console.log(Categories.isSelect)
+			// console.log("clearrrrrr")
+		}
+		// console.log({ Restaurantsloading: Restaurants.isLoading })
+		this.isLoading = false
+		// console.log(this.isLoading)
 	}
 	componentDidAppear() {
 		this.updateOptions();
+		this.fetchData()
+
 	}
 	componentWillUnmount() {
 		UI.removeScreen(this);
@@ -57,28 +87,26 @@ export default class Home extends React.Component<Props> {
 		Navigation.mergeOptions(this.props.componentId, opts);
 	}
 	render() {
-		if (Restaurants.isLoading) {
-			return (
-				<View style={{
-					justifyContent: 'center',
-					alignItems: 'center',
-					flex: 1
-				}}>
-					<Text>12323</Text>
-				</View>
-			)
-		} else {
-			return (
-				<>
-					<Header />
-					<View style={styles.container} >
-						<HomeScrollHeader
-							props={this.props} />
+		// console.log({ loading: this.isLoading })
+		return (
+			<>
+				<Header />
+				{this.isLoading ?
+					<View style={{
+						justifyContent: 'center',
+						alignItems: 'center',
+						flex: 1
+					}}>
+						<ActivityIndicator size="large" color="#00ff00" />
 					</View>
-				</>
-			)
-		}
-
+					: <View style={styles.container} >
+						<CategoryGroupHeader
+							props={this.props}
+							fetchData={this.fetchData}
+						/>
+					</View>}
+			</>
+		)
 	}
 }
 const styles = StyleSheet.create({
@@ -88,35 +116,3 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 13
 	},
 })
-
-
-// export default Home
-{/* {
-						<FlatList
-							data={JSON.parse(JSON.stringify(restaurants))}
-							renderItem={({ item, index }) => {
-								console.log(item)
-								// return <Text>{index}</Text>;
-								return (
-									<StoreItems
-										image={item.photos[4]}
-									/>
-
-								)
-							}}
-							keyExtractor={(item, index) => index.toString()}
-							style={{ flex: 1 }}
-						/>
-						// return x.photos.map((item, index) => {
-						// 	console.log({item: item})
-						// 		return (<Image
-						// 			source={{ uri: item.value }}
-						// 			// width={item.width}
-						// 			// height={item.height}
-						// 			style={{
-						// 				width: item.width,
-						// 				height: item.height
-						// 			}}
-						// 		/>)
-						// })
-					} */}

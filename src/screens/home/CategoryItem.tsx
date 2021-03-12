@@ -1,31 +1,34 @@
 import React from 'react'
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import { colorStyles } from '../../styles/ColorStyles'
-import { CategoryFoodScreen } from '../'
-export const Item = (props: any) => {
-	const { item, index } = props
+import { CategoryFoodScreen } from '..'
+import Categories from '../../stores/Category'
+import { observer } from 'mobx-react'
+export const CategoryItem = observer((props: any) => {
+	const { item, index, fetchData } = props
 	return (
 		<TouchableOpacity
 			onPress={() => {
-				CategoryFoodScreen(item.id)
+				Categories.setSelectCategory(index)
+				fetchData(false,index)
 			}}
-			style={[styles.container, { backgroundColor: index === 0 ? colorStyles.pomegranate : colorStyles.white }]}>
-			<View style={[styles.radius, { backgroundColor: index === 0 ? colorStyles.white : colorStyles.mercury }]}>
+			style={[styles.container, { backgroundColor: index === Categories.isSelect ? colorStyles.pomegranate : colorStyles.white }]}>
+			<View style={[styles.radius, { backgroundColor: index === Categories.isSelect ? colorStyles.white : colorStyles.mercury }]}>
 				<Image
 					style={{
-						width: 30,
-						height: 30
+						width: 40,
+						height: 40
 					}}
-					source={{ uri: item.tab_icon[0].value }}
+					source={{ uri: item.icon[1].value }}
 					resizeMode='contain'
 				/>
 			</View>
-			<Text style={[styles.textUnderbox, { color: index === 0 ? colorStyles.white : colorStyles.black }]}>
+			<Text style={[styles.textUnderbox, { color: index === Categories.isSelect ? colorStyles.white : colorStyles.black }]}>
 				{item.name}
 			</Text>
 		</TouchableOpacity>
 	)
-}
+})
 const styles = StyleSheet.create({
 	container: {
 		marginRight: 14,

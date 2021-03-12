@@ -4,12 +4,14 @@ import UI from '../../stores/UI'
 import Header from '../../components/Header'
 import { Navigation } from 'react-native-navigation'
 import { autobind } from 'core-decorators';
+import Dishes from '../../stores/Dishes'
 interface Props {
 	componentId: string;
 	testID?: string;
+	id_restaurant: number
 }
 
-export default class DetailProduct extends React.Component<Props> {
+export default class RestaurantFood extends React.Component<Props> {
 	static get options() {
 		return {
 			topBar: {
@@ -20,12 +22,16 @@ export default class DetailProduct extends React.Component<Props> {
 	constructor(props: any) {
 		super(props)
 	}
+	componentDidMount() {
+		Dishes.clear()
+		Dishes.fetchData(this.props.id_restaurant)
+	}
 	componentDidAppear() {
 		this.updateOptions();
 	}
 	@autobind
 	updateOptions() {
-		const opts = DetailProduct.options;
+		const opts = RestaurantFood.options;
 		Navigation.mergeOptions(this.props.componentId, opts);
 	}
 	UNSAFE_componentWillMount() {
@@ -35,6 +41,7 @@ export default class DetailProduct extends React.Component<Props> {
 		UI.removeScreen(this);
 	}
 	render() {
+		console.log({ dat: JSON.parse(JSON.stringify(Dishes.dishes)) })
 		return (
 			<>
 				{/* <Header /> */}
@@ -47,8 +54,8 @@ export default class DetailProduct extends React.Component<Props> {
 						}]}
 						resizeMode='cover'
 					/>
-					<View style={{  position: 'absolute', top: 0, bottom: 0, right: 0, left: 0 }}>
-						<Text>Le Thành Đạt</Text>
+					<View style={{ position: 'absolute', top: 0, bottom: 0, right: 0, left: 0 }}>
+						<Text>Lê Thành Đạt</Text>
 					</View>
 				</View>
 			</>
@@ -58,7 +65,7 @@ export default class DetailProduct extends React.Component<Props> {
 const styles = StyleSheet.create({
 	wrapBackimage: {
 		// width: '100%',
-		flex:1,
+		flex: 1,
 		backgroundColor: 'white'
 	},
 	backdrop: {

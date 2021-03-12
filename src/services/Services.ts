@@ -1,4 +1,4 @@
-export const API_URL = 'http://lucastony.hopto.org:4000';
+export const API_URL = 'http://localhost:4000';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Navigation } from "react-native-navigation";
 export class Services {
@@ -12,6 +12,11 @@ export class Services {
 			},
 		})
 			.then(res => res.text())
+	}
+	async getDishesByIdRestaurant(id: number, page = 20) {
+		const data = await this.fetch(`dishes/${7039}?page=${page}`)
+		const jsonData = await JSON.parse(data);
+		return jsonData
 	}
 	async getCategories() {
 		const data = await this.fetch(`category_groups`)

@@ -4,19 +4,22 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { Icon } from '../../components'
 import { colorStyles } from '../../styles/ColorStyles'
-import { DetailProductScreen } from '../'
+import { DetailProductScreen } from '..'
+import {observer} from 'mobx-react'
 interface Props {
 	props: any,
 	item: any,
-	index: any
+	index: any,
+	fetchData: Function
 }
-export const InfoItemProduct = (props: Props) => {
-	const { props: propsItem, item, index } = props
-	console.log({ item: item, index: index })
+export const FoodItem = observer((props: Props) => {
+	const { props: propsItem, item, index,fetchData } = props
+	// console.log({ item: item, index: index })
 	return (
 		<TouchableOpacity style={styles.container}
-			onPress={() => {
-				DetailProductScreen()
+			onPress={() => {	
+				DetailProductScreen(item.id)
+				fetchData(true)
 			}}
 		>
 			<View style={styles.wrap}>
@@ -78,7 +81,7 @@ export const InfoItemProduct = (props: Props) => {
 		// 	</View>
 		// </TouchableOpacity>
 	)
-}
+})
 
 const styles = StyleSheet.create({
 	wrap: {

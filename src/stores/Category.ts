@@ -7,6 +7,7 @@ const CategoryType = types
 	.model('Category', {
 		categories: types.optional(types.array(CategoryModel), []),
 		isLoading: types.optional(types.boolean, false),
+		isSelect: types.optional(types.number, 0)
 	})
 	.views(self => ({
 		get categoryFetch() {
@@ -27,7 +28,12 @@ const CategoryType = types
 			}
 			self.isLoading = false
 		}),
-
+		clearSelect() {
+			self.isSelect = 0
+		},
+		setSelectCategory(id: any) {
+			self.isSelect = id
+		},
 		addSingleCategory(data: any) {
 			self.categories.push(data)
 		},

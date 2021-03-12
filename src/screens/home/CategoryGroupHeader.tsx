@@ -1,13 +1,14 @@
 import React, { useRef } from 'react'
 import { View, Text, StyleSheet, FlatList, Image, Animated, ViewProps, TouchableOpacity } from 'react-native'
 import { Icon } from '../../components'
-import { Item } from './Item'
-import { InfoItemProduct } from './InfoItemProduct'
+import { CategoryItem } from './CategoryItem'
+import { FoodItem } from './FoodItem'
 import Restaurants from '../../stores/Restaurant'
 import { observer } from 'mobx-react'
 import Categories from '../../stores/Category'
-export const HomeScrollHeader = observer(({ props }: any) => {
-	// console.log(props)
+import Empty from '../../components/Empty'
+export const CategoryGroupHeader = observer(({ props, fetchData }: any) => {
+	// console.log({props: fetchData})
 	const scrollY = useRef(new Animated.Value(0)).current
 	const FlatListHeight = 150
 	const titleHeight = 48
@@ -50,12 +51,14 @@ export const HomeScrollHeader = observer(({ props }: any) => {
 							// 	index: index
 							// })
 							return (
-								<Item
+								<CategoryItem
 									item={item}
 									index={index}
+									fetchData={fetchData}
 								/>
 							)
 						}}
+						ListEmptyComponent={<Empty message="No category Found" />}
 						keyExtractor={(item, index) => index.toString()}
 						showsHorizontalScrollIndicator={false}
 						horizontal={true}
@@ -92,12 +95,15 @@ export const HomeScrollHeader = observer(({ props }: any) => {
 						{ nativeEvent: { contentOffset: { y: scrollY } } }
 					], { useNativeDriver: false })
 				}
+				ListEmptyComponent={<Empty message="No food Found" />}
 				renderItem={({ item, index }) => {
 					return (
-						<InfoItemProduct
+						<FoodItem
 							item={item}
 							index={index}
-							props={props} />
+							props={props}
+							fetchData={fetchData}
+							/>
 					)
 				}}
 				keyExtractor={(item, index) => index.toString()}

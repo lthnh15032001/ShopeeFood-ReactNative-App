@@ -33,7 +33,7 @@ const RestaurantModel = types
 			open_time: types.optional(types.string, ""),
 			status: types.number,
 			text: types.optional(types.model({
-				resource_name: types.string
+				resource_name: types.optional(types.string, " ")
 			}), { resource_name: "" })
 		}),
 		promotion: types.array(types.model({

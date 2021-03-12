@@ -1,10 +1,11 @@
+import { LogBox } from 'react-native'
 import { Screens, startApp } from './screens';
 import { onSnapshot } from 'mobx-state-tree';
 import { Navigation } from 'react-native-navigation';
 import debounce from 'lodash/debounce';
 import UI from './stores/UI';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+LogBox.ignoreAllLogs(true);
 // Register screens
 Screens.forEach((ScreenComponent, key) => {
 	// console.log({ ScreenComponent: ScreenComponent, key: key })

@@ -4,7 +4,7 @@ import LoginScreen from './authen/Login'
 import RegisterScreen from './authen/Register'
 import AccountScreen from './account/AccountScreen'
 import Header from '../components/Header'
-import DetailProduct from './product/DetailProduct'
+import RestaurantFood from './product/RestaurantFood'
 import CategoryFood from './product/CategoryFood'
 import UI from '../stores/UI'
 export const HOME_SCREEN = 'internapp.HomeScreen'
@@ -20,7 +20,7 @@ Screens.set(HOME_SCREEN, Home);
 Screens.set(LOGIN_SCREEN, LoginScreen);
 Screens.set(REGISTER_SCREEN, RegisterScreen);
 Screens.set(ACCOUNT_SCREEN, AccountScreen)
-Screens.set(DETAIL_PRODUCT_SCREEN, DetailProduct)
+Screens.set(DETAIL_PRODUCT_SCREEN, RestaurantFood)
 Screens.set(CATEGORY_FOOD_SCREEN, CategoryFood)
 export const startApp = () => {
 	return Navigation.setRoot({
@@ -113,14 +113,14 @@ export const startApp = () => {
 	})
 }
 
-export const DetailProductScreen = () => {
+export const DetailProductScreen = (id_restaurant: number) => {
 	// console.log({ Ui: <string>UI.componentId })
 	// console.log({ id: id })
 	Navigation.push(<string>UI.componentId, {
 		component: {
 			name: DETAIL_PRODUCT_SCREEN,
 			passProps: {
-
+				id_restaurant: id_restaurant
 			}
 		}
 	})

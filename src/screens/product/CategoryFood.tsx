@@ -6,7 +6,7 @@ import Header from '../../components/Header'
 import UI from '../../stores/UI'
 import Restaurants from '../../stores/Restaurant'
 import { observer } from 'mobx-react'
-import { InfoItemProduct } from '../home/InfoItemProduct'
+import { FoodItem } from '../home/FoodItem'
 interface Props {
 	componentId: string,
 	categoryId: number
@@ -24,6 +24,7 @@ export default class CategoryFood extends React.Component<Props> {
 		super(props)
 	}
 	componentDidMount() {
+		Restaurants.clear()
 		Restaurants.fetchDataByCategoryId(this.props.categoryId)
 	}
 	componentDidAppear() {
@@ -53,7 +54,7 @@ export default class CategoryFood extends React.Component<Props> {
 						data={JSON.parse(JSON.stringify(Restaurants.restaurants))}
 						renderItem={({ item, index }) => {
 							return (
-								<InfoItemProduct
+								<FoodItem
 									item={item}
 									index={index}
 									props={this.props}
