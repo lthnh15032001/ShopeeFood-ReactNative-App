@@ -3,16 +3,18 @@ import Home from './home/Home'
 import LoginScreen from './authen/Login'
 import RegisterScreen from './authen/Register'
 import AccountScreen from './account/AccountScreen'
-import Header from '../components/Header'
+// import Header from '../components/Header'
 import RestaurantFood from './product/RestaurantFood'
 import CategoryFood from './product/CategoryFood'
+import Order from './order/Order'
 import UI from '../stores/UI'
 export const HOME_SCREEN = 'internapp.HomeScreen'
 export const LOGIN_SCREEN = 'internapp.LoginScreen'
 export const REGISTER_SCREEN = 'internapp.RegisterScreen'
 export const ACCOUNT_SCREEN = 'internapp.AccountScreen'
-export const DETAIL_PRODUCT_SCREEN = 'internapp.DetailProductScreen'
+export const RESTAURANT_FOOD_SCREEN = 'internapp.RestaurantFood'
 export const CATEGORY_FOOD_SCREEN = 'internapp.CategoryFood'
+export const ORDER_SCREEN = 'internapp.OrderScreen'
 export const HEADER = 'component.Header'
 export const Screens = new Map()
 // screen 
@@ -20,8 +22,9 @@ Screens.set(HOME_SCREEN, Home);
 Screens.set(LOGIN_SCREEN, LoginScreen);
 Screens.set(REGISTER_SCREEN, RegisterScreen);
 Screens.set(ACCOUNT_SCREEN, AccountScreen)
-Screens.set(DETAIL_PRODUCT_SCREEN, RestaurantFood)
+Screens.set(RESTAURANT_FOOD_SCREEN, RestaurantFood)
 Screens.set(CATEGORY_FOOD_SCREEN, CategoryFood)
+Screens.set(ORDER_SCREEN, Order)
 export const startApp = () => {
 	return Navigation.setRoot({
 		root: {
@@ -112,15 +115,22 @@ export const startApp = () => {
 		}
 	})
 }
-
-export const DetailProductScreen = (id_restaurant: number) => {
+export const OrderScreen = () => {
+	Navigation.push(<string>UI.componentId, {
+		component: {
+			name: ORDER_SCREEN,
+		}
+	})
+}
+export const DetailProductScreen = (id_restaurant: number, restaurantInfo: any) => {
 	// console.log({ Ui: <string>UI.componentId })
 	// console.log({ id: id })
 	Navigation.push(<string>UI.componentId, {
 		component: {
-			name: DETAIL_PRODUCT_SCREEN,
+			name: RESTAURANT_FOOD_SCREEN,
 			passProps: {
-				id_restaurant: id_restaurant
+				id_restaurant: id_restaurant,
+				restaurantInfo: restaurantInfo
 			}
 		}
 	})

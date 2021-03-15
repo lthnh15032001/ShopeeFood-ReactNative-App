@@ -14,7 +14,7 @@ export class Services {
 			.then(res => res.text())
 	}
 	async getDishesByIdRestaurant(id: number, page = 20) {
-		const data = await this.fetch(`dishes/${7039}?page=${page}`)
+		const data = await this.fetch(`dishes/${id}?page=${page}`)
 		const jsonData = await JSON.parse(data);
 		return jsonData
 	}

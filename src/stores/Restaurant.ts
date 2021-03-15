@@ -41,9 +41,7 @@ const RestaurantsType = types
 			self.isLoading = false
 		}),
 		clear() {
-			self.isLoading = true;
 			self.restaurants.clear()
-			self.isLoading = false
 		},
 		addSingleRestaurant(data: any) {
 			self.restaurants.push(data)

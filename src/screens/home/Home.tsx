@@ -36,9 +36,6 @@ export default class Home extends React.Component<Props> {
 	constructor(props: any) {
 		super(props);
 		Navigation.events().bindComponent(this);
-		// this.state = {
-		// 	restaurants
-		// }
 	}
 
 	UNSAFE_componentWillMount() {
@@ -46,37 +43,24 @@ export default class Home extends React.Component<Props> {
 	}
 	componentDidMount() {
 		this.fetchData()
-		// const dataCategory = JSON.parse(JSON.stringify(Categories.categories))
-		// Restaurants.fetchDataByCategoryId(dataCategory[1].id) 
 	}
-	async fetchData(isClear?: boolean, index = 0) {
+	async fetchData(index = 0) {
 		this.isLoading = true
-		// console.log(this.isLoading)
-		// console.log({ Categoriesloading: Categories.isLoading })
-		// console.log({ Categoriesloading: Categories.isLoading })
 		const dataCategory = JSON.parse(JSON.stringify(Categories.categories))
-		// console.log({ index: index })
-		// console.log({ Restaurantsloading: Restaurants.isLoading })
 		if (dataCategory[index]) {
 			Restaurants.fetchDataByCategoryId(dataCategory[Categories.isSelect].id)
-			console.log({ haveindex: Categories.isSelect })
-			// isClear ? Categories.clearSelect() : ""
+			// console.log({ haveindex: Categories.isSelect })
 		}
 		else {
 			await Categories.fetchData()
 			Restaurants.fetchDataByCategoryId(1000000);
 			Categories.clearSelect()
-			console.log(Categories.isSelect)
-			// console.log("clearrrrrr")
+			// console.log(Categories.isSelect)
 		}
-		// console.log({ Restaurantsloading: Restaurants.isLoading })
 		this.isLoading = false
-		// console.log(this.isLoading)
 	}
 	componentDidAppear() {
 		this.updateOptions();
-		this.fetchData()
-
 	}
 	componentWillUnmount() {
 		UI.removeScreen(this);
@@ -87,7 +71,6 @@ export default class Home extends React.Component<Props> {
 		Navigation.mergeOptions(this.props.componentId, opts);
 	}
 	render() {
-		// console.log({ loading: this.isLoading })
 		return (
 			<>
 				<Header />

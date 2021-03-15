@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import { View, Text, StyleSheet, FlatList, Image, Animated, ViewProps, TouchableOpacity } from 'react-native'
 import { Icon } from '../../components'
 import { CategoryItem } from './CategoryItem'
-import { FoodItem } from './FoodItem'
+import { RestaurantItem } from './RestaurantItem'
 import Restaurants from '../../stores/Restaurant'
 import { observer } from 'mobx-react'
 import Categories from '../../stores/Category'
@@ -98,7 +98,7 @@ export const CategoryGroupHeader = observer(({ props, fetchData }: any) => {
 				ListEmptyComponent={<Empty message="No food Found" />}
 				renderItem={({ item, index }) => {
 					return (
-						<FoodItem
+						<RestaurantItem
 							item={item}
 							index={index}
 							props={props}

@@ -10,7 +10,7 @@ export const CategoryItem = observer((props: any) => {
 		<TouchableOpacity
 			onPress={() => {
 				Categories.setSelectCategory(index)
-				fetchData(false,index)
+				fetchData(index)
 			}}
 			style={[styles.container, { backgroundColor: index === Categories.isSelect ? colorStyles.pomegranate : colorStyles.white }]}>
 			<View style={[styles.radius, { backgroundColor: index === Categories.isSelect ? colorStyles.white : colorStyles.mercury }]}>

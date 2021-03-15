@@ -20,6 +20,16 @@ const DishModel = types
 					height: types.number,
 					value: types.string
 				})),
+				display_total_order: types.string,
+				discount_price: types.optional(types.model({
+					text: types.optional(types.string, " "),
+					unit: types.optional(types.string, " "),
+					value: types.optional(types.number, 0)
+				}), {
+					text: "",
+					unit: "",
+					value: 0
+				}),
 				// option: types.array(types.model({
 				// 	name: types.string,
 				// 	price: types.model({
