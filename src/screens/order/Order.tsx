@@ -6,6 +6,9 @@ import Header from '../../components/Header'
 import UI from '../../stores/UI'
 import { colorStyles } from '../../styles/ColorStyles'
 import { OrderItem } from '../../components/OrderItem'
+import { Icon } from '../../components'
+import ShowOrderDetailModal from '../../screens/order/ShowOrderDetailModal'
+import Orders from '../../stores/Orders'
 interface Props {
 	componentId: string;
 	testID?: string;
@@ -50,44 +53,53 @@ export default class Order extends React.Component<Props> {
 		return (
 			<View style={{ backgroundColor: colorStyles.mercury, flex: 1 }}>
 				<Header />
-				<View style={styles.container}>
+				<View style={[styles.container, { marginTop: 10 }]}>
 					<Text style={{ fontWeight: '200' }}>Địa điểm giao hàng </Text>
 					<Text style={{ fontWeight: '700', paddingVertical: 3, fontSize: 20 }}>LandMarrk 72 </Text>
-					<View style={{ flexDirection: 'row', marginTop: 8 }}>
-						<TouchableOpacity style={styles.wrapButton}>
-							<Text style={styles.note}>Ghi chú</Text>
-						</TouchableOpacity>
-						<TouchableOpacity style={styles.wrapButton}>
-							<Text style={styles.note}>Thay đổi địa điểm</Text>
-						</TouchableOpacity>
-					</View>
 				</View>
 				<View style={[styles.container, { marginTop: 10 }]}>
 					<View style={{ flexDirection: 'row' }}>
-						<Text>13123</Text>
+						<View style={{
+							borderWidth: 0.3,
+							borderColor: colorStyles.mercury,
+							padding: 8,
+							borderRadius: 30,
+							backgroundColor: colorStyles.alto
+						}}>
+							<Icon MaterialCommunityIcons name="motorbike" size={30} color={colorStyles.apple} />
+						</View>
 						<View style={{ marginLeft: 20 }}>
-							<Text style={{ fontWeight: '700' }}>Giao hàng</Text>
-							<Text>Giao hàng trong 26 phút</Text>
+							<Text style={{ fontWeight: '700', fontSize: 17 }}>Giao hàng</Text>
+							<Text style={{ paddingTop: 5 }}>Giao hàng trong 26 phút</Text>
 						</View>
 					</View>
 				</View>
+				<ShowOrderDetailModal />
 				<View style={styles.wrapBill}>
 					<Text style={{ fontSize: 16, fontWeight: '700', paddingBottom: 15 }}>Tóm tắt thanh toán</Text>
 					<View style={{ borderBottomWidth: 0.5, paddingBottom: 10, marginBottom: 10 }}>
 						<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-							<Text>Phí giao hàng</Text>
-							<Text>Phí giao hàng</Text>
+							<Text style={{}}>Phí giao hàng</Text>
+							<Text style={{ fontWeight: '300', fontSize: 17 }}>15,000 đ</Text>
 						</View>
 						<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 							<Text style={{ paddingVertical: 12 }}>Phí dịch vụ</Text>
-							<Text style={{ paddingVertical: 12 }}>Phí dịch vụ</Text>
+							<Text style={{ paddingVertical: 12, fontWeight: '300', fontSize: 17 }}>2,000 đ</Text>
 						</View>
 						<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 							<Text>Phí đơn hàng</Text>
-							<Text>Phí đơn hàng</Text>
+							<Text style={{ fontWeight: '300', fontSize: 17 }}>{Orders && Intl.NumberFormat().format(Orders.totalPrice)} {Orders.orders[0] && Orders.orders[0].price.unit}</Text>
 						</View>
 					</View>
-					<Text>Tổng thanh toán</Text>
+					<TouchableOpacity style={styles.order}>
+						<Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, paddingLeft:10 }}>Đặt hàng</Text>
+						<View style={{ flexDirection: 'row', alignItems: 'baseline', paddingRight:10 }}>
+							<Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17 }}> {Orders && Intl.NumberFormat().format(Orders.totalPrice + 15000 + 2000)} {Orders.orders[0] && Orders.orders[0].price.unit}</Text>
+							<View style={{backgroundColor: 'white', marginLeft: 10, borderRadius: 20, padding: 4}}>
+								<Icon AntDesign name="arrowright" color={colorStyles.grayChateau} />
+							</View>
+						</View>
+					</TouchableOpacity>
 				</View>
 				{/* <OrderItem /> */}
 			</View>
@@ -95,6 +107,14 @@ export default class Order extends React.Component<Props> {
 	}
 }
 const styles = StyleSheet.create({
+	order: {
+		backgroundColor: colorStyles.apple,
+		justifyContent: 'space-between',
+		flexDirection: 'row',
+		padding: 8,
+		borderRadius: 20,
+		alignItems: 'baseline'
+	},
 	wrapBill: {
 		backgroundColor: colorStyles.white,
 		borderWidth: 0.5,
@@ -121,14 +141,17 @@ const styles = StyleSheet.create({
 	},
 	wrapButton: {
 		backgroundColor: colorStyles.white,
-		padding: 3,
-		paddingHorizontal: 8,
+		padding: 5,
+		paddingHorizontal: 18,
 		borderWidth: 0.5,
 		borderRadius: 20,
 		marginRight: 7,
-		borderColor: colorStyles.doveGray
+		borderColor: colorStyles.doveGray,
+		flexDirection: 'row',
+		alignItems: 'baseline'
 	},
 	note: {
-		fontWeight: '500'
+		fontWeight: '600',
+		marginLeft: 10
 	}
 })

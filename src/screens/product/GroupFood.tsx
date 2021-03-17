@@ -6,9 +6,11 @@ import { observer } from 'mobx-react'
 interface Props {
 	groupItem: any,
 	groupIndex: number,
+	restaurantInfo: any
 }
 export const GroupFood = observer((props: Props) => {
-	const { groupItem, groupIndex } = props
+	const { groupItem, groupIndex, restaurantInfo } = props
+
 	return (
 		<View style={styles.container}>
 			<View style={{ backgroundColor: colorStyles.mercury, padding: 7 }}>
@@ -23,6 +25,7 @@ export const GroupFood = observer((props: Props) => {
 							<FoodItem
 								foodItem={item}
 								foodIndex={index}
+								restaurantInfo={restaurantInfo}
 							/>
 						</>
 					)

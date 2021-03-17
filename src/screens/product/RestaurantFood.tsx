@@ -51,12 +51,14 @@ export default class RestaurantFood extends React.Component<Props> {
 		UI.removeScreen(this);
 	}
 	render() {
+		// console.log({ id_restaurant: this.props.restaurantInfo })
+		const restaurantInfo = this.props.restaurantInfo
 		return (
 			<>
 				<View style={styles.wrapBackimage}>
 
 					<Image
-						source={{ uri: this.props.restaurantInfo.photos[8].value }}
+						source={{ uri: restaurantInfo && restaurantInfo.photos[8].value }}
 						style={[styles.backdrop, {
 							width: '100%',
 							height: 230
@@ -79,7 +81,7 @@ export default class RestaurantFood extends React.Component<Props> {
 					data={JSON.parse(JSON.stringify(Dishes.dishes))}
 					ListHeaderComponent={() => <View style={styles.wrapName}>
 						<View style={{ flexDirection: 'row', justifyContent: 'space-between', marginRight: 10 }}>
-							<Text style={styles.name}>{this.props.restaurantInfo.name}</Text>
+							<Text style={styles.name}>{restaurantInfo && restaurantInfo.name}</Text>
 
 							<TouchableOpacity onPress={() => {
 
@@ -90,7 +92,7 @@ export default class RestaurantFood extends React.Component<Props> {
 						<View style={{ marginTop: 3, flexDirection: 'row', }}>
 							<View style={{ flexDirection: 'row', alignItems: 'baseline', }}>
 								<Icon AntDesign name='star' color={colorStyles.saffron} size={21} />
-								<Text style={{ paddingLeft: 5 }}>{this.props.restaurantInfo.rating.avg} - 1.5km</Text>
+								<Text style={{ paddingLeft: 5 }}>{restaurantInfo && restaurantInfo.rating.avg} - 1.5km</Text>
 							</View>
 						</View>
 					</View>}
@@ -99,6 +101,7 @@ export default class RestaurantFood extends React.Component<Props> {
 							<GroupFood
 								groupItem={item}
 								groupIndex={index}
+								restaurantInfo={restaurantInfo && restaurantInfo}
 							/>
 						)
 					}}

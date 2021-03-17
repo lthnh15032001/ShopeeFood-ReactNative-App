@@ -1,13 +1,17 @@
 import React from 'react'
-import { View, Text, Image, StyleSheet } from 'react-native'
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import { Icon } from '../../components/Icon'
 import { colorStyles } from '../../styles/ColorStyles'
+import Orders from '../../stores/Orders'
 interface Props {
 	foodItem: any,
 	foodIndex: any,
+	restaurantInfo: any
 }
 export const FoodItem = (props: Props) => {
-	const { foodItem, foodIndex } = props
+	const { foodItem, foodIndex, restaurantInfo } = props
+	
+	// console.log({ model: restaurantInfo })
 	return (
 		<>
 			<View style={{
@@ -52,9 +56,18 @@ export const FoodItem = (props: Props) => {
 						</View>
 					</View>
 				</View>
-				<View style={{ width: '40%', marginLeft: 110, justifyContent: 'center' }}>
+				<TouchableOpacity style={{ width: '40%', marginLeft: 110, justifyContent: 'center' }}
+					onPress={() => {
+						Orders.addSingleDishes(restaurantInfo, foodItem)
+						// console.log({
+						// 	foodItem: foodItem,
+						// 	restaurant: restaurantInfo
+						// })
+						// console.log(JSON.parse(JSON.stringify(Orders.orders)) , JSON.parse(JSON.stringify(Orders.restaurantId)))
+					}}
+				>
 					<Icon Ionicons name='md-add-circle' size={35} color={colorStyles.apple} />
-				</View>
+				</TouchableOpacity>
 			</View>
 		</>
 	)

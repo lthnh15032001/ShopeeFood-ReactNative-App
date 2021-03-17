@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import { Navigation } from 'react-native-navigation'
@@ -7,6 +7,8 @@ import { colorStyles } from '../../styles/ColorStyles'
 import { DetailProductScreen, OrderScreen } from '..'
 import { observer } from 'mobx-react'
 import Dishes from '../../stores/Dishes'
+import Orders from '../../stores/Orders'
+import RBSheet from "react-native-raw-bottom-sheet";
 interface Props {
 	props: any,
 	item: any,
@@ -15,79 +17,111 @@ interface Props {
 }
 export const RestaurantItem = observer((props: Props) => {
 	const { props: propsItem, item, index, fetchData } = props
+	const refRBSheet = useRef();
 	// console.log({ item: item, index: index })
+	const ordersRestaurant = JSON.parse(JSON.stringify(Orders.restaurant))
+	const moveToRestaurantFood = () => {
+		Dishes.clear()
+		DetailProductScreen(item.id, item)
+	}
 	return (
-		<TouchableOpacity style={styles.container}
-			onPress={() => {
-				Dishes.clear()
-				// Dishes.fetchData(item.id)
-				DetailProductScreen(item.id, item)
-				// OrderScreen()
-				// fetchData()
-			}}
-		>
-			<View style={styles.wrap}>
-				<View style={{ flexDirection: 'row' }}>
-					<Image source={{ uri: item.photos[1].value }} style={{
-						width: item.photos[1].width,
-						height: item.photos[1].height
-					}} />
-					<View style={styles.wrapInfo}>
-						<Text style={styles.name}>{item.name}</Text>
-						<Text style={styles.address}>{item.address.length >= 35 ? item.address.slice(0, 35) + "..." : item.address}</Text>
-						<View style={{ flexDirection: 'row', alignItems: 'baseline', marginTop: 3 }}>
-							<Icon AntDesign name='star' color={colorStyles.saffron} size={21} />
-							<Text style={styles.rating}>{item.rating.avg} -</Text>
-							<Text style={styles.cuisines}>{item.cuisines.map((x: string, i: number) => `${x} ${item.cuisines.length >= 2 ? item.cuisines.length != i + 1 ? "," : "" : ""}`)}</Text>
-						</View>
-						<View style={{ flexDirection: 'row', marginTop: 2, alignItems: 'baseline' }}>
-							<View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
-								<Icon EvilIcons name="tag" size={25} color="black" />
-								<Text style={styles.priceRange}>Tối thiểu: {item.min_order_value.resource_args[0]}</Text>
+		<>
+			<TouchableOpacity style={styles.container}
+				onPress={() => {
+					if (ordersRestaurant) {
+						if (ordersRestaurant.id === item.id) {
+							moveToRestaurantFood()
+						} else {
+							// window.alert("Bạn đã có món ở giỏ hàng, bạn chắc chắn muốn thay đổi cửa hàng chứ ?")
+							refRBSheet.current.open()
+						}
+					} else {
+						moveToRestaurantFood()
+					}
+				}}
+			>
+				<View style={styles.wrap}>
+					<View style={{ flexDirection: 'row' }}>
+						<Image source={{ uri: item.photos[1].value }} style={{
+							width: item.photos[1].width,
+							height: item.photos[1].height
+						}} />
+						<View style={styles.wrapInfo}>
+							<Text style={styles.name}>{item.name}</Text>
+							<Text style={styles.address}>{item.address.length >= 35 ? item.address.slice(0, 35) + "..." : item.address}</Text>
+							<View style={{ flexDirection: 'row', alignItems: 'baseline', marginTop: 3 }}>
+								<Icon AntDesign name='star' color={colorStyles.saffron} size={21} />
+								<Text style={styles.rating}>{item.rating.avg} -</Text>
+								<Text style={styles.cuisines}>{item.cuisines.map((x: string, i: number) => `${x} ${item.cuisines.length >= 2 ? item.cuisines.length != i + 1 ? "," : "" : ""}`)}</Text>
 							</View>
-							<View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
-								<Icon MaterialIcons name="attach-money" size={18} color="black" />
-								<Text style={styles.priceRange}>Giá: {item.price_range.resource_args[0]}</Text>
+							<View style={{ flexDirection: 'row', marginTop: 2, alignItems: 'baseline' }}>
+								<View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
+									<Icon EvilIcons name="tag" size={25} color="black" />
+									<Text style={styles.priceRange}>Tối thiểu: {item.min_order_value.resource_args[0]}</Text>
+								</View>
+								<View style={{ flexDirection: 'row', alignItems: 'baseline' }}>
+									<Icon MaterialIcons name="attach-money" size={18} color="black" />
+									<Text style={styles.priceRange}>Giá: {item.price_range.resource_args[0]}</Text>
+								</View>
 							</View>
-						</View>
-						<View>
+							<View>
 
+							</View>
 						</View>
 					</View>
 				</View>
-			</View>
-		</TouchableOpacity>
-		// <TouchableOpacity
-		// 	onPress={() => {
-		// 		DetailProductScreen(propsItem.componentId)
-		// 	}}
-		// 	style={styles.container}>
-		// 	<View style={styles.wrapImage}>
-		// 		<Image
-		// 			source={{uri : item.photos[3].value}}
-		// 			style={styles.imageThumbnail}
-		// 		/>
-		// 		<View style={styles.timeEstimate}>
-		// 			<Text style={styles.textEstimate}>25-30 min</Text>
-		// 		</View>
-		// 	</View>
-		// 	<View style={styles.wrapInfo}>
-		// 		<Text style={styles.nameProduct}>{item.name}</Text>
-		// 		<View style={styles.childWrap}>
-		// 			<Icon AntDesign name='star' color={colorStyles.black} size={21} />
-		// 			<Text style={styles.starNumber}>{item.rating.avg}</Text>
-		// 			<Text style={styles.category}>{item.categories[0]} </Text>
-		// 			<Icon Entypo name='dot-single' />
-		// 			<Text style={styles.category2}> Snacks</Text>
-		// 			<Icon Entypo name='dot-single' />
-		// 			<Text style={styles.category2}> $$$</Text>
-		// 		</View>
-		// 	</View>
-		// </TouchableOpacity>
+			</TouchableOpacity>
+			<RBSheet
+				ref={refRBSheet}
+				closeOnDragDown={true}
+				closeOnPressMask={false}
+				customStyles={{
+					wrapper: {
+						backgroundColor: "transparent"
+					},
+					draggableIcon: {
+						backgroundColor: "#000"
+					}
+				}}
+			>
+				{/* <YourOwnComponent /> */}
+				<View style={{
+					padding: 20,
+					justifyContent: 'center',
+					alignItems: 'center'
+				}}>
+					<Text style={{
+						fontWeight: '700',
+						fontSize: 21
+					}}>Bạn đã có món ở giỏ hàng, bạn chắc chắn muốn thay đổi cửa hàng chứ ?</Text>
+					<View style={{ padding: 15, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+						<TouchableOpacity style={styles.button} onPress={() => {
+							Orders.clear();
+							refRBSheet.current.close()
+							moveToRestaurantFood()
+						}}>
+							<Text>OK</Text>
+						</TouchableOpacity>
+						<TouchableOpacity style={styles.button} onPress={() => {
+							refRBSheet.current.close()
+						}}>
+							<Text>Không</Text>
+						</TouchableOpacity>
+					</View>
+				</View>
+			</RBSheet>
+		</>
 	)
 })
 
 const styles = StyleSheet.create({
+	button: {
+		borderWidth: 1,
+		paddingVertical: 10,
+		paddingHorizontal: 30,
+		marginLeft: 20,
+		borderRadius: 30
+	},
 	wrap: {
 		shadowColor: "#000",
 		shadowOffset: {

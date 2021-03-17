@@ -8,6 +8,7 @@ import RestaurantFood from './product/RestaurantFood'
 import CategoryFood from './product/CategoryFood'
 import Order from './order/Order'
 import UI from '../stores/UI'
+import ShowOrderDetailModal from './order/ShowOrderDetailModal'
 export const HOME_SCREEN = 'internapp.HomeScreen'
 export const LOGIN_SCREEN = 'internapp.LoginScreen'
 export const REGISTER_SCREEN = 'internapp.RegisterScreen'
@@ -16,6 +17,7 @@ export const RESTAURANT_FOOD_SCREEN = 'internapp.RestaurantFood'
 export const CATEGORY_FOOD_SCREEN = 'internapp.CategoryFood'
 export const ORDER_SCREEN = 'internapp.OrderScreen'
 export const HEADER = 'component.Header'
+export const SHOW_ORDER_DETAIL_MODAL = 'internapp.ShowOrderDetailModal'
 export const Screens = new Map()
 // screen 
 Screens.set(HOME_SCREEN, Home);
@@ -25,6 +27,7 @@ Screens.set(ACCOUNT_SCREEN, AccountScreen)
 Screens.set(RESTAURANT_FOOD_SCREEN, RestaurantFood)
 Screens.set(CATEGORY_FOOD_SCREEN, CategoryFood)
 Screens.set(ORDER_SCREEN, Order)
+Screens.set(SHOW_ORDER_DETAIL_MODAL, ShowOrderDetailModal)
 export const startApp = () => {
 	return Navigation.setRoot({
 		root: {
@@ -145,3 +148,14 @@ export const CategoryFoodScreen = (categoryId: number) => {
 		}
 	})
 }
+// export const showOrderDetail = () => Navigation.showModal({
+// 	stack: {
+// 		children: [
+// 			{
+// 				component: {
+// 					name: SHOW_ORDER_DETAIL_MODAL
+// 				}
+// 			}
+// 		]
+// 	}
+// })
