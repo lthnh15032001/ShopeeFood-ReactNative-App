@@ -10,6 +10,7 @@ import Header from '../../components/Header'
 import { observer } from 'mobx-react'
 import { observable } from 'mobx'
 import { OrderItem } from '../../components/OrderItem'
+
 interface Props {
 	componentId: string;
 	testID?: string;
@@ -89,7 +90,7 @@ export default class Home extends React.Component<Props> {
 							fetchData={this.fetchData}
 						/>
 					</View>}
-				<OrderItem />
+				<OrderItem handleBack={() => Navigation.popTo(this.props.componentId)} />
 			</>
 		)
 	}

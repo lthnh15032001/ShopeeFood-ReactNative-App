@@ -27,6 +27,13 @@ const OrderModel = types
 			self.restaurant = null
 			self.totalPrice = 0
 		},
+		setNoteForSameDishes(id: number, note: string) {
+			self.orders.map((x, i) => {
+				if (x.id === id) {
+					x.setNote(note)
+				}
+			})
+		},
 		addSingleDishes(restaurantOrderType: any, data: any) {
 			self.restaurant = restaurantOrderType
 			let price = 0;

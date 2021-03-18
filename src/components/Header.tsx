@@ -5,14 +5,27 @@ import { Icon } from '../components'
 import { colorStyles } from '../styles/ColorStyles'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import PropTypes from 'prop-types';
+import UI from '../stores/UI'
+import { observer } from 'mobx-react'
 interface HeaderProps {
-	isTitle?: boolean,
-	isRightButton?: boolean,
-	isLeft?: boolean
+	componentId?: string,
+	handleBack?: Function
 }
-const Header = (props: HeaderProps) => {
+const Header = observer((props: HeaderProps) => {
+	// console.log({component: UI.previousComponentIdScreen})
+	// console.log({component: UI.componentId})
+	// console.log({ handleBack: props.handleBack })
+	useEffect(() => {
+
+	}, [props.componentId])
 	const renderLeftComponent = () => {
-		return <TouchableOpacity onPress={() => console.log("dat")}>
+		// console.log(props.componentId)
+		return <TouchableOpacity onPress={() => {
+			{ props.handleBack ? props.handleBack() : Navigation.popTo(props.componentId as string) }
+			// console.log(props.componentId)
+		}
+		}
+		>
 			<Icon Ionicons name='ios-chevron-back-sharp' color={colorStyles.curiousBlue} size={28} />
 		</TouchableOpacity>
 	}
@@ -45,7 +58,7 @@ const Header = (props: HeaderProps) => {
 		</SafeAreaView>
 
 	)
-}
+})
 const styles = StyleSheet.create({
 	textinput: {
 		// borderWidth: 0.25,

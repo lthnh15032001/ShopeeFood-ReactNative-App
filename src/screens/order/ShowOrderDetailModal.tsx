@@ -10,7 +10,11 @@ interface Props {
 	componentId?: string;
 	testID?: string;
 	refRBSheet?: Function,
-	payment?: boolean
+	payment?: boolean,
+	handleBack?: Function
+}
+interface HandleBackProps {
+	handleBack?: Function
 }
 @observer
 export default class ShowOrderDetailModal extends React.Component<Props> {
@@ -18,7 +22,9 @@ export default class ShowOrderDetailModal extends React.Component<Props> {
 	constructor(props: any) {
 		super(props)
 	}
-
+	addNote(x: any, item: any) {
+		Orders.setNoteForSameDishes(item[0].id, x)
+	}
 	render() {
 		const { payment } = this.props
 		// console.log(JSON.parse(JSON.stringify(Orders.getGroupOrderByTypeID())))
@@ -59,8 +65,13 @@ export default class ShowOrderDetailModal extends React.Component<Props> {
 										<View style={{ marginTop: 5, flexDirection: 'row' }}>
 											<Icon Foundation name="clipboard-notes" color={colorStyles.black} />
 											<TextInput
-												placeholder="Ghi chú..."
+												placeholder='Ghi chú...'
 												style={{ paddingLeft: 5, color: colorStyles.scarpaFlow }}
+												onChangeText={(x) => {
+													this.addNote(x, item)
+												}}
+												editable={payment ? true : false}
+												defaultValue={item[0].note }
 											/>
 										</View>
 									</View>
@@ -94,7 +105,7 @@ export default class ShowOrderDetailModal extends React.Component<Props> {
 								{Orders.orders[0] &&
 									<TouchableOpacity style={styles.deliver} onPress={() => {
 										this.props.refRBSheet()
-										OrderScreen()
+										OrderScreen(this.props.handleBack as HandleBackProps)
 									}}>
 										<Text style={{ fontWeight: '600', paddingRight: 5 }}>Giao hàng</Text>
 										<Icon AntDesign name="arrowright" />

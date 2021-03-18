@@ -12,6 +12,7 @@ import { BlurView } from '@react-native-community/blur';
 import { colorStyles } from '../../styles/ColorStyles'
 import { Icon } from '../../components/Icon'
 import { OrderItem } from '../../components/OrderItem'
+import { HOME_SCREEN } from '../'
 interface Props {
 	componentId: string;
 	testID?: string;
@@ -66,13 +67,17 @@ export default class RestaurantFood extends React.Component<Props> {
 						resizeMode='cover'
 						blurRadius={0.5}
 					/>
-					<TouchableOpacity style={{
-						position: 'absolute',
-						top: 40,
-						left: 20,
-						right: 0,
-						bottom: 0
-					}}>
+					<TouchableOpacity
+						onPress={() => {
+							Navigation.popTo(HOME_SCREEN)
+						}}
+						style={{
+							position: 'absolute',
+							top: 40,
+							left: 20,
+							right: 0,
+							bottom: 0
+						}}>
 						<Icon Ionicons name='ios-chevron-back-sharp' color={colorStyles.white} size={40} />
 					</TouchableOpacity>
 				</View>

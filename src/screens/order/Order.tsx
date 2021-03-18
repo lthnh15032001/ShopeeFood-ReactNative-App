@@ -9,9 +9,12 @@ import { OrderItem } from '../../components/OrderItem'
 import { Icon } from '../../components'
 import ShowOrderDetailModal from '../../screens/order/ShowOrderDetailModal'
 import Orders from '../../stores/Orders'
+import { MapOrderViewScreen } from '../'
+import { RESTAURANT_FOOD_SCREEN } from '../'
 interface Props {
 	componentId: string;
 	testID?: string;
+	handleBack? : Function
 }
 export default class Order extends React.Component<Props> {
 	static get options() {
@@ -52,7 +55,7 @@ export default class Order extends React.Component<Props> {
 
 		return (
 			<View style={{ backgroundColor: colorStyles.mercury, flex: 1 }}>
-				<Header />
+				<Header componentId={RESTAURANT_FOOD_SCREEN} handleBack={this.props.handleBack} />
 				<View style={[styles.container, { marginTop: 10 }]}>
 					<Text style={{ fontWeight: '200' }}>Địa điểm giao hàng </Text>
 					<Text style={{ fontWeight: '700', paddingVertical: 3, fontSize: 20 }}>LandMarrk 72 </Text>
@@ -91,11 +94,13 @@ export default class Order extends React.Component<Props> {
 							<Text style={{ fontWeight: '300', fontSize: 17 }}>{Orders && Intl.NumberFormat().format(Orders.totalPrice)} {Orders.orders[0] && Orders.orders[0].price.unit}</Text>
 						</View>
 					</View>
-					<TouchableOpacity style={styles.order}>
-						<Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, paddingLeft:10 }}>Đặt hàng</Text>
-						<View style={{ flexDirection: 'row', alignItems: 'baseline', paddingRight:10 }}>
+					<TouchableOpacity style={styles.order} onPress={() => {
+						MapOrderViewScreen(this.props.componentId)
+					}}>
+						<Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, paddingLeft: 10 }}>Đặt hàng</Text>
+						<View style={{ flexDirection: 'row', alignItems: 'baseline', paddingRight: 10 }}>
 							<Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17 }}> {Orders && Intl.NumberFormat().format(Orders.totalPrice + 15000 + 2000)} {Orders.orders[0] && Orders.orders[0].price.unit}</Text>
-							<View style={{backgroundColor: 'white', marginLeft: 10, borderRadius: 20, padding: 4}}>
+							<View style={{ backgroundColor: 'white', marginLeft: 10, borderRadius: 20, padding: 4 }}>
 								<Icon AntDesign name="arrowright" color={colorStyles.grayChateau} />
 							</View>
 						</View>

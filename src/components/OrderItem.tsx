@@ -8,7 +8,10 @@ import { observer } from 'mobx-react'
 // import { showOrderDetail } from '../screens'
 import RBSheet from "react-native-raw-bottom-sheet";
 import ShowOrderDetailModal from '../screens/order/ShowOrderDetailModal'
-export const OrderItem = observer(() => {
+interface Props {
+	handleBack?: Function
+}
+export const OrderItem = observer((props: Props) => {
 	// console.log(JSON.parse(JSON.stringify(Orders.orders)), JSON.parse(JSON.stringify(Orders.restaurant)))
 	const refRBSheet = useRef();
 	const orders = JSON.parse(JSON.stringify(Orders.orders))
@@ -57,13 +60,15 @@ export const OrderItem = observer(() => {
 						>
 							<ShowOrderDetailModal
 								payment={true}
-							refRBSheet={() => refRBSheet.current.close()}/>
+								refRBSheet={() => refRBSheet.current.close()}
+								handleBack={props.handleBack}
+							/>
 						</RBSheet>
 					</View>
 					<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 						<View>
 							<Text style={{ fontWeight: '800', color: colorStyles.white }}>{orders && orders.length} món</Text>
-							<Text style={{ fontWeight: '400', color: colorStyles.white }}>{restaurant && restaurant.name}</Text>
+							<Text style={{ fontWeight: '400', color: colorStyles.white }}>{restaurant && restaurant.name.length >=33 ? restaurant.name.slice(0,33) + "..." : restaurant.name}</Text>
 						</View>
 						<View style={{ justifyContent: 'center', marginLeft: 10 }}>
 							<Text style={{ fontWeight: '800', color: colorStyles.white }}>{Intl.NumberFormat().format(Orders.totalPrice)} {Orders.orders[0].price.unit}</Text>

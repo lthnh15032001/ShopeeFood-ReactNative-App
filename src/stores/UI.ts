@@ -30,6 +30,7 @@ const UI = types
 			}),
 			{},
 		),
+		previousComponentIdScreen: types.optional(types.string, "")
 	})
 	.views(self => ({
 		font(size: number) {
@@ -43,7 +44,9 @@ const UI = types
 		addScreen(screen: any) {
 			Screens.add(screen)
 		},
-
+		setPrevious(componentId: string) {
+			self.previousComponentIdScreen = componentId
+		},
 		removeScreen(screen: any) {
 			Screens.delete(screen);
 		},
@@ -79,6 +82,7 @@ const UI = types
 			(self as any).updateLayout();
 		},
 		onDidDisappear(componentId: string, componentName?: string) {
+			this.setPrevious(componentId)
 			if (componentName === self.preview.componentName) {
 				self.preview.componentName = undefined;
 				self.preview.active = false;

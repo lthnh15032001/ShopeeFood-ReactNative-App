@@ -10,7 +10,7 @@ interface Props {
 }
 export const FoodItem = (props: Props) => {
 	const { foodItem, foodIndex, restaurantInfo } = props
-	
+
 	// console.log({ model: restaurantInfo })
 	return (
 		<>
@@ -36,17 +36,22 @@ export const FoodItem = (props: Props) => {
 					/>
 					<View style={{ paddingLeft: 8 }}>
 						<Text style={{ fontWeight: '600', fontSize: 15, marginBottom: 3 }}>{foodItem.name}</Text>
-						<Text style={{ marginBottom: 3 }}>
-							<Text style={{ textDecorationLine: 'line-through', fontSize: 16 }}>
-								{foodItem.discount_price && foodItem.discount_price.text}
-							</Text>
-							{foodItem.discount_price.text && <View style={{ paddingHorizontal: 5, alignItems: 'baseline' }}>
-								<Icon AntDesign name="arrowright" />
-							</View>}
+						{foodItem.discount_price.text ?
+							<Text style={{ marginBottom: 3 }}>
+								<Text style={{ textDecorationLine: 'line-through', fontSize: 16 }}>
+									{foodItem.price.text}
+								</Text>
+								{foodItem.discount_price.text && <View style={{ paddingHorizontal: 5, alignItems: 'baseline' }}>
+									<Icon AntDesign name="arrowright" />
+								</View>}
+								<Text style={{ fontSize: 16 }}>
+									{Intl.NumberFormat().format(foodItem.price.value - foodItem.discount_price.value)}đ
+								</Text>
+							</Text> :
 							<Text style={{ fontSize: 16 }}>
 								{foodItem.price.text}
 							</Text>
-						</Text>
+						}
 						{foodItem.description.length >= 1 &&
 							<Text style={{ fontSize: 15, marginBottom: 8 }}>{foodItem.description}</Text>
 						}
