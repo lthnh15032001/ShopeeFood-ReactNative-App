@@ -6,7 +6,8 @@ import { observer } from 'mobx-react'
 interface Props {
 	groupItem: any,
 	groupIndex: number,
-	restaurantInfo: any
+	restaurantInfo: any,
+	// favorite: boolean
 }
 export const GroupFood = observer((props: Props) => {
 	const { groupItem, groupIndex, restaurantInfo } = props
@@ -26,6 +27,7 @@ export const GroupFood = observer((props: Props) => {
 								foodItem={item}
 								foodIndex={index}
 								restaurantInfo={restaurantInfo}
+								// favorite={favorite}
 							/>
 						</>
 					)

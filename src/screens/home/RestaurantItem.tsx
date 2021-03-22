@@ -13,16 +13,17 @@ interface Props {
 	props: any,
 	item: any,
 	index: any,
-	fetchData?: Function
+	fetchData?: Function,
+	favorite?: boolean
 }
 export const RestaurantItem = observer((props: Props) => {
-	const { props: propsItem, item, index, fetchData } = props
+	const { props: propsItem, item, index, fetchData, favorite } = props
 	const refRBSheet = useRef();
 	// console.log({ item: item, index: index })
 	const ordersRestaurant = JSON.parse(JSON.stringify(Orders.restaurant))
 	const moveToRestaurantFood = () => {
 		Dishes.clear()
-		DetailProductScreen(item.id, item)
+		DetailProductScreen(item.id, item, favorite)
 	}
 	return (
 		<>

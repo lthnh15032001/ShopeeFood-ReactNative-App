@@ -1,7 +1,7 @@
 import { Navigation } from 'react-native-navigation'
 import Home from './home/Home'
-import LoginScreen from './authen/Login'
-import RegisterScreen from './authen/Register'
+import MarkRestaurant from './favorite/MarkRestaurant'
+import CompleteOrder from './favorite/CompleteOrder'
 import AccountScreen from './account/AccountScreen'
 // import Header from '../components/Header'
 import RestaurantFood from './product/RestaurantFood'
@@ -11,8 +11,8 @@ import UI from '../stores/UI'
 import ShowOrderDetailModal from './order/ShowOrderDetailModal'
 import MapOrderView from './order/MapOrderView'
 export const HOME_SCREEN = 'internapp.HomeScreen'
-export const LOGIN_SCREEN = 'internapp.LoginScreen'
-export const REGISTER_SCREEN = 'internapp.RegisterScreen'
+export const MARK_FAVORITE_SCREEN = 'internapp.markFavoriteRestautant'
+export const COMPLETE_ORDER_SCREEN = 'internapp.CompleteOrderScreen'
 export const ACCOUNT_SCREEN = 'internapp.AccountScreen'
 export const RESTAURANT_FOOD_SCREEN = 'internapp.RestaurantFood'
 export const CATEGORY_FOOD_SCREEN = 'internapp.CategoryFood'
@@ -23,8 +23,8 @@ export const MAP_ORDER_VIEW = 'internapp.MapOrderView'
 export const Screens = new Map()
 // screen 
 Screens.set(HOME_SCREEN, Home);
-Screens.set(LOGIN_SCREEN, LoginScreen);
-Screens.set(REGISTER_SCREEN, RegisterScreen);
+Screens.set(MARK_FAVORITE_SCREEN, MarkRestaurant);
+Screens.set(COMPLETE_ORDER_SCREEN, CompleteOrder);
 Screens.set(ACCOUNT_SCREEN, AccountScreen)
 Screens.set(RESTAURANT_FOOD_SCREEN, RestaurantFood)
 Screens.set(CATEGORY_FOOD_SCREEN, CategoryFood)
@@ -52,12 +52,12 @@ export const startApp = () => {
 					},
 					{
 						stack: {
-							id: "LOGIN_SCREEN",
+							id: "MARK_FAVORITE_SCREEN",
 							children: [
 								{
 									component: {
-										id: LOGIN_SCREEN,
-										name: LOGIN_SCREEN
+										id: MARK_FAVORITE_SCREEN,
+										name: MARK_FAVORITE_SCREEN
 									}
 								}
 							],
@@ -73,12 +73,12 @@ export const startApp = () => {
 					},
 					{
 						stack: {
-							id: "REGISTER_SCREEN",
+							id: "COMPLETE_ORDER_SCREEN",
 							children: [
 								{
 									component: {
-										id: REGISTER_SCREEN,
-										name: REGISTER_SCREEN
+										id: COMPLETE_ORDER_SCREEN,
+										name: COMPLETE_ORDER_SCREEN
 									}
 								}
 							],
@@ -120,22 +120,24 @@ export const startApp = () => {
 		}
 	})
 }
-interface HandleBackProps {
-	handleBack?: Function
-}
-export const OrderScreen = (props: HandleBackProps) => {
-	// console.log(props)
+// interface HandleBackProps {
+// 	handleBack?: Function,
+// 	favorite?: boolean
+// }
+export const OrderScreen = (handleBack: any, favorite: boolean = false) => {
+	// console.log({ favorite: favorite })
 	Navigation.push(<string>UI.componentId, {
 		component: {
 			id: ORDER_SCREEN,
 			name: ORDER_SCREEN,
 			passProps: {
-				handleBack: props && props
+				handleBack: handleBack,
+				favorite: favorite
 			}
 		},
 	})
 }
-export const DetailProductScreen = (id_restaurant: number, restaurantInfo: any) => {
+export const DetailProductScreen = (id_restaurant: number, restaurantInfo: any, favorite: boolean = false) => {
 	// console.log({ Ui: <string>UI.componentId })
 	// console.log({ id: id })
 	Navigation.push(<string>UI.componentId, {
@@ -144,7 +146,8 @@ export const DetailProductScreen = (id_restaurant: number, restaurantInfo: any) 
 			id: RESTAURANT_FOOD_SCREEN,
 			passProps: {
 				id_restaurant: id_restaurant,
-				restaurantInfo: restaurantInfo
+				restaurantInfo: restaurantInfo,
+				favorite: favorite
 			}
 		}
 	})
@@ -160,25 +163,26 @@ export const CategoryFoodScreen = (categoryId: number) => {
 		}
 	})
 }
-export const MapOrderViewScreen = (componentId: string) => {
+export const MapOrderViewScreen = (favorite: boolean = false) => {
+	// console.log({ map: favorite })
 	Navigation.push(<string>UI.componentId, {
 		component: {
 			name: MAP_ORDER_VIEW,
 			id: MAP_ORDER_VIEW,
 			passProps: {
-				prevComponentId: componentId
+				favorite: favorite
 			}
 		}
 	})
 }
-// export const showOrderDetail = () => Navigation.showModal({
-// 	stack: {
-// 		children: [
-// 			{
-// 				component: {
-// 					name: SHOW_ORDER_DETAIL_MODAL
-// 				}
-// 			}
-// 		]
-// 	}
-// })
+export const CompleteOrderScreen = () => {
+	Navigation.push(<string>UI.componentId, {
+		component: {
+			name: COMPLETE_ORDER_SCREEN,
+			id: COMPLETE_ORDER_SCREEN,
+			passProps: {
+				// favorite: favorite
+			}
+		}
+	})
+}

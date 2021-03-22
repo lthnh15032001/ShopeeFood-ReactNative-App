@@ -7,27 +7,40 @@ import { autobind } from 'core-decorators';
 import Dishes from '../../stores/Dishes'
 import { GroupFood } from './GroupFood'
 import Empty from '../../components/Empty'
-import { observer } from 'mobx-react'
+import { observer, Observer } from 'mobx-react'
 import { BlurView } from '@react-native-community/blur';
 import { colorStyles } from '../../styles/ColorStyles'
 import { Icon } from '../../components/Icon'
 import { OrderItem } from '../../components/OrderItem'
-import { HOME_SCREEN } from '../'
+import { HOME_SCREEN, MARK_FAVORITE_SCREEN } from '../'
+import MarkRestaurant from '../../stores/MarkRestaurants'
 interface Props {
 	componentId: string;
 	testID?: string;
 	id_restaurant: number,
-	restaurantInfo: any
+	restaurantInfo: any,
+	favorite: boolean
 }
+
+
 @observer
 export default class RestaurantFood extends React.Component<Props> {
 	static get options() {
 		return {
 			topBar: {
 				visible: false
+			},
+			bottomTabs: {
+				visible: false
 			}
 		}
 	}
+	// MarkFavorite = observer(() => {
+	// 	const isFavorite = MarkRestaurant.restaurantFavorite.findIndex((x, i) => {
+	// 		x.id === this.props.restaurantInfo.id
+	// 	})
+	// 	return <View></View>
+	// })
 	constructor(props: any) {
 		super(props)
 	}
@@ -52,8 +65,8 @@ export default class RestaurantFood extends React.Component<Props> {
 		UI.removeScreen(this);
 	}
 	render() {
-		// console.log({ id_restaurant: this.props.restaurantInfo })
 		const restaurantInfo = this.props.restaurantInfo
+		const markRestaurant = JSON.parse(JSON.stringify(MarkRestaurant.restaurantFavorite))
 		return (
 			<>
 				<View style={styles.wrapBackimage}>
@@ -69,7 +82,7 @@ export default class RestaurantFood extends React.Component<Props> {
 					/>
 					<TouchableOpacity
 						onPress={() => {
-							Navigation.popTo(HOME_SCREEN)
+							this.props.favorite ? Navigation.popTo(MARK_FAVORITE_SCREEN) : Navigation.popTo(HOME_SCREEN)
 						}}
 						style={{
 							position: 'absolute',
@@ -87,12 +100,24 @@ export default class RestaurantFood extends React.Component<Props> {
 					ListHeaderComponent={() => <View style={styles.wrapName}>
 						<View style={{ flexDirection: 'row', justifyContent: 'space-between', marginRight: 10 }}>
 							<Text style={styles.name}>{restaurantInfo && restaurantInfo.name}</Text>
+							<View style={{ justifyContent: 'center' }}>
+								<TouchableOpacity onPress={() => {
+									MarkRestaurant.addFavorite(restaurantInfo);
+									// console.log(JSON.parse(JSON.stringify(MarkRestaurant.restaurantFavorite)))
+								}}>
+									{
+										markRestaurant.findIndex((x: any) => { return x.id === restaurantInfo.id }) < 0 ?
+											< Icon AntDesign name="heart" size={31} />
+											:
+											<Icon AntDesign name="heart" size={31} color={colorStyles.thunderbird} />
 
-							<TouchableOpacity onPress={() => {
-
-							}}>
-								<Icon AntDesign name="heart" size={21} />
-							</TouchableOpacity>
+									}
+									{/* <Icon AntDesign name="heart" size={21} color={isFavorite < 0 ? colorStyles.black : colorStyles.thunderbird} /> */}
+								</TouchableOpacity>
+								<TouchableOpacity style={{ position: 'absolute', borderWidth: 1, borderColor: 'white', paddingHorizontal: 4, top: 0, right: -10, backgroundColor: colorStyles.thunderbird, borderRadius: 50, }}>
+									<Text style={{ fontSize: 10, color: colorStyles.white, fontWeight: '700' }}>{markRestaurant.length}</Text>
+								</TouchableOpacity>
+							</View>
 						</View>
 						<View style={{ marginTop: 3, flexDirection: 'row', }}>
 							<View style={{ flexDirection: 'row', alignItems: 'baseline', }}>
@@ -107,6 +132,7 @@ export default class RestaurantFood extends React.Component<Props> {
 								groupItem={item}
 								groupIndex={index}
 								restaurantInfo={restaurantInfo && restaurantInfo}
+							// favorite={this.props.favorite}
 							/>
 						)
 					}}
@@ -114,7 +140,7 @@ export default class RestaurantFood extends React.Component<Props> {
 					keyExtractor={(item, index) => index.toString()}
 					showsVerticalScrollIndicator={false}
 				/>
-				<OrderItem />
+				<OrderItem favorite={this.props.favorite} />
 			</>
 		)
 	}
@@ -127,6 +153,7 @@ const styles = StyleSheet.create({
 	name: {
 		fontWeight: '700',
 		fontSize: 20,
+		width: '80%'
 	},
 	wrapBackimage: {
 		// width: '100%',

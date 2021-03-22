@@ -1,5 +1,5 @@
 import { Navigation } from 'react-native-navigation'
-import DishModel from './models/DishModel'
+import DishModel from './models/DishModel'
 import Services from '../services/Services'
 import { types, unprotect } from 'mobx-state-tree'
 import { flow } from 'mobx'

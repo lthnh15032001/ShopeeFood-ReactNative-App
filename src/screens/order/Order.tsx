@@ -14,7 +14,8 @@ import { RESTAURANT_FOOD_SCREEN } from '../'
 interface Props {
 	componentId: string;
 	testID?: string;
-	handleBack? : Function
+	handleBack?: Function,
+	favorite?: boolean
 }
 export default class Order extends React.Component<Props> {
 	static get options() {
@@ -55,7 +56,12 @@ export default class Order extends React.Component<Props> {
 
 		return (
 			<View style={{ backgroundColor: colorStyles.mercury, flex: 1 }}>
-				<Header componentId={RESTAURANT_FOOD_SCREEN} handleBack={this.props.handleBack} />
+				<Header
+					componentId={RESTAURANT_FOOD_SCREEN}
+					handleBack={this.props.handleBack}
+					type={2}
+					titleName={Orders.restaurant?.name}
+				/>
 				<View style={[styles.container, { marginTop: 10 }]}>
 					<Text style={{ fontWeight: '200' }}>Địa điểm giao hàng </Text>
 					<Text style={{ fontWeight: '700', paddingVertical: 3, fontSize: 20 }}>LandMarrk 72 </Text>
@@ -95,7 +101,8 @@ export default class Order extends React.Component<Props> {
 						</View>
 					</View>
 					<TouchableOpacity style={styles.order} onPress={() => {
-						MapOrderViewScreen(this.props.componentId)
+						console.log({ mapFave: this.props.favorite })
+						MapOrderViewScreen(this.props.favorite)
 					}}>
 						<Text style={{ color: 'white', fontWeight: 'bold', fontSize: 17, paddingLeft: 10 }}>Đặt hàng</Text>
 						<View style={{ flexDirection: 'row', alignItems: 'baseline', paddingRight: 10 }}>

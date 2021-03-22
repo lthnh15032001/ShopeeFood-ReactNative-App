@@ -3,13 +3,17 @@ import React from 'react'
 import { Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import { Navigation } from 'react-native-navigation';
 import UI from '../../stores/UI';
-import MapView, { Marker, Geojson } from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import { colorStyles } from '../../styles/ColorStyles';
 import { Icon } from '../../components/Icon';
 import Orders from '../../stores/Orders'
+import { HOME_SCREEN, MARK_FAVORITE_SCREEN, COMPLETE_ORDER_SCREEN } from '../../screens/'
+import { CompleteOrderScreen } from '../../screens'
+import Modal from 'react-native-modal';
+import MarkRestaurant from '../../stores/MarkRestaurants';
 interface Props {
 	componentId: string,
-	prevComponentId: string,
+	favorite: boolean
 }
 export default class MapOrderView extends React.Component<Props> {
 	static get options() {
@@ -21,6 +25,9 @@ export default class MapOrderView extends React.Component<Props> {
 				visible: false
 			}
 		}
+	}
+	state = {
+		isModalOpen: false
 	}
 	constructor(props: any) {
 		super(props)
@@ -40,207 +47,284 @@ export default class MapOrderView extends React.Component<Props> {
 		UI.removeScreen(this);
 	}
 	render() {
-		// const myPlace = {
-		// 	type: 'FeatureCollection',
-		// 	features: [
-		// 		{
-		// 			type: 'Feature',
-		// 			properties: {},
-		// 			geometry: {
-		// 				type: 'Point',
-		// 				coordinates: [30.0163427, 110.7818576],
-		// 			}
-		// 		}
-		// 	]
-		// };
 		return (
-			<View style={styles.container}>
-
-				<MapView
-					style={{ flex: 1 }}
-					minZoomLevel={14}
-					initialRegion={{
-						latitude: 21.0163427,
-						longitude: 105.7818576,
-						latitudeDelta: 0.0922,
-						longitudeDelta: 0.0421,
-					}}
-					zoomEnabled={true}
-					// showsUserLocation={true}
-					onPanDrag={(coordinate) => {
-
-					}}
-					onMarkerDragEnd={(x) => {
-						console.log(x)
-					}}
-					// scrollEnabled={false}
-				>
-					<Marker
-						title={Orders.restaurant?.name}
-						coordinate={{
-							"latitude": 21.0163427,
-							"longitude": 105.7818576
+			<>
+				<View style={styles.container}>
+					<MapView
+						style={{ flex: 1 }}
+						minZoomLevel={14}
+						initialRegion={{
+							latitude: 21.0163427,
+							longitude: 105.7818576,
+							latitudeDelta: 0.0922,
+							longitudeDelta: 0.0421,
 						}}
-						image={require('../../assets/map.png')}
+						zoomEnabled={true}
+						// showsUserLocation={true}
+						onPanDrag={(coordinate) => {
 
-					/>
-					{/* <Geojson
+						}}
+						onMarkerDragEnd={(x) => {
+							console.log(x)
+						}}
+					// scrollEnabled={false}
+					>
+						<Marker
+							title={Orders.restaurant?.name}
+							coordinate={{
+								"latitude": 21.0163427,
+								"longitude": 105.7818576
+							}}
+							image={require('../../assets/map.png')}
+
+						/>
+						{/* <Geojson
 						geojson={myPlace}
 						strokeColor="red"
-						fillColor="green"
+						Huỷ="green"
 						strokeWidth={2}
 					/> */}
-				</MapView>
-				<View style={{
-					position: 'absolute',
-					top: 50,
-					right: 50,
-					left: 20,
-					shadowColor: "#000",
-					shadowOffset: {
-						width: 0,
-						height: 2,
-					},
-					shadowOpacity: 0.25,
-					shadowRadius: 3.84,
-					elevation: 5,
-				}}>
-					<TouchableOpacity
-						onPress={() => {
-							Navigation.pop(UI.previousComponentIdScreen)
-						}}
-						style={{ backgroundColor: 'white', width: 40, height: 40, borderRadius: 50, justifyContent: 'center', alignItems: 'center', flex: 1 }}>
-						<Icon Ionicons name="ios-chevron-back-sharp" color="black" size={20} />
-					</TouchableOpacity>
-				</View>
-				<View style={styles.wrapInfo}>
-					<View style={{ flexDirection: 'row', paddingHorizontal: 20, justifyContent: 'space-between', marginTop: 10 }}>
-						<View style={{ flexDirection: 'row' }}>
-							<Image
-								source={require('../../assets/avt.jpeg')}
-								style={{ width: 65, height: 65, borderRadius: 50 }}
-							/>
-							<View style={{ marginLeft: 15, marginTop: 10 }}>
-								<Text style={{ color: 'white', fontWeight: '600', fontSize: 17 }}>Lê Thành Đạt</Text>
-								<View style={{ flexDirection: 'row', paddingTop: 4 }}>
-									<Icon AntDesign name="star" color={colorStyles.pizazz} />
-									<Icon AntDesign name="star" color={colorStyles.pizazz} />
-									<Icon AntDesign name="star" color={colorStyles.pizazz} />
-									<Icon AntDesign name="star" color={colorStyles.pizazz} />
-									<Icon AntDesign name="star" />
+					</MapView>
+
+
+					<View style={{
+						position: 'absolute',
+						top: 50,
+						right: 50,
+						left: 20,
+						shadowColor: "#000",
+						shadowOffset: {
+							width: 0,
+							height: 2,
+						},
+						shadowOpacity: 0.25,
+						shadowRadius: 3.84,
+						elevation: 5,
+					}}>
+						<TouchableOpacity
+							onPress={() => {
+								Navigation.pop(UI.previousComponentIdScreen)
+							}}
+							style={{ backgroundColor: 'white', width: 40, height: 40, borderRadius: 50, justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+							<Icon Ionicons name="ios-chevron-back-sharp" color="black" size={20} />
+						</TouchableOpacity>
+					</View>
+					<View style={styles.wrapInfo}>
+						<View style={{ flexDirection: 'row', paddingHorizontal: 20, justifyContent: 'space-between', marginTop: 10 }}>
+							<View style={{ flexDirection: 'row' }}>
+								<Image
+									source={require('../../assets/avt.jpeg')}
+									style={{ width: 65, height: 65, borderRadius: 50 }}
+								/>
+								<View style={{ marginLeft: 15, marginTop: 10 }}>
+									<Text style={{ color: 'white', fontWeight: '600', fontSize: 17 }}>Lê Thành Đạt</Text>
+									<View style={{ flexDirection: 'row', paddingTop: 4 }}>
+										<Icon AntDesign name="star" color={colorStyles.pizazz} />
+										<Icon AntDesign name="star" color={colorStyles.pizazz} />
+										<Icon AntDesign name="star" color={colorStyles.pizazz} />
+										<Icon AntDesign name="star" color={colorStyles.pizazz} />
+										<Icon AntDesign name="star" />
+									</View>
 								</View>
 							</View>
+							<View style={{ flexDirection: 'row', marginTop: 20 }}>
+								<Icon AntDesign name="message1" size={28} style={{ paddingRight: 13 }} color={colorStyles.pizazz} />
+								<Icon AntDesign name="phone" size={28} color={colorStyles.pizazz} />
+							</View>
 						</View>
-						<View style={{ flexDirection: 'row', marginTop: 20 }}>
-							<Icon AntDesign name="message1" size={28} style={{ paddingRight: 13 }} color={colorStyles.pizazz} />
-							<Icon AntDesign name="phone" size={28} color={colorStyles.pizazz} />
+						<View style={styles.info}>
+							<View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+								<View style={{ alignItems: 'center' }}>
+									<Icon Entypo name="dot-single" size={30} />
+								</View>
+								<View style={{ width: 100, marginTop: 14 }}>
+									<View style={{ borderWidth: 0.5, width: '100%', borderColor: colorStyles.silver }}></View>
+								</View>
+								<View style={{ alignItems: 'center' }}>
+									<Icon Entypo name="dot-single" size={30} />
+								</View>
+								<View style={{ width: 100, marginTop: 14 }}>
+									<View style={{ borderWidth: 0.5, width: '100%', borderColor: colorStyles.silver }}></View>
+								</View>
+								<View style={{ alignItems: 'center', paddingLeft: 10 }}>
+									<Icon Ionicons name="checkmark-done-circle-outline" size={25} color={colorStyles.thunderbird} />
+								</View>
+							</View>
+							<View style={{ flexDirection: 'row' }}>
+								<View style={{ alignItems: 'center', paddingLeft: 4 }}>
+									<Text style={{ fontSize: 12 }}>10:41</Text>
+									<Text style={{ paddingTop: 7, fontSize: 12 }}>Đã đăt</Text>
+								</View>
+								<View style={{ alignItems: 'center', paddingLeft: 95, }}>
+									<Text style={{ fontSize: 12 }}>10:50</Text>
+									<Text style={{ paddingTop: 7, fontSize: 12 }}>Đã lấy</Text>
+								</View>
+								<View style={{ alignItems: 'center', paddingLeft: 80, }}>
+									<Text style={{ fontSize: 12, fontWeight: '700' }}>11:10</Text>
+									<Text style={{ paddingTop: 7, fontSize: 12, fontWeight: '700' }}>Hoàn thành </Text>
+								</View>
+							</View>
+							<View style={{ paddingTop: 5, flexDirection: 'row', alignItems: 'center' }}>
+								<View style={{
+									backgroundColor: colorStyles.amber,
+									padding: 10, borderRadius: 100,
+									marginRight: 12
+								}}>
+									<Icon Feather name="map-pin" size={15} color={colorStyles.thunderbird} />
+								</View>
+								<Text>Toàn nhà 72 landmark</Text>
+							</View>
+							<View style={{ paddingTop: 5, flexDirection: 'row', alignItems: 'center' }}>
+								<View style={{
+									backgroundColor: colorStyles.amber,
+									padding: 10, borderRadius: 100,
+									marginRight: 12
+								}}>
+									<Icon FontAwesome5 name="store" size={15} color={colorStyles.thunderbird} />
+								</View>
+								<Text>{Orders.restaurant?.address}</Text>
+							</View>
+							<View style={{ paddingTop: 5, flexDirection: 'row', alignItems: 'center' }}>
+								<View style={{
+									backgroundColor: colorStyles.amber,
+									padding: 10,
+									borderRadius: 100,
+									marginRight: 12
+								}}>
+									<Icon FontAwesome name="money" size={15} color={colorStyles.thunderbird} />
+								</View>
+								<Text>Tiền mặt: <Text style={{ fontWeight: '700', fontSize: 17 }}>{Intl.NumberFormat().format(Orders.totalPrice)}đ</Text></Text>
+							</View>
+							<View style={{
+								position: 'absolute',
+								bottom: 0,
+								right: 0,
+								left: 0,
+								height: 60,
+								flexDirection: 'row',
+								justifyContent: 'space-between',
+								shadowColor: "#000",
+								shadowOffset: {
+									width: 0,
+									height: 4,
+								},
+								shadowOpacity: 0.30,
+								shadowRadius: 4.65,
+								elevation: 8,
+								// padding: 10,
+
+							}}>
+								<TouchableOpacity style={[styles.button, {
+									backgroundColor: colorStyles.thunderbird,
+									borderBottomLeftRadius: 50,
+									flexDirection: 'row'
+								}]}
+									onPress={() => {
+										// Navigation.popToRoot(HOME_SCREEN);
+										this.setState({
+											isModalOpen: true
+										})
+									}}
+								>
+									<Icon EvilIcons name="close-o" size={25} color={colorStyles.white} />
+									<Text style={styles.txt}>Huỷ</Text>
+								</TouchableOpacity>
+
+								<TouchableOpacity style={[styles.button, {
+									borderRightWidth: 0,
+									borderBottomRightRadius: 50,
+									backgroundColor: colorStyles.apple,
+									flexDirection: 'row'
+								}]}
+									onPress={() => {
+										// console.log(JSON.parse(JSON.stringify(MarkRestaurant.orderComplete)))
+										const orderTypes = {
+											restaurantId: Orders.restaurant?.id,
+											dishesOrder: JSON.parse(JSON.stringify(Orders.orders))
+										}
+										MarkRestaurant.add(orderTypes)
+										// Navigation.popToRoot()
+										// this.props.favorite ? Navigation.popToRoot(MARK_FAVORITE_SCREEN) : Navigation.popToRoot(HOME_SCREEN)
+										// Navigation.setRoot()
+										console.log(JSON.parse(JSON.stringify(MarkRestaurant.orderComplete)))
+									}}
+								>
+									<Icon Ionicons name="checkmark-done-circle-outline" size={25} color={colorStyles.white} />
+									<Text style={styles.txt}>Hoàn thành</Text>
+								</TouchableOpacity>
+							</View>
 						</View>
 					</View>
-					<View style={styles.info}>
-						<View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-							<View style={{ alignItems: 'center' }}>
-								<Icon Entypo name="dot-single" size={30} />
-							</View>
-							<View style={{ width: 100, marginTop: 14 }}>
-								<View style={{ borderWidth: 0.5, width: '100%', borderColor: colorStyles.silver }}></View>
-							</View>
-							<View style={{ alignItems: 'center' }}>
-								<Icon Entypo name="dot-single" size={30} />
-							</View>
-							<View style={{ width: 100, marginTop: 14 }}>
-								<View style={{ borderWidth: 0.5, width: '100%', borderColor: colorStyles.silver }}></View>
-							</View>
-							<View style={{ alignItems: 'center', paddingLeft: 10 }}>
-								<Icon Ionicons name="checkmark-done-circle-outline" size={25} color={colorStyles.thunderbird} />
-							</View>
-						</View>
-						<View style={{ flexDirection: 'row' }}>
-							<View style={{ alignItems: 'center', paddingLeft: 4 }}>
-								<Text style={{ fontSize: 12 }}>10:41</Text>
-								<Text style={{ paddingTop: 7, fontSize: 12 }}>Đã đăt</Text>
-							</View>
-							<View style={{ alignItems: 'center', paddingLeft: 95, }}>
-								<Text style={{ fontSize: 12 }}>10:50</Text>
-								<Text style={{ paddingTop: 7, fontSize: 12 }}>Đã lấy</Text>
-							</View>
-							<View style={{ alignItems: 'center', paddingLeft: 80, }}>
-								<Text style={{ fontSize: 12, fontWeight: '700' }}>11:10</Text>
-								<Text style={{ paddingTop: 7, fontSize: 12, fontWeight: '700' }}>Hoàn thành </Text>
-							</View>
-						</View>
-						<View style={{ paddingTop: 5, flexDirection: 'row', alignItems: 'center' }}>
-							<View style={{
-								backgroundColor: colorStyles.amber,
-								padding: 10, borderRadius: 100,
-								marginRight: 12
-							}}>
-								<Icon Feather name="map-pin" size={15} color={colorStyles.thunderbird} />
-							</View>
-							<Text>Toàn nhà 72 landmark</Text>
-						</View>
-						<View style={{ paddingTop: 5, flexDirection: 'row', alignItems: 'center' }}>
-							<View style={{
-								backgroundColor: colorStyles.amber,
-								padding: 10, borderRadius: 100,
-								marginRight: 12
-							}}>
-								<Icon FontAwesome5 name="store" size={15} color={colorStyles.thunderbird} />
-							</View>
-							<Text>{Orders.restaurant?.address}</Text>
-						</View>
-						<View style={{ paddingTop: 5, flexDirection: 'row', alignItems: 'center' }}>
-							<View style={{
-								backgroundColor: colorStyles.amber,
-								padding: 10,
-								borderRadius: 100,
-								marginRight: 12
-							}}>
-								<Icon FontAwesome name="money" size={15} color={colorStyles.thunderbird} />
-							</View>
-							<Text>Tiền mặt: <Text style={{ fontWeight: '700', fontSize: 17 }}>{Intl.NumberFormat().format(Orders.totalPrice)}đ</Text></Text>
-						</View>
-						<View style={{
-							position: 'absolute',
-							bottom: 0,
-							right: 0,
-							left: 0,
-							height: 60,
-							flexDirection: 'row',
-							justifyContent: 'space-between',
+				</View>
+				<View style={{}}>
+					<Modal
+						isVisible={this.state.isModalOpen}
+						onBackdropPress={() => {
+							this.setState({
+								isModalOpen: false
+							})
+						}}
+						style={{
 							shadowColor: "#000",
 							shadowOffset: {
 								width: 0,
-								height: 4,
+								height: 2,
 							},
-							shadowOpacity: 0.30,
-							shadowRadius: 4.65,
-							elevation: 8,
-							// padding: 10,
-
+							shadowOpacity: 0.25,
+							shadowRadius: 3.84,
+							elevation: 5,
 						}}>
-							<TouchableOpacity style={[styles.button, {
-								backgroundColor: colorStyles.thunderbird,
-								borderBottomLeftRadius: 50,
-							}]}>
-								<Text style={styles.txt}>Huỷ</Text>
-							</TouchableOpacity>
+						<View style={{
+							justifyContent: 'center',
+							alignItems: 'center',
+							backgroundColor: 'white',
+							padding: 18,
+							borderRadius: 4,
+							borderColor: 'rgba(0, 0, 0, 0.1)',
+						}}>
+							<View>
+								<Text>Bạn có chắc muốn huỷ đơn hàng ? </Text>
+							</View>
+							<View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 10 }}>
+								<TouchableOpacity style={styles.buttonCancel}
+									onPress={() => {
 
-							<TouchableOpacity style={[styles.button, {
-								borderRightWidth: 0,
-								borderBottomRightRadius: 50,
-								backgroundColor: colorStyles.apple,
-							}]}>
-								<Text style={styles.txt}>OK</Text>
-							</TouchableOpacity>
+										this.setState({
+											isModalOpen: false
+										})
+									}}
+								>
+									<Text>Huỷ</Text>
+								</TouchableOpacity>
+								<TouchableOpacity style={styles.buttonCancel}
+									onPress={() => {
+										Orders.clear();
+										this.setState({
+											isModalOpen: false
+										})
+										this.props.favorite ? Navigation.popToRoot(MARK_FAVORITE_SCREEN) : Navigation.popToRoot(HOME_SCREEN)
+										// console.log(this.props.favorite)
+									}}
+								>
+									<Text>OK</Text>
+								</TouchableOpacity>
+							</View>
 						</View>
-					</View>
+					</Modal>
 				</View>
-			</View>
+			</>
 		)
 	}
 }
 
 const styles = StyleSheet.create({
+	buttonCancel: {
+		paddingHorizontal: 13,
+		paddingVertical: 6,
+		borderRadius: 20,
+		borderWidth: 1,
+		marginRight: 20
+	},
 	txt: {
 		fontWeight: '600',
 		fontSize: 20,

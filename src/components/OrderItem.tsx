@@ -9,7 +9,8 @@ import { observer } from 'mobx-react'
 import RBSheet from "react-native-raw-bottom-sheet";
 import ShowOrderDetailModal from '../screens/order/ShowOrderDetailModal'
 interface Props {
-	handleBack?: Function
+	handleBack?: Function,
+	favorite?: boolean
 }
 export const OrderItem = observer((props: Props) => {
 	// console.log(JSON.parse(JSON.stringify(Orders.orders)), JSON.parse(JSON.stringify(Orders.restaurant)))
@@ -62,13 +63,14 @@ export const OrderItem = observer((props: Props) => {
 								payment={true}
 								refRBSheet={() => refRBSheet.current.close()}
 								handleBack={props.handleBack}
+								favorite={props.favorite}
 							/>
 						</RBSheet>
 					</View>
 					<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 						<View>
 							<Text style={{ fontWeight: '800', color: colorStyles.white }}>{orders && orders.length} món</Text>
-							<Text style={{ fontWeight: '400', color: colorStyles.white }}>{restaurant && restaurant.name.length >=33 ? restaurant.name.slice(0,33) + "..." : restaurant.name}</Text>
+							<Text style={{ fontWeight: '400', color: colorStyles.white }}>{restaurant && restaurant.name.length >= 33 ? restaurant.name.slice(0, 33) + "..." : restaurant.name}</Text>
 						</View>
 						<View style={{ justifyContent: 'center', marginLeft: 10 }}>
 							<Text style={{ fontWeight: '800', color: colorStyles.white }}>{Intl.NumberFormat().format(Orders.totalPrice)} {Orders.orders[0].price.unit}</Text>

@@ -7,9 +7,12 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import PropTypes from 'prop-types';
 import UI from '../stores/UI'
 import { observer } from 'mobx-react'
+import Orders from '../stores/Orders'
 interface HeaderProps {
 	componentId?: string,
-	handleBack?: Function
+	handleBack?: Function,
+	type?: number,
+	titleName? : string
 }
 const Header = observer((props: HeaderProps) => {
 	// console.log({component: UI.previousComponentIdScreen})
@@ -29,14 +32,22 @@ const Header = observer((props: HeaderProps) => {
 			<Icon Ionicons name='ios-chevron-back-sharp' color={colorStyles.curiousBlue} size={28} />
 		</TouchableOpacity>
 	}
-	const renderTitle = () => {
-		return <TouchableOpacity>
-			<TextInput
-				style={styles.textinput}
-				placeholder="Tìm kiếm"
-				value="Lanmark 72 Ha Noi"
-			/>
-		</TouchableOpacity>
+	const renderTitle = (type = 3) => {
+		if (type == 2) {
+			return <Text style={{
+				fontSize: 18,
+				fontWeight: '600',
+				paddingLeft: 10,
+			}}>{props.titleName}</Text>;
+		} else {
+			return <TouchableOpacity>
+				<TextInput
+					style={styles.textinput}
+					placeholder="Tìm kiếm"
+					value="Lanmark 72 Ha Noi"
+				/>
+			</TouchableOpacity>
+		}
 	}
 	const renderRightComponent = () => {
 		return <TouchableOpacity onPress={() => console.log("dat")}>
@@ -50,10 +61,22 @@ const Header = observer((props: HeaderProps) => {
 				backgroundColor="transparent"
 				translucent={true}
 			/>
-			<View style={styles.header}>
-				{renderLeftComponent()}
+			<View style={[styles.header, { justifyContent: props.type ? 'flex-start' : 'space-around', marginLeft: props.type === 2 ? 10 : 0 }]}>
+				{
+					props.type === 2 ?
+						<>
+							{renderLeftComponent()}
+							{renderTitle(props.type)}
+						</> :
+						<>
+							{renderLeftComponent()}
+							{renderTitle()}
+							{renderRightComponent()}
+						</>
+				}
+				{/* {renderLeftComponent()}
 				{renderTitle()}
-				{renderRightComponent()}
+				{renderRightComponent()} */}
 			</View>
 		</SafeAreaView>
 

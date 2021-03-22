@@ -1,6 +1,6 @@
 import React from 'react'
 import { Navigation } from "react-native-navigation";
-import { Login, Register } from '../screens/authen'
+import { Login, Register } from '../screens/favorite'
 import { Detail_Product } from '../components'
 
 import Header from '../components/Header'

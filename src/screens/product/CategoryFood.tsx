@@ -6,7 +6,7 @@ import Header from '../../components/Header'
 import UI from '../../stores/UI'
 import Restaurants from '../../stores/Restaurant'
 import { observer } from 'mobx-react'
-import { RestaurantItem } from '../home/RestaurantItem'
+import { RestaurantItem } from '../home/RestaurantItem'
 interface Props {
 	componentId: string,
 	categoryId: number
@@ -58,7 +58,7 @@ export default class CategoryFood extends React.Component<Props> {
 									item={item}
 									index={index}
 									props={this.props}
-									
+									favorite={false}
 								/>
 							)
 						}}
