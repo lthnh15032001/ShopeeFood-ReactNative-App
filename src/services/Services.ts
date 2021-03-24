@@ -31,7 +31,12 @@ export class Services {
 		return jsonData
 	}
 	async getRestaurantByCategoryId(page = 20, id: number) {
-		const data = await this.fetch(`restaurants/${id}?page=${page}`)
+		const data = await this.fetch(`restaurants/category/${id}?page=${page}`)
+		const jsonData = await JSON.parse(data)
+		return jsonData
+	}
+	async getRestaurantById(id: number) {
+		const data = await this.fetch(`restaurants/id/${id}`)
 		const jsonData = await JSON.parse(data)
 		return jsonData
 	}

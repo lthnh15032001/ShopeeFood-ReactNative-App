@@ -19,7 +19,8 @@ interface Props {
 	testID?: string;
 	id_restaurant: number,
 	restaurantInfo: any,
-	favorite: boolean
+	favorite: boolean,
+	screen?: string,
 }
 
 
@@ -82,7 +83,8 @@ export default class RestaurantFood extends React.Component<Props> {
 					/>
 					<TouchableOpacity
 						onPress={() => {
-							this.props.favorite ? Navigation.popTo(MARK_FAVORITE_SCREEN) : Navigation.popTo(HOME_SCREEN)
+							Navigation.popTo(this.props.screen as string);
+							// this.props.favorite ? Navigation.popTo(MARK_FAVORITE_SCREEN) : Navigation.popTo(HOME_SCREEN)
 						}}
 						style={{
 							position: 'absolute',
@@ -140,7 +142,7 @@ export default class RestaurantFood extends React.Component<Props> {
 					keyExtractor={(item, index) => index.toString()}
 					showsVerticalScrollIndicator={false}
 				/>
-				<OrderItem favorite={this.props.favorite} />
+				<OrderItem favorite={this.props.favorite} screens={this.props.componentId} />
 			</>
 		)
 	}

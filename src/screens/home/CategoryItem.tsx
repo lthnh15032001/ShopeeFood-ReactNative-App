@@ -1,9 +1,10 @@
 import React from 'react'
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { colorStyles } from '../../styles/ColorStyles'
 import { CategoryFoodScreen } from '..'
 import Categories from '../../stores/Category'
 import { observer } from 'mobx-react'
+import Image from 'react-native-image-progress';
 export const CategoryItem = observer((props: any) => {
 	const { item, index, fetchData } = props
 	return (

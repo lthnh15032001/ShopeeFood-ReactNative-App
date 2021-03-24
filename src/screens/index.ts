@@ -10,6 +10,8 @@ import Order from './order/Order'
 import UI from '../stores/UI'
 import ShowOrderDetailModal from './order/ShowOrderDetailModal'
 import MapOrderView from './order/MapOrderView'
+import MarkRestaurants from '../stores/MarkRestaurants'
+import { colorStyles } from '../styles/ColorStyles'
 export const HOME_SCREEN = 'internapp.HomeScreen'
 export const MARK_FAVORITE_SCREEN = 'internapp.markFavoriteRestautant'
 export const COMPLETE_ORDER_SCREEN = 'internapp.CompleteOrderScreen'
@@ -85,6 +87,8 @@ export const startApp = () => {
 							options: {
 								bottomTab: {
 									text: 'Đơn hàng',
+									badge: MarkRestaurants.orderComplete.length.toString(),
+									badgeColor: colorStyles.sushi,
 									icon: require('../assets/Vector.png'),
 									selectedIconColor: 'black',
 									selectedTextColor: 'black',
@@ -124,20 +128,20 @@ export const startApp = () => {
 // 	handleBack?: Function,
 // 	favorite?: boolean
 // }
-export const OrderScreen = (handleBack: any, favorite: boolean = false) => {
-	// console.log({ favorite: favorite })
+export const OrderScreen = (handleBack: any, screens: string = "false") => {
+	console.log({ screens: screens })
 	Navigation.push(<string>UI.componentId, {
 		component: {
 			id: ORDER_SCREEN,
 			name: ORDER_SCREEN,
 			passProps: {
 				handleBack: handleBack,
-				favorite: favorite
+				screens: screens
 			}
 		},
 	})
 }
-export const DetailProductScreen = (id_restaurant: number, restaurantInfo: any, favorite: boolean = false) => {
+export const DetailProductScreen = (id_restaurant: number, restaurantInfo: any, screen: string = "false") => {
 	// console.log({ Ui: <string>UI.componentId })
 	// console.log({ id: id })
 	Navigation.push(<string>UI.componentId, {
@@ -147,7 +151,7 @@ export const DetailProductScreen = (id_restaurant: number, restaurantInfo: any, 
 			passProps: {
 				id_restaurant: id_restaurant,
 				restaurantInfo: restaurantInfo,
-				favorite: favorite
+				screen: screen,
 			}
 		}
 	})
@@ -163,14 +167,14 @@ export const CategoryFoodScreen = (categoryId: number) => {
 		}
 	})
 }
-export const MapOrderViewScreen = (favorite: boolean = false) => {
+export const MapOrderViewScreen = (screens: string = "false") => {
 	// console.log({ map: favorite })
 	Navigation.push(<string>UI.componentId, {
 		component: {
 			name: MAP_ORDER_VIEW,
 			id: MAP_ORDER_VIEW,
 			passProps: {
-				favorite: favorite
+				screens: screens
 			}
 		}
 	})

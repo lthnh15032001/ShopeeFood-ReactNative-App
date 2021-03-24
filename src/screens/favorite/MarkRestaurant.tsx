@@ -83,6 +83,7 @@ export default class MarkRestaurant extends React.Component<Props> {
 									index={index}
 									props={this.props}
 									favorite={true}
+									screen={this.props.componentId}
 								// fetchData={fetchData}
 								/>
 							)
@@ -91,7 +92,7 @@ export default class MarkRestaurant extends React.Component<Props> {
 						showsVerticalScrollIndicator={false}
 					/>
 				</View>
-				<OrderItem handleBack={() => Navigation.popTo(this.props.componentId)} favorite={true} />
+				<OrderItem handleBack={() => Navigation.popTo(this.props.componentId)} favorite={true} screens={this.props.componentId}/>
 			</>
 		)
 	}

@@ -11,9 +11,11 @@ import { HOME_SCREEN, MARK_FAVORITE_SCREEN, COMPLETE_ORDER_SCREEN } from '../../
 import { CompleteOrderScreen } from '../../screens'
 import Modal from 'react-native-modal';
 import MarkRestaurant from '../../stores/MarkRestaurants';
+import { startApp } from '../../screens'
+import { ModalShowNotif } from './ModalShowNotif';
 interface Props {
 	componentId: string,
-	favorite: boolean
+	screens?: string
 }
 export default class MapOrderView extends React.Component<Props> {
 	static get options() {
@@ -27,7 +29,8 @@ export default class MapOrderView extends React.Component<Props> {
 		}
 	}
 	state = {
-		isModalOpen: false
+		isModalOpen: false,
+		isComplete: false
 	}
 	constructor(props: any) {
 		super(props)
@@ -45,6 +48,12 @@ export default class MapOrderView extends React.Component<Props> {
 	}
 	componentWillUnmount() {
 		UI.removeScreen(this);
+	}
+	toggleModal(isComplete: boolean) {
+		this.setState({
+			isModalOpen: !this.state.isModalOpen,
+			isComplete: isComplete
+		})
 	}
 	render() {
 		return (
@@ -193,7 +202,7 @@ export default class MapOrderView extends React.Component<Props> {
 								}}>
 									<Icon FontAwesome name="money" size={15} color={colorStyles.thunderbird} />
 								</View>
-								<Text>Tiền mặt: <Text style={{ fontWeight: '700', fontSize: 17 }}>{Intl.NumberFormat().format(Orders.totalPrice)}đ</Text></Text>
+								<Text>Tiền mặt: <Text style={{ fontWeight: '700', fontSize: 17 }}>{Intl.NumberFormat().format(Orders.totalPrice + 17000)}đ</Text></Text>
 							</View>
 							<View style={{
 								position: 'absolute',
@@ -221,9 +230,8 @@ export default class MapOrderView extends React.Component<Props> {
 								}]}
 									onPress={() => {
 										// Navigation.popToRoot(HOME_SCREEN);
-										this.setState({
-											isModalOpen: true
-										})
+										this.toggleModal(false)
+
 									}}
 								>
 									<Icon EvilIcons name="close-o" size={25} color={colorStyles.white} />
@@ -237,16 +245,8 @@ export default class MapOrderView extends React.Component<Props> {
 									flexDirection: 'row'
 								}]}
 									onPress={() => {
-										// console.log(JSON.parse(JSON.stringify(MarkRestaurant.orderComplete)))
-										const orderTypes = {
-											restaurantId: Orders.restaurant?.id,
-											dishesOrder: JSON.parse(JSON.stringify(Orders.orders))
-										}
-										MarkRestaurant.add(orderTypes)
-										// Navigation.popToRoot()
-										// this.props.favorite ? Navigation.popToRoot(MARK_FAVORITE_SCREEN) : Navigation.popToRoot(HOME_SCREEN)
-										// Navigation.setRoot()
-										console.log(JSON.parse(JSON.stringify(MarkRestaurant.orderComplete)))
+										
+										this.toggleModal(true)
 									}}
 								>
 									<Icon Ionicons name="checkmark-done-circle-outline" size={25} color={colorStyles.white} />
@@ -257,60 +257,12 @@ export default class MapOrderView extends React.Component<Props> {
 					</View>
 				</View>
 				<View style={{}}>
-					<Modal
-						isVisible={this.state.isModalOpen}
-						onBackdropPress={() => {
-							this.setState({
-								isModalOpen: false
-							})
-						}}
-						style={{
-							shadowColor: "#000",
-							shadowOffset: {
-								width: 0,
-								height: 2,
-							},
-							shadowOpacity: 0.25,
-							shadowRadius: 3.84,
-							elevation: 5,
-						}}>
-						<View style={{
-							justifyContent: 'center',
-							alignItems: 'center',
-							backgroundColor: 'white',
-							padding: 18,
-							borderRadius: 4,
-							borderColor: 'rgba(0, 0, 0, 0.1)',
-						}}>
-							<View>
-								<Text>Bạn có chắc muốn huỷ đơn hàng ? </Text>
-							</View>
-							<View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 10 }}>
-								<TouchableOpacity style={styles.buttonCancel}
-									onPress={() => {
-
-										this.setState({
-											isModalOpen: false
-										})
-									}}
-								>
-									<Text>Huỷ</Text>
-								</TouchableOpacity>
-								<TouchableOpacity style={styles.buttonCancel}
-									onPress={() => {
-										Orders.clear();
-										this.setState({
-											isModalOpen: false
-										})
-										this.props.favorite ? Navigation.popToRoot(MARK_FAVORITE_SCREEN) : Navigation.popToRoot(HOME_SCREEN)
-										// console.log(this.props.favorite)
-									}}
-								>
-									<Text>OK</Text>
-								</TouchableOpacity>
-							</View>
-						</View>
-					</Modal>
+					<ModalShowNotif
+						toggleModal={() => this.toggleModal(this.state.isComplete)}
+						isComplete={this.state.isComplete}
+						isModalOpen={this.state.isModalOpen}
+						screens={this.props.screens}
+					/>
 				</View>
 			</>
 		)
@@ -318,13 +270,7 @@ export default class MapOrderView extends React.Component<Props> {
 }
 
 const styles = StyleSheet.create({
-	buttonCancel: {
-		paddingHorizontal: 13,
-		paddingVertical: 6,
-		borderRadius: 20,
-		borderWidth: 1,
-		marginRight: 20
-	},
+
 	txt: {
 		fontWeight: '600',
 		fontSize: 20,

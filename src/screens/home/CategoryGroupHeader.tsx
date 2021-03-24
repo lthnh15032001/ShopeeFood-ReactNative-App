@@ -22,6 +22,9 @@ export const CategoryGroupHeader = observer(({ props, fetchData }: any) => {
 		outputRange: [titleHeight, titleHeight - titleHeight],
 		extrapolate: 'clamp'
 	})
+	const empty = () => {
+		Restaurants.isLoading && Restaurants.restaurants.length === 0 && <Empty message="No food Found" />
+	}
 	return (
 		<>
 			<Animated.View style={{
@@ -58,7 +61,7 @@ export const CategoryGroupHeader = observer(({ props, fetchData }: any) => {
 								/>
 							)
 						}}
-						ListEmptyComponent={<Empty message="No category Found" />}
+						ListEmptyComponent={Categories.isLoading && Categories.categories.length === 0 && <Empty message="No category Found" />}
 						keyExtractor={(item, index) => index.toString()}
 						showsHorizontalScrollIndicator={false}
 						horizontal={true}
@@ -95,7 +98,7 @@ export const CategoryGroupHeader = observer(({ props, fetchData }: any) => {
 						{ nativeEvent: { contentOffset: { y: scrollY } } }
 					], { useNativeDriver: false })
 				}
-				ListEmptyComponent={<Empty message="No food Found" />}
+				ListEmptyComponent={empty()}
 				renderItem={({ item, index }) => {
 					return (
 						<RestaurantItem
@@ -104,6 +107,7 @@ export const CategoryGroupHeader = observer(({ props, fetchData }: any) => {
 							props={props}
 							fetchData={fetchData}
 							favorite={false}
+							screen={props.componentId}
 							/>
 					)
 				}}

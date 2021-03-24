@@ -10,7 +10,7 @@ import Header from '../../components/Header'
 import { observer } from 'mobx-react'
 import { observable } from 'mobx'
 import { OrderItem } from '../../components/OrderItem'
-
+// import Toast from 'react-native-simple-toast';
 interface Props {
 	componentId: string;
 	testID?: string;
@@ -73,6 +73,8 @@ export default class Home extends React.Component<Props> {
 		Navigation.mergeOptions(this.props.componentId, opts);
 	}
 	render() {
+		// Toast.showWithGravity('This is a toast.');
+		// Toast.show('This is a long toast.', Toast.LONG);
 		return (
 			<>
 				<Header />
@@ -90,7 +92,7 @@ export default class Home extends React.Component<Props> {
 							fetchData={this.fetchData}
 						/>
 					</View>}
-				<OrderItem handleBack={() => Navigation.popTo(this.props.componentId)} />
+				<OrderItem screens={this.props.componentId} />
 			</>
 		)
 	}

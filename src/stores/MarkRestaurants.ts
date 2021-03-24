@@ -1,11 +1,13 @@
 import { Navigation } from 'react-native-navigation'
-import { types, unprotect } from 'mobx-state-tree'
+import { flow, types, unprotect } from 'mobx-state-tree'
 import RestaurantModel from './models/RestaurantModel'
 // import DishModel from './models/Dish\bModel'
 import OrderType from './models/OrdersModel'
+import Services from '../services/Services'
 const orderTypes = types.model({
-	restaurantId: types.number,
-	dishesOrder: types.optional(types.array(OrderType), [])
+	restaurant: RestaurantModel,
+	dishesOrder: types.optional(types.array(OrderType), []),
+	totalPrice: types.string
 })
 const MarkRestaurantTypes = types
 	.model('MarkRestaurant', {
@@ -19,6 +21,17 @@ const MarkRestaurantTypes = types
 		clear() {
 			self.orderComplete.clear();
 		},
+		getRestaurantById: flow(function* (id: number) {
+			try {
+				Services.getRestaurantById(id).then(res => {
+					console.log({ res: res })
+					return res;
+				})
+			} catch (e) {
+				console.log(e)
+				return e;
+			}
+		}),
 		add(orderComplete: any,) {
 			self.orderComplete.push(orderComplete);
 		},

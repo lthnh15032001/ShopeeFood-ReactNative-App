@@ -12,7 +12,8 @@ interface HeaderProps {
 	componentId?: string,
 	handleBack?: Function,
 	type?: number,
-	titleName? : string
+	titleName?: string,
+	screens?:string
 }
 const Header = observer((props: HeaderProps) => {
 	// console.log({component: UI.previousComponentIdScreen})
@@ -24,12 +25,13 @@ const Header = observer((props: HeaderProps) => {
 	const renderLeftComponent = () => {
 		// console.log(props.componentId)
 		return <TouchableOpacity onPress={() => {
-			{ props.handleBack ? props.handleBack() : Navigation.popTo(props.componentId as string) }
+			// { props.handleBack ? props.handleBack() : Navigation.popTo(props.componentId as string) }
+			Navigation.popTo(props.screens as string)
 			// console.log(props.componentId)
 		}
 		}
 		>
-			<Icon Ionicons name='ios-chevron-back-sharp' color={colorStyles.curiousBlue} size={28} />
+			<Icon Entypo name='location' color={colorStyles.curiousBlue} size={23} />
 		</TouchableOpacity>
 	}
 	const renderTitle = (type = 3) => {
@@ -40,9 +42,11 @@ const Header = observer((props: HeaderProps) => {
 				paddingLeft: 10,
 			}}>{props.titleName}</Text>;
 		} else {
-			return <TouchableOpacity>
+			return <TouchableOpacity> 
 				<TextInput
-					style={styles.textinput}
+					style={[styles.textinput, {
+						fontSize: 15
+					}]}
 					placeholder="Tìm kiếm"
 					value="Lanmark 72 Ha Noi"
 				/>
@@ -85,10 +89,13 @@ const Header = observer((props: HeaderProps) => {
 const styles = StyleSheet.create({
 	textinput: {
 		// borderWidth: 0.25,
-		paddingVertical: 7,
-		paddingHorizontal: 70,
+		paddingVertical: 10,
+		// paddingHorizontal: 70,
+		
 		borderRadius: 27,
 		backgroundColor: '#f5f5f6',
+		width: 180,
+		paddingLeft: 30,
 	},
 	headerContainer: {
 		// paddingTop: 45,

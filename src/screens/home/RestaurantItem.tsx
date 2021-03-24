@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { Icon } from '../../components'
 import { colorStyles } from '../../styles/ColorStyles'
@@ -9,21 +9,26 @@ import { observer } from 'mobx-react'
 import Dishes from '../../stores/Dishes'
 import Orders from '../../stores/Orders'
 import RBSheet from "react-native-raw-bottom-sheet";
+import Image from 'react-native-image-progress';
 interface Props {
 	props: any,
 	item: any,
 	index: any,
 	fetchData?: Function,
-	favorite?: boolean
+	favorite?: boolean,
+	screen? :string,
 }
 export const RestaurantItem = observer((props: Props) => {
-	const { props: propsItem, item, index, fetchData, favorite } = props
+	const { props: propsItem, item, index, fetchData, favorite,screen } = props
 	const refRBSheet = useRef();
 	// console.log({ item: item, index: index })
 	const ordersRestaurant = JSON.parse(JSON.stringify(Orders.restaurant))
 	const moveToRestaurantFood = () => {
 		Dishes.clear()
-		DetailProductScreen(item.id, item, favorite)
+		DetailProductScreen(item.id, item, screen)
+		// console.log(
+		// 	{ itemid: item.id, item: item, favorite: favorite }
+		// )
 	}
 	return (
 		<>

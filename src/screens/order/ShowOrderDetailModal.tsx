@@ -12,7 +12,8 @@ interface Props {
 	refRBSheet?: Function,
 	payment?: boolean,
 	handleBack?: Function,
-	favorite? : boolean
+	favorite? : boolean,
+	screens?:string
 }
 interface HandleBackProps {
 	handleBack?: Function
@@ -106,7 +107,7 @@ export default class ShowOrderDetailModal extends React.Component<Props> {
 								{Orders.orders[0] &&
 									<TouchableOpacity style={styles.deliver} onPress={() => {
 										this.props.refRBSheet()
-										OrderScreen(this.props.handleBack as HandleBackProps, this.props.favorite)
+										OrderScreen(this.props.handleBack as HandleBackProps, this.props.screens)
 									}}>
 										<Text style={{ fontWeight: '600', paddingRight: 5 }}>Giao hàng</Text>
 										<Icon AntDesign name="arrowright" />
