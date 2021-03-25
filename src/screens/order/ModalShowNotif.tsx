@@ -52,7 +52,8 @@ export const ModalShowNotif = ({ toggleModal, isModalOpen, screens, isComplete }
 							const orderTypes = {
 								restaurant: JSON.parse(JSON.stringify(Orders.restaurant)),
 								dishesOrder: JSON.parse(JSON.stringify(Orders.orders)),
-								totalPrice: Orders.totalPrice.toString()
+								totalPrice: Orders.totalPrice.toString(),
+								timeComplete: Date.now().toString()
 							}
 							MarkRestaurant.add(orderTypes)
 							Navigation.mergeOptions("COMPLETE_ORDER_SCREEN", {

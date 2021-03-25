@@ -10,11 +10,13 @@ import { observer } from 'mobx-react'
 import { colorStyles } from '../../styles/ColorStyles'
 import MarkRestaurants from '../../stores/MarkRestaurants'
 import { OrderItem } from '../../components/OrderItem'
+// import numeral from 'numer'
 interface Props {
 	componentId: string,
 }
 import { DetailProductScreen } from '..'
 import Orders from '../../stores/Orders'
+import moment from 'moment'
 
 @observer
 export default class CompleteOrder extends React.Component<Props> {
@@ -55,19 +57,23 @@ export default class CompleteOrder extends React.Component<Props> {
 		return (
 			<>
 				<Header type={1} titleName="Đơn hàng" />
-				<View style={styles.container}>
+				<View style={[styles.container, completRes.length >= 1  && { backgroundColor:  colorStyles.mercury }]}>
 					<FlatList
 						data={completRes.reverse()}
 						showsVerticalScrollIndicator={false}
-						ListEmptyComponent={<Empty message="No Orders Found" />}
+						ListEmptyComponent={<Empty message={`Vào cửa hàng chọn đồ ăn nhé \n Mỗi đơn hàng thành công sẽ hiển thị ở đây`} />}
 						renderItem={({ item, index }) => {
 							// console.log({item:item})
 							const reverseLenth = completRes.length--;
+							// const date = new Date(item.timeComplete);
 							return (
-								<TouchableOpacity style={styles.wrapBox} >
-									<View style={{ flexDirection: 'row', flex: 1 }} >
-										<Text style={{ fontWeight: '700' }}>{item.restaurant.categories[0]}</Text>
-										<Text style={{ paddingHorizontal: 10, color: colorStyles.boulder }}>#{reverseLenth}</Text>
+								<TouchableOpacity style={[styles.wrapBox]} >
+									<View style={{ flexDirection: 'row', flex: 1, justifyContent: 'space-between' }} >
+										<View style={{ flexDirection: 'row' }}>
+											<Text style={{ fontWeight: '700' }}>{item.restaurant.categories[0]}</Text>
+											<Text style={{ paddingHorizontal: 10, color: colorStyles.boulder }}>#{reverseLenth}</Text>
+										</View>
+										<Text>{moment.utc(item.timeComplete).local().format("MM/DD/YYYY HH:mm")}</Text>
 									</View>
 									<View style={{ marginTop: 10, flexDirection: 'row', borderBottomWidth: 0.4, paddingBottom: 10, borderColor: colorStyles.boulder }}>
 										<Image
@@ -96,7 +102,7 @@ export default class CompleteOrder extends React.Component<Props> {
 													item.dishesOrder.forEach((x: any) => {
 														Orders.addSingleDishes(item.restaurant, x);
 													})
-													DetailProductScreen(item.restaurant.id, item.restaurant, this.props.componentId, true)
+													DetailProductScreen(item.restaurant.id, item.restaurant, this.props.componentId)
 
 												}}
 												style={{ marginLeft: 10, borderColor: colorStyles.boulder, borderWidth: 0.5, paddingHorizontal: 13, borderRadius: 15, paddingVertical: 4 }}>
@@ -117,7 +123,6 @@ export default class CompleteOrder extends React.Component<Props> {
 
 const styles = StyleSheet.create({
 	container: {
-		backgroundColor: colorStyles.mercury,
 		paddingHorizontal: 10,
 		flex: 1,
 	},

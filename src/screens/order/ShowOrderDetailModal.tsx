@@ -14,8 +14,8 @@ interface Props {
 	refRBSheet?: Function,
 	payment?: boolean,
 	handleBack?: Function,
-	favorite? : boolean,
-	screens?:string
+	favorite?: boolean,
+	screens?: string
 }
 interface HandleBackProps {
 	handleBack?: Function
@@ -66,17 +66,20 @@ export default class ShowOrderDetailModal extends React.Component<Props> {
 									/>
 									<View style={{ marginLeft: 10, width: payment ? 210 : 270 }}>
 										<Text >{item[0].name}</Text>
-										<View style={{ marginTop: 5, flexDirection: 'row' }}>
-											<Icon Foundation name="clipboard-notes" color={colorStyles.black} />
-											<TextInput
-												placeholder='Ghi chú...'
-												style={{ paddingLeft: 5, color: colorStyles.scarpaFlow }}
-												onChangeText={(x) => {
-													this.addNote(x, item)
-												}}
-												editable={payment ? true : false}
-												defaultValue={item[0].note }
-											/>
+										<View style={{ marginTop: 5}}>
+											<View style={{ flexDirection: 'row' }}>
+												<Icon Foundation name="clipboard-notes" color={colorStyles.black} />
+												<TextInput
+													placeholder='Ghi chú...'
+													style={{ paddingLeft: 5, color: colorStyles.scarpaFlow }}
+													onChangeText={(x) => {
+														this.addNote(x, item)
+													}}
+													editable={payment ? true : false}
+													defaultValue={item[0].note}
+												/>
+											</View>
+											<Text style={{marginTop:7, fontWeight:'600'}}>Giá: {Intl.NumberFormat().format(item[0].discount_price.value ? item[0].discount_price.value : item[0].price.value)}đ</Text>
 										</View>
 									</View>
 									{payment ? <View style={{ flexDirection: 'row', alignItems: 'baseline' }}>

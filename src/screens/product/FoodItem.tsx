@@ -46,7 +46,7 @@ export const FoodItem = (props: Props) => {
 									<Icon AntDesign name="arrowright" />
 								</View>}
 								<Text style={{ fontSize: 16 }}>
-									{Intl.NumberFormat().format(foodItem.price.value - foodItem.discount_price.value)}đ
+									{Intl.NumberFormat().format( foodItem.discount_price.value)}đ
 								</Text>
 							</Text> :
 							<Text style={{ fontSize: 16 }}>

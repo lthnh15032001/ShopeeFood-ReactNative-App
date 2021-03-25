@@ -79,7 +79,7 @@ export default class MarkRestaurant extends React.Component<Props> {
 						// 		{ nativeEvent: { contentOffset: { y: scrollY } } }
 						// 	], { useNativeDriver: false })
 						// }
-						ListEmptyComponent={<Empty message="No Favorite Found" />}
+						ListEmptyComponent={<Empty message={`Thả tym vào quán bạn yêu thích nàoo 😘 \n Những quán đã được bạn thả tym sẽ hiển thị tại đây nhé`} />}
 						renderItem={({ item, index }) => {
 							return (
 								<RestaurantItem

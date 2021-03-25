@@ -7,7 +7,8 @@ import Services from '../services/Services'
 const orderTypes = types.model({
 	restaurant: RestaurantModel,
 	dishesOrder: types.optional(types.array(OrderType), []),
-	totalPrice: types.string
+	totalPrice: types.string,
+	timeComplete: types.string
 })
 const MarkRestaurantTypes = types
 	.model('MarkRestaurant', {

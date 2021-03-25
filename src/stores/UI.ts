@@ -12,6 +12,7 @@ const UI = types
 	.model('UI', {
 		componentId: types.maybe(types.string),
 		settings: types.optional(Settings, {}),
+		location: types.optional(types.string, ""),
 		layout: types.optional(
 			types.model('UILayout', {
 				width: types.optional(types.number, width),

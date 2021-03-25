@@ -38,8 +38,9 @@ const OrderModel = types
 			self.restaurant = restaurantOrderType
 			let price = 0;
 			self.orders.push(data)
+			// if(x.discount_price){}
 			self.orders.map(x =>
-				price += (x.price.value - x.discount_price.value)
+				price += x.discount_price.value ? x.discount_price.value : x.price.value
 			)
 			this.setTotalPrice(price)
 		},
