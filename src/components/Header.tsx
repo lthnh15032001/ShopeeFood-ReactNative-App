@@ -13,47 +13,35 @@ interface HeaderProps {
 	handleBack?: Function,
 	type?: number,
 	titleName?: string,
-	screens?:string
+	screens?: string,
+	customHeader?: React.ReactElement,
+	customLeftHeader?: React.ReactElement,
+	customTitleHeader?: React.ReactElement
 }
 const Header = observer((props: HeaderProps) => {
-	// console.log({component: UI.previousComponentIdScreen})
-	// console.log({component: UI.componentId})
-	// console.log({ handleBack: props.handleBack })
-	useEffect(() => {
-
-	}, [props.componentId])
+	// console.log(props.customLeftHeader)
 	const renderLeftComponent = () => {
-		// console.log(props.componentId)
-		return <TouchableOpacity onPress={() => {
-			// { props.handleBack ? props.handleBack() : Navigation.popTo(props.componentId as string) }
-			Navigation.popTo(props.screens as string)
-			// console.log(props.componentId)
-		}
-		}
-		>
-			<Icon Entypo name='location' color={colorStyles.curiousBlue} size={23} />
-		</TouchableOpacity>
+		if (props.type === 1) return;
+		return props.customLeftHeader ?
+			props.customLeftHeader
+			: <TouchableOpacity onPress={() => { Navigation.popTo(props.screens as string) }} >
+				<Icon Ionicons name='ios-arrow-back-sharp' color={colorStyles.curiousBlue} size={23} />
+			</TouchableOpacity>
 	}
-	const renderTitle = (type = 3) => {
-		if (type == 2) {
+	const renderTitle = () => {
+		if (props.customTitleHeader) return props.customTitleHeader
+		if (props.type == 2 || props.type === 1) {
 			return <Text style={{
 				fontSize: 18,
 				fontWeight: '600',
 				paddingLeft: 10,
 			}}>{props.titleName}</Text>;
 		} else {
-			return <TouchableOpacity> 
-				<TextInput
-					style={[styles.textinput, {
-						fontSize: 15
-					}]}
-					placeholder="Tìm kiếm"
-					value="Lanmark 72 Ha Noi"
-				/>
-			</TouchableOpacity>
 		}
 	}
 	const renderRightComponent = () => {
+		if (props.customTitleHeader || props.type === 2) return;
+		if (props.type === 1) return;
 		return <TouchableOpacity onPress={() => console.log("dat")}>
 			<Icon Ionicons name='ios-cart-outline' color={colorStyles.curiousBlue} size={28} />
 		</TouchableOpacity>
@@ -65,42 +53,33 @@ const Header = observer((props: HeaderProps) => {
 				backgroundColor="transparent"
 				translucent={true}
 			/>
-			<View style={[styles.header, { justifyContent: props.type ? 'flex-start' : 'space-around', marginLeft: props.type === 2 ? 10 : 0 }]}>
-				{
-					props.type === 2 ?
-						<>
-							{renderLeftComponent()}
-							{renderTitle(props.type)}
-						</> :
+			{
+				props.customHeader ?
+					props.customHeader
+					:
+					<View style={[styles.header, { justifyContent: props.type === 1 ? 'center' : props.type === 2 ? 'flex-start' : 'space-around', marginLeft: props.type === 2 ? 10 : 0 }]}>
+
 						<>
 							{renderLeftComponent()}
 							{renderTitle()}
 							{renderRightComponent()}
 						</>
-				}
-				{/* {renderLeftComponent()}
-				{renderTitle()}
-				{renderRightComponent()} */}
-			</View>
+
+					</View>
+			}
 		</SafeAreaView>
 
 	)
 })
 const styles = StyleSheet.create({
 	textinput: {
-		// borderWidth: 0.25,
 		paddingVertical: 10,
-		// paddingHorizontal: 70,
-		
 		borderRadius: 27,
 		backgroundColor: '#f5f5f6',
 		width: 180,
 		paddingLeft: 30,
 	},
 	headerContainer: {
-		// paddingTop: 45,
-		// paddingLeft: 15,
-		// paddingRight: 15,
 		justifyContent: 'flex-end',
 		backgroundColor: colorStyles.white,
 		shadowColor: "#000",
@@ -112,7 +91,7 @@ const styles = StyleSheet.create({
 		shadowRadius: 1.41,
 
 		elevation: 2,
-		paddingBottom: 13
+		paddingBottom: 5
 
 	},
 	header: {

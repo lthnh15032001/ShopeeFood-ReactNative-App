@@ -5,10 +5,10 @@ import RestaurantModel from './models/RestaurantModel'
 import Services from '../services/Services'
 const RestaurantsType = types
 	.model('Restaurant', {
-		// type: 
 		isLoading: types.optional(types.boolean, false),
 		restaurants: types.optional(types.array(RestaurantModel), []),
-		error: types.optional(types.boolean, false)
+		page: types.optional(types.number, 1),
+		totalPage: types.optional(types.number, 0)
 	})
 	.views(self => ({
 		get pageRestaurant() {
@@ -16,11 +16,11 @@ const RestaurantsType = types
 		}
 	}))
 	.actions(self => ({
-		fetchData: flow(function* () {
+		fetchData: flow(function* (page: number) {
 			self.isLoading = true;
 			try {
-				Services.getRestaurant(20).then(res => {
-					console.log({ res: res })
+				Services.getRestaurant(page).then(res => {
+					// console.log({ res: res })
 					self.restaurants = res
 				})
 			}
@@ -29,11 +29,15 @@ const RestaurantsType = types
 			}
 			self.isLoading = false
 		}),
-		fetchDataByCategoryId: flow(function* (id: number) {
+		fetchDataByCategoryId: flow(function* (id: number, page: number) {
+			// console.log(self.totalPage, self.page)
 			self.isLoading = true;
 			try {
-				Services.getRestaurantByCategoryId(20, id).then(res => {
-					self.restaurants = res
+				Services.getRestaurantByCategoryId(page, id).then(res => {
+					const add = self.restaurants.concat(res.data)
+					self.restaurants = JSON.parse(JSON.stringify(add))
+					self.totalPage = res.pages
+					console.log({ restaurants: JSON.parse(JSON.stringify(self.restaurants)) })
 				})
 			} catch (e) {
 				console.log(e)
@@ -42,11 +46,18 @@ const RestaurantsType = types
 		}),
 		clear() {
 			self.restaurants.clear()
+			self.isLoading = false
+			self.page = 1
 		},
 		addSingleRestaurant(data: any) {
 			self.restaurants.push(data)
 		},
-
+		pageIncrease() {
+			!this.isEnd() && self.page++
+		},
+		isEnd(): boolean {
+			return self.page === self.totalPage
+		}
 	}))
 const Restaurants = RestaurantsType.create()
 unprotect(Restaurants)

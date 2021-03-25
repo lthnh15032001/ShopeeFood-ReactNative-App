@@ -24,13 +24,13 @@ export class Services {
 		// console.log({ data: jsonData, type: typeof jsonData })
 		return jsonData
 	}
-	async getRestaurant(page = 20) {
-		const data = await this.fetch(`restaurants`)
+	async getRestaurant(page = 1) {
+		const data = await this.fetch(`restaurants?page=${page}`)
 		const jsonData = await JSON.parse(data);
 		// console.log({ data: jsonData, type: typeof jsonData })
 		return jsonData
 	}
-	async getRestaurantByCategoryId(page = 20, id: number) {
+	async getRestaurantByCategoryId(page = 1, id: number) {
 		const data = await this.fetch(`restaurants/category/${id}?page=${page}`)
 		const jsonData = await JSON.parse(data)
 		return jsonData

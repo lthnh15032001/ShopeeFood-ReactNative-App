@@ -5,12 +5,14 @@ import { CategoryFoodScreen } from '..'
 import Categories from '../../stores/Category'
 import { observer } from 'mobx-react'
 import Image from 'react-native-image-progress';
+import Restaurants from '../../stores/Restaurant'
 export const CategoryItem = observer((props: any) => {
 	const { item, index, fetchData } = props
 	return (
 		<TouchableOpacity
 			onPress={() => {
 				Categories.setSelectCategory(index)
+				Restaurants.clear();
 				fetchData(index)
 			}}
 			style={[styles.container, { backgroundColor: index === Categories.isSelect ? colorStyles.pomegranate : colorStyles.white }]}>

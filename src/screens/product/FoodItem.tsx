@@ -1,8 +1,9 @@
 import React from 'react'
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { Icon } from '../../components/Icon'
 import { colorStyles } from '../../styles/ColorStyles'
 import Orders from '../../stores/Orders'
+import Image from 'react-native-image-progress';
 interface Props {
 	foodItem: any,
 	foodIndex: any,

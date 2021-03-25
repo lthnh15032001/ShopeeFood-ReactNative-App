@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native'
 import UI from '../../stores/UI'
 import Header from '../../components/Header'
 import { Navigation } from 'react-native-navigation'
@@ -14,6 +14,7 @@ import { Icon } from '../../components/Icon'
 import { OrderItem } from '../../components/OrderItem'
 import { HOME_SCREEN, MARK_FAVORITE_SCREEN } from '../'
 import MarkRestaurant from '../../stores/MarkRestaurants'
+import Image from 'react-native-image-progress';
 interface Props {
 	componentId: string;
 	testID?: string;
@@ -22,7 +23,7 @@ interface Props {
 	favorite: boolean,
 	screen?: string,
 }
-
+import Loading from '../../components/Loading'
 
 @observer
 export default class RestaurantFood extends React.Component<Props> {
@@ -138,6 +139,14 @@ export default class RestaurantFood extends React.Component<Props> {
 							/>
 						)
 					}}
+					ListFooterComponent={
+						<View style={{
+							justifyContent: 'center',
+							alignItems: 'center',
+							flex: 1
+						}}>
+							<Loading />
+						</View>}
 					ListEmptyComponent={<Empty message="No Food Provide" />}
 					keyExtractor={(item, index) => index.toString()}
 					showsVerticalScrollIndicator={false}

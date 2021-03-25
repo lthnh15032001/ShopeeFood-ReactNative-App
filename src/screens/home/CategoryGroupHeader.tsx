@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { View, Text, StyleSheet, FlatList, Image, Animated, ViewProps, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, FlatList, Image, Animated, ViewProps, TouchableOpacity, ActivityIndicator } from 'react-native'
 import { Icon } from '../../components'
 import { CategoryItem } from './CategoryItem'
 import { RestaurantItem } from './RestaurantItem'
@@ -7,6 +7,7 @@ import Restaurants from '../../stores/Restaurant'
 import { observer } from 'mobx-react'
 import Categories from '../../stores/Category'
 import Empty from '../../components/Empty'
+import Loading from '../../components/Loading'
 export const CategoryGroupHeader = observer(({ props, fetchData }: any) => {
 	// console.log({props: fetchData})
 	const scrollY = useRef(new Animated.Value(0)).current
@@ -105,12 +106,23 @@ export const CategoryGroupHeader = observer(({ props, fetchData }: any) => {
 							item={item}
 							index={index}
 							props={props}
-							fetchData={fetchData}
 							favorite={false}
 							screen={props.componentId}
-							/>
+						/>
 					)
 				}}
+
+				onEndReached={(x) => {
+					!Restaurants.isEnd() && fetchData(Categories.isSelect, true)
+					// console.log(Restaurants.page)
+				}}
+				ListFooterComponent={
+					<View style={styles.containFooter}>
+
+						{Restaurants.isEnd() ? <Text style={{ fontSize: 20, fontWeight: '800' }}>Hết món òi</Text> : <Loading visible={true} />}
+					</View>
+				}
+				onEndReachedThreshold={1}
 				keyExtractor={(item, index) => index.toString()}
 				showsVerticalScrollIndicator={false}
 			/>
@@ -123,5 +135,10 @@ const styles = StyleSheet.create({
 		// maxHeight: 200,
 		// backgroundColor: 'black'
 	},
-
+	containFooter: {
+		justifyContent: 'center',
+		alignItems: 'center',
+		flex: 1,
+		paddingBottom: 50
+	}
 })

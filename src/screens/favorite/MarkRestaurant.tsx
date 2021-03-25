@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Navigation } from 'react-native-navigation'
-import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native'
 import Header from '../../components/Header'
 import { autobind } from 'core-decorators'
 import UI from '../../stores/UI'
@@ -42,7 +42,11 @@ export default class MarkRestaurant extends React.Component<Props> {
 	render() {
 		return (
 			<>
-				<Header />
+				<Header
+					// customTitleHeader={<Text>Đã lưu</Text>}
+					type={1}
+					titleName="Đã lưu"
+				/>
 				<View style={styles.container}>
 					<View style={{
 						flexDirection: 'row',
@@ -90,16 +94,18 @@ export default class MarkRestaurant extends React.Component<Props> {
 						}}
 						keyExtractor={(item, index) => index.toString()}
 						showsVerticalScrollIndicator={false}
+					
 					/>
 				</View>
-				<OrderItem handleBack={() => Navigation.popTo(this.props.componentId)} favorite={true} screens={this.props.componentId}/>
+				<OrderItem handleBack={() => Navigation.popTo(this.props.componentId)} favorite={true} screens={this.props.componentId} />
 			</>
 		)
 	}
 }
-
 const styles = StyleSheet.create({
 	container: {
-		padding: 10
-	}
+		padding: 10,
+		flex: 1
+	},
+
 })

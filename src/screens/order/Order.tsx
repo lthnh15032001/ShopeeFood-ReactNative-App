@@ -58,7 +58,6 @@ export default class Order extends React.Component<Props> {
 			<View style={{ backgroundColor: colorStyles.mercury, flex: 1 }}>
 				<Header
 					componentId={RESTAURANT_FOOD_SCREEN}
-					// handleBack={this.props.handleBack}
 					type={2}
 					titleName={Orders.restaurant?.name}
 					screens={this.props.screens}

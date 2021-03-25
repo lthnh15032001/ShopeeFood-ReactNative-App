@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, FlatList } from 'react-native'
+import { View, Text, FlatList, ActivityIndicator } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { autobind } from 'core-decorators';
 import Header from '../../components/Header'
@@ -25,7 +25,7 @@ export default class CategoryFood extends React.Component<Props> {
 	}
 	componentDidMount() {
 		Restaurants.clear()
-		Restaurants.fetchDataByCategoryId(this.props.categoryId)
+		Restaurants.fetchDataByCategoryId(this.props.categoryId, Restaurants.page)
 	}
 	componentDidAppear() {
 		this.updateOptions();
@@ -65,6 +65,7 @@ export default class CategoryFood extends React.Component<Props> {
 
 						keyExtractor={(item, index) => index.toString()}
 						showsVerticalScrollIndicator={false}
+						
 					/>
 				</View>
 			</>

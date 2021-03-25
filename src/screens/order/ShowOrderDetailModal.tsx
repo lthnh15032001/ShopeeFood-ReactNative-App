@@ -1,11 +1,13 @@
 import React from 'react'
-import { Text, TouchableOpacity, View, StyleSheet, FlatList, Image, TextInput } from 'react-native'
+import { Text, TouchableOpacity, View, StyleSheet, FlatList, TextInput } from 'react-native'
 import { Navigation } from 'react-native-navigation'
 import { OrderScreen } from '../../screens'
 import { colorStyles } from '../../styles/ColorStyles'
 import Orders from '../../stores/Orders'
 import { Icon } from '../../components'
 import { observer } from 'mobx-react'
+import Image from 'react-native-image-progress';
+
 interface Props {
 	componentId?: string;
 	testID?: string;

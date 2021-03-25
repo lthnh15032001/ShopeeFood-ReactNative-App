@@ -14,12 +14,11 @@ interface Props {
 	props: any,
 	item: any,
 	index: any,
-	fetchData?: Function,
 	favorite?: boolean,
 	screen? :string,
 }
 export const RestaurantItem = observer((props: Props) => {
-	const { props: propsItem, item, index, fetchData, favorite,screen } = props
+	const { props: propsItem, item, index, favorite,screen } = props
 	const refRBSheet = useRef();
 	// console.log({ item: item, index: index })
 	const ordersRestaurant = JSON.parse(JSON.stringify(Orders.restaurant))

@@ -54,7 +54,7 @@ export default class CompleteOrder extends React.Component<Props> {
 
 		return (
 			<>
-				<Header type={2} titleName="Đơn hàng" />
+				<Header type={1} titleName="Đơn hàng" />
 				<View style={styles.container}>
 					<FlatList
 						data={completRes.reverse()}
@@ -62,12 +62,12 @@ export default class CompleteOrder extends React.Component<Props> {
 						ListEmptyComponent={<Empty message="No Orders Found" />}
 						renderItem={({ item, index }) => {
 							// console.log({item:item})
-							const reverseLenth = completRes.length-- ;
+							const reverseLenth = completRes.length--;
 							return (
 								<TouchableOpacity style={styles.wrapBox} >
 									<View style={{ flexDirection: 'row', flex: 1 }} >
 										<Text style={{ fontWeight: '700' }}>{item.restaurant.categories[0]}</Text>
-										<Text style={{ paddingHorizontal: 10, color: colorStyles.boulder }}>#{reverseLenth }</Text>
+										<Text style={{ paddingHorizontal: 10, color: colorStyles.boulder }}>#{reverseLenth}</Text>
 									</View>
 									<View style={{ marginTop: 10, flexDirection: 'row', borderBottomWidth: 0.4, paddingBottom: 10, borderColor: colorStyles.boulder }}>
 										<Image

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Navigation } from 'react-native-navigation'
-import { Text, StyleSheet, View, ActivityIndicator } from 'react-native'
+import { Text, StyleSheet, View, ActivityIndicator, TouchableOpacity } from 'react-native'
 import { CategoryGroupHeader } from './CategoryGroupHeader'
 import Restaurants from '../../stores/Restaurant'
 import Categories from '../../stores/Category'
@@ -10,6 +10,8 @@ import Header from '../../components/Header'
 import { observer } from 'mobx-react'
 import { observable } from 'mobx'
 import { OrderItem } from '../../components/OrderItem'
+import { Icon } from '../../components/Icon'
+import { colorStyles } from '../../styles/ColorStyles'
 // import Toast from 'react-native-simple-toast';
 interface Props {
 	componentId: string;
@@ -18,7 +20,6 @@ interface Props {
 @observer
 export default class Home extends React.Component<Props> {
 	@observable
-	isLoading = false
 	static get options() {
 		return {
 			bottomTab: {
@@ -46,20 +47,18 @@ export default class Home extends React.Component<Props> {
 	componentDidMount() {
 		this.fetchData()
 	}
-	async fetchData(index = 0) {
-		this.isLoading = true
+	async fetchData(index = 0, increase: boolean = false) {
 		const dataCategory = JSON.parse(JSON.stringify(Categories.categories))
 		if (dataCategory[index]) {
-			Restaurants.fetchDataByCategoryId(dataCategory[Categories.isSelect].id)
-			// console.log({ haveindex: Categories.isSelect })
+			increase && Restaurants.pageIncrease()
+			Restaurants.fetchDataByCategoryId(dataCategory[Categories.isSelect].id, Restaurants.page)
 		}
 		else {
 			await Categories.fetchData()
-			Restaurants.fetchDataByCategoryId(1000000);
+			Restaurants.fetchDataByCategoryId(1000000, Restaurants.page);
 			Categories.clearSelect()
 			// console.log(Categories.isSelect)
 		}
-		this.isLoading = false
 	}
 	componentDidAppear() {
 		this.updateOptions();
@@ -77,8 +76,26 @@ export default class Home extends React.Component<Props> {
 		// Toast.show('This is a long toast.', Toast.LONG);
 		return (
 			<>
-				<Header />
-				{this.isLoading ?
+				<Header
+					customHeader={
+						<TouchableOpacity
+							style={{ height: 45, paddingHorizontal: 10, marginBottom: 2, paddingRight: 30 }}
+							onPress={() => { Navigation.popTo(this.props.componentId as string) }} >
+							<Text style={{ color: colorStyles.boulder, paddingBottom: 4, paddingLeft: 4, fontSize: 13 }}>Giao hàng đến: </Text>
+							<View style={{ flexDirection: 'row', flex: 1, alignItems: 'baseline' }}>
+								<Icon Ionicons name="ios-location-sharp" color={colorStyles.thunderbird} />
+								<Text
+									numberOfLines={1}
+									style={{
+										fontWeight: '600',
+										paddingRight: 5
+									}}>[Số nhà 11 ngõ 178] Ngõ 178 Quan Nhân Nhân Chính Thanh Xuân Hà Nội</Text>
+								<Icon MaterialIcons name="arrow-forward-ios" color={colorStyles.thunderbird} size={13} />
+							</View>
+						</TouchableOpacity>
+					}
+				/>
+				{/* {this.isLoading ?
 					<View style={{
 						justifyContent: 'center',
 						alignItems: 'center',
@@ -86,12 +103,14 @@ export default class Home extends React.Component<Props> {
 					}}>
 						<ActivityIndicator size="large" color="#00ff00" />
 					</View>
-					: <View style={styles.container} >
+					:  */}
+					<View style={styles.container} >
 						<CategoryGroupHeader
 							props={this.props}
 							fetchData={this.fetchData}
 						/>
-					</View>}
+					</View>
+					{/* // } */}
 				<OrderItem screens={this.props.componentId} />
 			</>
 		)
