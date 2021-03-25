@@ -11,6 +11,7 @@ import UI from '../stores/UI'
 import ShowOrderDetailModal from './order/ShowOrderDetailModal'
 import MapOrderView from './order/MapOrderView'
 import MarkRestaurants from '../stores/MarkRestaurants'
+import { Login } from './account/Login'
 import { colorStyles } from '../styles/ColorStyles'
 export const HOME_SCREEN = 'internapp.HomeScreen'
 export const MARK_FAVORITE_SCREEN = 'internapp.markFavoriteRestautant'
@@ -22,6 +23,7 @@ export const ORDER_SCREEN = 'internapp.OrderScreen'
 export const HEADER = 'component.Header'
 export const SHOW_ORDER_DETAIL_MODAL = 'internapp.ShowOrderDetailModal'
 export const MAP_ORDER_VIEW = 'internapp.MapOrderView'
+export const LOGIN = 'internapp.Login'
 export const Screens = new Map()
 // screen 
 Screens.set(HOME_SCREEN, Home);
@@ -33,6 +35,31 @@ Screens.set(CATEGORY_FOOD_SCREEN, CategoryFood)
 Screens.set(ORDER_SCREEN, Order)
 Screens.set(SHOW_ORDER_DETAIL_MODAL, ShowOrderDetailModal)
 Screens.set(MAP_ORDER_VIEW, MapOrderView)
+Screens.set(LOGIN, Login)
+export const detectFirstRun = () => {
+	if (UI.settings.isFirstRun) {
+		startApp()
+	} else {
+		startAppNotLogin()
+	}
+}
+
+export const startAppNotLogin = () => {
+	return Navigation.setRoot({
+		root: {
+			stack: {
+				children: [
+					{
+						component: {
+							name: LOGIN,
+							id: LOGIN
+						}
+					}
+				]
+			}
+		}
+	})
+}
 export const startApp = () => {
 	return Navigation.setRoot({
 		root: {
@@ -124,10 +151,7 @@ export const startApp = () => {
 		}
 	})
 }
-// interface HandleBackProps {
-// 	handleBack?: Function,
-// 	favorite?: boolean
-// }
+
 export const OrderScreen = (handleBack: any, screens: string = "false") => {
 	console.log({ screens: screens })
 	Navigation.push(<string>UI.componentId, {

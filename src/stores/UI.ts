@@ -102,27 +102,30 @@ const UI = types
 		hydrate() {
 			return flow(function* () {
 				try {
-					const data = yield AsyncStorage.getItem('UI.settings');
-					if (data) {
-						applySnapshot(UI.settings, JSON.parse(data));
+					// let useFirstRun = false;
+					const isFirstRun = yield AsyncStorage.getItem('firstStartApp');
+					console.log({ isFirstRun: isFirstRun })
+					if (isFirstRun) {
+						UI.settings.isFirstRun = true
+					} else {
+						UI.settings.isFirstRun = false
 					}
+					// try {
 
-					let useFirstRun = false;
-					try {
-						// const ref = firebase.firestore().collection('settings');
-						// const doc = yield ref.doc('1.0.1').get();
-						// useFirstRun = doc.exists && doc.data().settings;
-					} catch (err) {
-						useFirstRun = Date.now() < 1532664000449;
-					}
+					// 	// const ref = firebase.firestore().collection('settings');
+					// 	// const doc = yield ref.doc('1.0.1').get();
+					// 	// useFirstRun = doc.exists && doc.data().settings;
+					// } catch (err) {
+					// 	useFirstRun = Date.now() < 1532664000449;
+					// }
 
-					if (UI.settings.isFirstRun) {
-						if (useFirstRun) {
-							UI.settings.appearance.largeShowThumbnail = false;
-							// UI.settings.general.browserOpenIn = 'safari';
-						}
-						UI.settings.isFirstRun = false;
-					}
+					// if (UI.settings.isFirstRun) {
+					// 	if (useFirstRun) {
+					// 		UI.settings.appearance.largeShowThumbnail = false;
+					// 		// UI.settings.general.browserOpenIn = 'safari';
+					// 	}
+					// 	UI.settings.isFirstRun = false;
+					// }
 
 					(self as any).apply();
 				} catch (err) { }

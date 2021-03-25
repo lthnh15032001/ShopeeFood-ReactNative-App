@@ -1,5 +1,5 @@
 import { LogBox } from 'react-native'
-import { Screens, startApp } from './screens';
+import { Screens, startApp, startAppNotLogin, detectFirstRun } from './screens';
 import { onSnapshot } from 'mobx-state-tree';
 import { Navigation } from 'react-native-navigation';
 import debounce from 'lodash/debounce';
@@ -13,7 +13,7 @@ Screens.forEach((ScreenComponent, key) => {
 })
 
 Navigation.events().registerAppLaunchedListener(() => {
-	startApp()
+
 	// if (__DEV__) {
 	// 	makeInspectable(UI);
 	// 	makeInspectable(Account);
@@ -21,7 +21,7 @@ Navigation.events().registerAppLaunchedListener(() => {
 	// 	makeInspectable(Items);
 	// }
 
-	// UI.hydrate().then(startApp);
+	UI.hydrate().then(detectFirstRun);
 });
 // Start application
 // Navigation.events().registerAppLaunchedListener(() => {
