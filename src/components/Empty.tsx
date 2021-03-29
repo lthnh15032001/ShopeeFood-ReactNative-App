@@ -8,12 +8,13 @@ import { Navigation } from 'react-native-navigation';
 interface Props {
 	key?: string;
 	message: string;
+	screens?: string
 }
 
 @observer
 export default class Empty extends React.Component<Props> {
 	render() {
-		const { message } = this.props;
+		const { message, screens } = this.props;
 		return (
 			<View style={{
 				justifyContent: 'center', alignItems: 'center', flex: 1,
@@ -30,7 +31,11 @@ export default class Empty extends React.Component<Props> {
 					<Text style={styles.message}>{message}</Text>
 					{/* <Text style={styles.message}>Đi vào cửa hàng để chọn cửa hàng yêu thích nhé</Text> */}
 					<TouchableOpacity style={{ paddingTop: 20, flexDirection: 'row', justifyContent: 'center' }} onPress={() => {
-						// Navigation.mergeOptions()
+						Navigation.mergeOptions(screens as string, {
+							bottomTabs: {
+								currentTabIndex:0
+							}
+						})
 					}}>
 						<Text style={{ fontSize: 17, fontWeight: '700', paddingRight: 5 }}>Cửa hàng</Text>
 						<Icon AntDesign name="arrowright" color="black" />

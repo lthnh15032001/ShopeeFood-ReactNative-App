@@ -106,27 +106,12 @@ const UI = types
 					const isFirstRun = yield AsyncStorage.getItem('firstStartApp');
 					console.log({ isFirstRun: isFirstRun })
 					if (isFirstRun) {
-						UI.settings.isFirstRun = true
-					} else {
 						UI.settings.isFirstRun = false
+						console.log({ isFirstRun: false })
+					} else {
+						UI.settings.isFirstRun = true
+						console.log({ isFirstRun: true })
 					}
-					// try {
-
-					// 	// const ref = firebase.firestore().collection('settings');
-					// 	// const doc = yield ref.doc('1.0.1').get();
-					// 	// useFirstRun = doc.exists && doc.data().settings;
-					// } catch (err) {
-					// 	useFirstRun = Date.now() < 1532664000449;
-					// }
-
-					// if (UI.settings.isFirstRun) {
-					// 	if (useFirstRun) {
-					// 		UI.settings.appearance.largeShowThumbnail = false;
-					// 		// UI.settings.general.browserOpenIn = 'safari';
-					// 	}
-					// 	UI.settings.isFirstRun = false;
-					// }
-
 					(self as any).apply();
 				} catch (err) { }
 				return;

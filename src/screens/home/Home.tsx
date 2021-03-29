@@ -12,6 +12,7 @@ import { observable } from 'mobx'
 import { OrderItem } from '../../components/OrderItem'
 import { Icon } from '../../components/Icon'
 import { colorStyles } from '../../styles/ColorStyles'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 // import Toast from 'react-native-simple-toast';
 interface Props {
 	componentId: string;
@@ -46,6 +47,7 @@ export default class Home extends React.Component<Props> {
 	}
 	componentDidMount() {
 		this.fetchData()
+		// AsyncStorage.removeItem('firstStartApp');
 	}
 	async fetchData(index = 0, increase: boolean = false) {
 		const dataCategory = JSON.parse(JSON.stringify(Categories.categories))

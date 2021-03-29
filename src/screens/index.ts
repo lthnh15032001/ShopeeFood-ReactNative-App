@@ -3,7 +3,6 @@ import Home from './home/Home'
 import MarkRestaurant from './favorite/MarkRestaurant'
 import CompleteOrder from './favorite/CompleteOrder'
 import AccountScreen from './account/AccountScreen'
-// import Header from '../components/Header'
 import RestaurantFood from './product/RestaurantFood'
 import CategoryFood from './product/CategoryFood'
 import Order from './order/Order'
@@ -11,12 +10,14 @@ import UI from '../stores/UI'
 import ShowOrderDetailModal from './order/ShowOrderDetailModal'
 import MapOrderView from './order/MapOrderView'
 import MarkRestaurants from '../stores/MarkRestaurants'
-import { Login } from './account/Login'
+import AddressEdit from './account/AddressEdit'
+import Login from './account/Login'
 import { colorStyles } from '../styles/ColorStyles'
 export const HOME_SCREEN = 'internapp.HomeScreen'
 export const MARK_FAVORITE_SCREEN = 'internapp.markFavoriteRestautant'
 export const COMPLETE_ORDER_SCREEN = 'internapp.CompleteOrderScreen'
 export const ACCOUNT_SCREEN = 'internapp.AccountScreen'
+export const ADDRESS_EDIT_SCREEN = 'internapp.AddressEditScreen'
 export const RESTAURANT_FOOD_SCREEN = 'internapp.RestaurantFood'
 export const CATEGORY_FOOD_SCREEN = 'internapp.CategoryFood'
 export const ORDER_SCREEN = 'internapp.OrderScreen'
@@ -30,6 +31,7 @@ Screens.set(HOME_SCREEN, Home);
 Screens.set(MARK_FAVORITE_SCREEN, MarkRestaurant);
 Screens.set(COMPLETE_ORDER_SCREEN, CompleteOrder);
 Screens.set(ACCOUNT_SCREEN, AccountScreen)
+Screens.set(ADDRESS_EDIT_SCREEN, AddressEdit)
 Screens.set(RESTAURANT_FOOD_SCREEN, RestaurantFood)
 Screens.set(CATEGORY_FOOD_SCREEN, CategoryFood)
 Screens.set(ORDER_SCREEN, Order)
@@ -38,9 +40,10 @@ Screens.set(MAP_ORDER_VIEW, MapOrderView)
 Screens.set(LOGIN, Login)
 export const detectFirstRun = () => {
 	if (UI.settings.isFirstRun) {
-		startApp()
-	} else {
 		startAppNotLogin()
+	} else {
+		startApp()
+		// console.log("startapp")
 	}
 }
 
@@ -211,6 +214,16 @@ export const CompleteOrderScreen = () => {
 			passProps: {
 				// favorite: favorite
 			}
+		}
+	})
+}
+
+export const AddressEditScreen = () => {
+	Navigation.push(<string>UI.componentId, {
+		component: {
+			name: ADDRESS_EDIT_SCREEN,
+			id: ADDRESS_EDIT_SCREEN,
+			passProps: {}
 		}
 	})
 }

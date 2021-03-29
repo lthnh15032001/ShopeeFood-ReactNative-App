@@ -11,7 +11,7 @@ export const ModalShowNotif = ({ toggleModal, isModalOpen, screens, isComplete }
 		<Modal
 			isVisible={isModalOpen}
 			onBackdropPress={() => {
-				toggleModal()
+				!isComplete && toggleModal()
 			}}
 			style={{
 				shadowColor: "#000",

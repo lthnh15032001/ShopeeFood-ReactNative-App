@@ -61,7 +61,7 @@ export default class CompleteOrder extends React.Component<Props> {
 					<FlatList
 						data={completRes.reverse()}
 						showsVerticalScrollIndicator={false}
-						ListEmptyComponent={<Empty message={`Vào cửa hàng chọn đồ ăn nhé \n Mỗi đơn hàng thành công sẽ hiển thị ở đây`} />}
+						ListEmptyComponent={<Empty message={`Vào cửa hàng chọn đồ ăn nhé \n Mỗi đơn hàng thành công sẽ hiển thị ở đây`} screens={this.props.componentId} />}
 						renderItem={({ item, index }) => {
 							// console.log({item:item})
 							const reverseLenth = completRes.length--;
