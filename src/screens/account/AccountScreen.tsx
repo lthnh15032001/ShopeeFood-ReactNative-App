@@ -44,7 +44,7 @@ export default class AccountScreen extends React.Component<Props> {
 		UI.addScreen(this);
 	}
 	componentDidMount() {
-		console.log({ dat: auth().currentUser?.toJSON() })
+		// console.log({ dat: auth().currentUser?.toJSON() })
 		// this.fetchData()
 		// AsyncStorage.removeItem('firstStartApp');
 	}
@@ -64,6 +64,7 @@ export default class AccountScreen extends React.Component<Props> {
 	render() {
 		// Toast.showWithGravity('This is a toast.');
 		// Toast.show('This is a long toast.', Toast.LONG);
+		// const userData = auth().currentUser?.toJSON()
 		return (
 			<>
 				<Header
@@ -85,7 +86,7 @@ export default class AccountScreen extends React.Component<Props> {
 							<Text style={{ paddingLeft: 5 }}>Nhà</Text>
 						</View>
 						<Text style={{ color: colorStyles.grayChateau, paddingLeft: 10, paddingVertical: 5 }}>[Số nhà 11 ngõ 178] Quan Nhân Nhân Chính Thanh Xuân Hà Nội</Text>
-						<Text style={{ paddingLeft: 10, paddingBottom: 5 }}>lethnhemail@mgail,cim</Text>
+						<Text style={{ paddingLeft: 10, paddingBottom: 5 }}>userData.email</Text>
 					</TouchableOpacity>
 					<TouchableOpacity
 						style={styles.logout}
