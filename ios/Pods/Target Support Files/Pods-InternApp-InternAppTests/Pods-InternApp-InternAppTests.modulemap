@@ -1,0 +1,6 @@
+module Pods_InternApp_InternAppTests {
+  umbrella header "Pods-InternApp-InternAppTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
